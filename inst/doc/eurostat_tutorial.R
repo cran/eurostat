@@ -68,16 +68,16 @@ p <- p + geom_line()
 print(p)
 
 ## ----plotGallery, warning=FALSE, message=FALSE---------------------------
-library(reshape2)
+library(tidyr)
 
-allTransports <- spread(subset(dat, time == 2012, select = -time), vehicle, values)
+transports <- spread(subset(dat, time == 2012, select = c(geo, vehicle, values)), vehicle, values)
 
-allTransports <- na.omit(allTransports)
+transports <- na.omit(transports)
 
 # triangle plot
 library(plotrix)
-triax.plot(allTransports[, -1], show.grid = TRUE, 
-           label.points = TRUE, point.labels = allTransports$geo, 
+triax.plot(transports[, -1], show.grid = TRUE, 
+           label.points = TRUE, point.labels = transports$geo, 
            pch = 19)
 
 ## ----citation, message=FALSE, eval=TRUE----------------------------------

@@ -1,4 +1,4 @@
-7abcc3fa5643618fa10584fe0d05151d *DESCRIPTION
+66e0ecb2e0d5477f8e24a449bd62774d *DESCRIPTION
 bfc01b8c7110adda6d3bfb8f283bc4c7 *LICENSE
 3fce8e82a441889e98d850f0ee231b48 *NAMESPACE
 363145443dca60a299f3a2a213662f6c *R/clean_eurostat_cache.R
@@ -18,9 +18,9 @@ f586ccba279bf17739d6d4129b8422b2 *R/search_eurostat.R
 8172ef79095d4910261eeffbb27b04ad *README.md
 37f267d8a246724653de0b8fb8fe2c23 *build/vignette.rds
 76e7da4d09501799e1780df8867c5fa2 *inst/CITATION
-8de14770cfcf6d74d99fe8949c6e9b50 *inst/doc/eurostat_tutorial.R
-8bae9fc3f2155def14f345d42c22bce6 *inst/doc/eurostat_tutorial.Rmd
-3a8f96ee797d8573d55f630c21475796 *inst/doc/eurostat_tutorial.html
+942a753d253b10e17eeae60ba433464b *inst/doc/eurostat_tutorial.R
+9e741c505468544f73198681aefb573c *inst/doc/eurostat_tutorial.Rmd
+c861a633ba48d53471768b62834eefd6 *inst/doc/eurostat_tutorial.html
 bc54c4b2f5c363bcee068a9f1d6dadae *man/clean_eurostat_cache.Rd
 cc429a2454c94f3730a4547bcb7c8bd5 *man/eurostat-package.Rd
 5a2bdc8e02b5502bb6095311ab92b75b *man/eurostat_url.Rd
@@ -99,8 +99,8 @@ ee95870c0c3296601559f8da93e296ff *vignettes/NUTS_2010_60M_SH/metadata/XML/global
 76d0a292ce17ff0d4ec6b2b1ad43fa78 *vignettes/NUTS_2010_60M_SH/metadata/XML/uml.png
 75d426761b7b0a9f2b4d1ede1b2fd273 *vignettes/NUTS_2010_60M_SH/readme.rtf
 f29b3d4cabe5c2bb19c53aaa1ac2ec53 *vignettes/NUTS_2010_60M_SH/readme.txt
-8bae9fc3f2155def14f345d42c22bce6 *vignettes/eurostat_tutorial.Rmd
-36e5e9bee1ff2f74c91334182634a1c0 *vignettes/eurostat_tutorial.md
+9e741c505468544f73198681aefb573c *vignettes/eurostat_tutorial.Rmd
+da9701136b458f61687592cd733ddaf9 *vignettes/eurostat_tutorial.md
 79ee290ab2b10b9a75476a88fe1e3839 *vignettes/figure/eurostat_map41.png
 f6d28f1e4eaa5984c1b44f778383fd51 *vignettes/figure/eurostat_map42.png
 db681d72ef7ab84490da535e4ac29a12 *vignettes/figure/eurostat_map43.png
