@@ -1,3 +1,8 @@
+## ----setup, include=FALSE------------------------------------------------
+# Global options
+library(knitr)
+opts_chunk$set(fig.path="fig/")
+
 ## ----install, eval=FALSE-------------------------------------------------
 #  install.packages("eurostat")
 
@@ -5,9 +10,14 @@
 #  library(devtools)
 #  install_github("ropengov/eurostat")
 
+## ---- echo=TRUE----------------------------------------------------------
+library(eurostat)
+kable(as.data.frame(ls("package:eurostat")))
+
 ## ----get_eurostat_toc, warning=FALSE, message=FALSE----------------------
 # Load the package
 library(eurostat)
+library(rvest)
 
 # Get Eurostat data listing
 toc <- get_eurostat_toc()
@@ -42,6 +52,10 @@ levels(datl$vehicle)
 ## ----name_labels---------------------------------------------------------
 
 label_eurostat_vars(names(datl))
+
+## ---- echo=TRUE, eval=TRUE-----------------------------------------------
+data(efta_countries)
+print(efta_countries)
 
 ## ----eu_12---------------------------------------------------------------
 dat_eu12 <- subset(datl, geo == "European Union (28 countries)" & time == 2012)

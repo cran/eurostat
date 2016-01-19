@@ -1,16 +1,9 @@
----
-title: "eurostat tutorial for R"
-author: Leo Lahti, Przemyslaw Biecek, Markus Kainu and Janne Huovari
-date: "`r Sys.Date()`"
-output:
-  html_document:
-    theme: flatly
----
 <!--
-%\VignetteEngine{knitr::rmarkdown}
-%\VignetteIndexEntry{eurostat Markdown Vignette}
+%\VignetteIndexEntry{eurostat tutorial}
+%\VignetteEngine{knitr::knitr}
 %\usepackage[utf8]{inputenc}
--->
+-->    
+
 
 
 Eurostat R tools
@@ -24,8 +17,8 @@ For contact information and source code, see the [github page](https://github.co
 
 ## Available tools
 
- * [Installation](#installation)  
- * [Finding data](#search)  
+ * [Installation](#installation)
+ * [Finding data](#search)
  * [Downloading data](#download)  
  * [Replacing codes with labels](#labeling)  
  * [Selecting and modifying data](#select)  
@@ -35,6 +28,12 @@ For contact information and source code, see the [github page](https://github.co
  * [Acknowledgements](#acknowledgements)  
  * [Session info](#session)  
 
+
+```{r setup, include=FALSE}
+# Global options
+library(knitr)
+opts_chunk$set(fig.path="fig/")
+```
 
 ## <a name="installation"></a>Installation
 
@@ -51,6 +50,14 @@ library(devtools)
 install_github("ropengov/eurostat")
 ```
 
+Overall, the eurostat package includes the following functions:
+
+```{r, echo=TRUE}
+library(eurostat)
+kable(as.data.frame(ls("package:eurostat")))
+```
+
+
 ## <a name="search"></a>Finding data
 
 Function `get_eurostat_toc()` downloads a table of contents of eurostat datasets. The values in column 'code' should be used to download a selected dataset.
@@ -58,6 +65,7 @@ Function `get_eurostat_toc()` downloads a table of contents of eurostat datasets
 ```{r get_eurostat_toc, warning=FALSE, message=FALSE}
 # Load the package
 library(eurostat)
+library(rvest)
 
 # Get Eurostat data listing
 toc <- get_eurostat_toc()
@@ -73,6 +81,11 @@ With `search_eurostat()` you can search the table of contents for particular pat
 # info about passengers
 kable(head(search_eurostat("passenger transport")))
 ```
+
+Codes for the dataset can be searched also from the [Eurostat
+database](http://ec.europa.eu/eurostat/data/database). The Eurostat
+database gives codes in the Data Navigation Tree after every dataset
+in parenthesis.
 
 ## <a name="download"></a>Downloading data 
 
@@ -122,6 +135,16 @@ label_eurostat_vars(names(datl))
 
 
 ## <a name="select"></a>Selecting and modifying data
+
+### EFTA, Eurozone, EU and EU candidate countries
+
+To facilititate fast plotting of standard European geographic areas, the package provides ready-made lists of the country codes used in the eurostat database for EFTA (efta\_countries), Euro area (ea\_countries), EU (eu\_countries) and EU candidate countries (candidate\_countries). This helps to select specific groups of countries for closer investigation. For conversions with other standard country coding systems, see the [countrycode](...) R package. To retrieve the country code list for EFTA, for instance, use:
+
+```{r, echo=TRUE, eval=TRUE}
+data(efta_countries)
+print(efta_countries)
+```
+
 
 ### EU data from 2012 in all vehicles:
 
@@ -182,6 +205,9 @@ triax.plot(transports[, -1], show.grid = TRUE,
            pch = 19)
 ```
 
+For further examples, see also the [blog post on the eurostat R
+package](...).
+
 
 ## <a name="citing"></a>Citing the package
 
@@ -196,9 +222,8 @@ citation("eurostat")
 
 ## <a name="acknowledgements"></a>Acknowledgements
 
-We are grateful to [Eurostat](http://ec.europa.eu/eurostat/) for the open data portal! This [rOpenGov](http://ropengov.github.io) R package is based on earlier CRAN packages [statfi](http://cran.r-project.org/web/packages/statfi/index.html) and [smarterpoland](http://cran.r-project.org/web/packages/SmarterPoland/index.html). The [datamart](http://cran.r-project.org/web/packages/datamart/index.html) and [reurostat](https://github.com/Tungurahua/reurostat) packages seem to develop related Eurostat tools but at the time of writing this tutorial this package seems to be in an experimental stage. The [quandl](http://cran.r-project.org/web/packages/Quandl/index.html) package may also provides access to some versions of eurostat data sets. 
 
-
+We are grateful to all [contributors](https://github.com/rOpenGov/eurostat/graphs/contributors) and [Eurostat](http://ec.europa.eu/eurostat/) open data portal! This [rOpenGov](http://ropengov.github.io) R package is based on earlier CRAN packages [statfi](https://cran.r-project.org/package=statfi) and [smarterpoland](https://cran.r-project.org/package=SmarterPoland). The [datamart](https://cran.r-project.org/package=datamart) and [reurostat](https://github.com/Tungurahua/reurostat) packages seem to develop related Eurostat tools but at the time of writing this tutorial this package seems to be in an experimental stage. The [quandl](https://cran.r-project.org/package=quandl) package may also provides access to some versions of eurostat data sets.
 
 
 ## <a name="session"></a>Session info
