@@ -12,7 +12,8 @@ opts_chunk$set(fig.path="fig/")
 
 ## ---- echo=TRUE----------------------------------------------------------
 library(eurostat)
-kable(as.data.frame(ls("package:eurostat")))
+eurostat.functions <- sort(ls("package:eurostat"))
+kable(as.data.frame(eurostat.functions))
 
 ## ----get_eurostat_toc, warning=FALSE, message=FALSE----------------------
 # Load the package
@@ -38,24 +39,37 @@ print(id)
 ## ----get_eurostat, warning=FALSE, message=FALSE, results='asis'----------
 dat <- get_eurostat(id, time_format = "num")
 
-## ----str_dat, warning=FALSE, message=FALSE, results='asis'---------------
+## ----str_dat, warning=FALSE, message=FALSE-------------------------------
 str(dat)
+
+## ----head_dat, warning=FALSE, message=FALSE, results='asis'--------------
 kable(head(dat))
+
+## ----get_eurostat_json, warning=FALSE, message=FALSE, results='asis'-----
+
+dat2 <- get_eurostat(id, filters = list(geo = c("EU28", "FI"), lastTimePeriod=1), time_format = "num")
+kable(dat2)
+
+## ----json_labels, warning=FALSE, message=FALSE, results='asis'-----------
+datl2 <- get_eurostat(id, filters = list(geo = c("EU28", "FI"), 
+                                         lastTimePeriod = 1), 
+                      type = "label", time_format = "num")
+kable(head(datl2))
 
 ## ----labels, warning=FALSE, message=FALSE, results='asis'----------------
 datl <- label_eurostat(dat)
 kable(head(datl))
 
-## ----vehicle_levels------------------------------------------------------
-levels(datl$vehicle)
-
 ## ----name_labels---------------------------------------------------------
 
 label_eurostat_vars(names(datl))
 
+## ----vehicle_levels------------------------------------------------------
+levels(datl$vehicle)
+
 ## ---- echo=TRUE, eval=TRUE-----------------------------------------------
 data(efta_countries)
-print(efta_countries)
+kable(efta_countries)
 
 ## ----eu_12---------------------------------------------------------------
 dat_eu12 <- subset(datl, geo == "European Union (28 countries)" & time == 2012)
@@ -75,7 +89,7 @@ dat_trains <- subset(datl, geo %in% c("Austria", "Belgium", "Finland", "Sweden")
 dat_trains_wide <- spread(dat_trains, geo, values) 
 kable(subset(dat_trains_wide, select = -vehicle), row.names = FALSE)
 
-## ----trains_plot, fig.width=10, fig.height=4-----------------------------
+## ----trains_plot, fig.width=8, fig.height=3------------------------------
 library(ggplot2)
 p <- ggplot(dat_trains, aes(x = time, y = values, colour = geo)) 
 p <- p + geom_line()
