@@ -1,4 +1,4 @@
-#' @title Transform raw Eurostat data table into row-column-value format (RCV)
+#' @title Transform Data into Row-Column-Value Format
 #' @description Transform raw Eurostat data table into the row-column-value
 #' format (RCV).
 #' @param dat a data.frame from \code{\link{get_eurostat_raw}}.
@@ -27,82 +27,89 @@ tidy_eurostat <- function(dat, time_format = "date", select_time = NULL,
            stringsAsFactors = default.stringsAsFactors(),
            keepFlags = FALSE) {
 
-    # Circumvent build warning
+    # To avoid warnings
     time <- NULL
 
     # Separate codes to columns
     cnames <- strsplit(colnames(dat)[1], split = "\\.")[[1]]
-    cnames1 <- cnames[-length(cnames)]
-    cnames2 <- cnames[length(cnames)]
+    cnames1 <- cnames[-length(cnames)]  # for columns
+    cnames2 <- cnames[length(cnames)]   # for colnames
+    
+    # Separe variables from first column
     dat2 <- tidyr::separate_(dat, col = colnames(dat)[1],
                        into = cnames1,
                        sep = ",", convert = FALSE)
+    
+    # Get variable from column names
+    # na.rm TRUE to save memory
+    dat2 <- tidyr::gather_(dat2, cnames2, "values", 
+                           names(dat2)[!(names(dat2) %in% cnames1)],
+                           convert = FALSE, na.rm = TRUE)
 
-    # columns from cnames1 are converted into factors
+    ## separate flags into separate column
+    if(keepFlags == TRUE) {
+      dat2$flags <- as.vector(
+        stringi::stri_match_first_regex(dat2$values, pattern = "[A-Za-z]"))
+    }
+    
+    # clean time and values
+    dat2$time <- gsub("X", "", dat2$time)
+    dat2$values <- tidyr::extract_numeric(dat2$values)
+    
+    # variable columns
+    var_cols <- names(dat2)[!(names(dat2) %in% c("time", "values"))]
+    
+    # reorder to standard order
+    dat2 <- dat2[c(var_cols, "time", "values")]
+    
+    # columns from var_cols are converted into factors
     # avoid convert = FALSE since it converts T into TRUE instead of TOTAL
     if (stringsAsFactors){
-      dat2[,cnames1] <- lapply(dat2[, cnames1, drop = FALSE],
+      dat2[,var_cols] <- lapply(dat2[, var_cols, drop = FALSE],
                               function(x) factor(x, levels = unique(x)))
     }
 
-    # selector for mixed time format data
-    freq_names <- names(dat2)[!(names(dat2) %in% cnames1)]
+    # For multiple time frequency
 
+    freqs <- available_freq(dat2$time)
+    
     if (!is.null(select_time)){
       if (length(select_time) > 1) stop(
         "Only one frequency should be selected in select_time. Selected: ",
         shQuote(select_time))
+ 
       # Annual
       if (select_time == "Y"){
-        dat2 <- dat2[, c(cnames1, freq_names[nchar(freq_names) == 5])]
+        dat2 <- subset(dat2, nchar(time) == 4)
       # Others
       } else {
-        dat2 <- dat2[, c(cnames1, grep(select_time, freq_names, value = TRUE))]
+        dat2 <- subset(dat2, grepl(select_time, time))
       }
       # Test if data
-      if (identical(names(dat2), cnames1)) stop(
+      if (nrow(dat2) == 0) stop(
         "No data selected with select_time:", dQuote(select_time), "\n",
-        "Available frequencies: ", shQuote(available_freq(freq_names)))
+        "Available frequencies: ", shQuote(freqs))
     } else {
 
-      if (length(available_freq(freq_names)) > 1 & time_format != "raw") stop(
+      if (length(freqs) > 1 & time_format != "raw") stop(
         "Data includes several time frequencies. Select frequency with
          select_time or use time_format = \"raw\".
-         Available frequencies: ", shQuote(available_freq(freq_names)))
+         Available frequencies: ", shQuote(freqs ))
     }
 
-      ## To long format
-      names(dat2) <- gsub("X", "", names(dat2))
-
-      dat3 <- tidyr::gather_(dat2, cnames2, "value", rev(names(dat2)[-c(1:length(cnames1))]))
-
-
-     # FIXME for issue #27, tidyr can't name value col if reshape attached.
-     # Named here separately
-      names(dat3)[match("value", names(dat3))] <- "values"
-
-      ## separate flags into separate column
-      if(keepFlags == TRUE) {
-          dat3$flags <- as.vector(stringi::stri_match_first_regex(dat3$values,
-                                                                  pattern = "[A-Za-z]"))
-      }
-
-      ## remove flags from values column
-      dat3$values <- tidyr::extract_numeric(dat3$values)
-      # colnames(dat3)[length(cnames1) + 1] <- cnames # Was like this - Bug ???
-      # colnames(dat3)[1:length(cnames)] <- cnames      
-
     # convert time column
-    dat3$time <- convert_time_col(dat3$time,
+    dat2$time <- convert_time_col(dat2$time,
     	   	                       time_format = time_format)
 
-    dat3
+
+
+    dat2
 
 }
 
 
-#' @title Time column conversions
-#' @description internal function to convert time column
+#' @title Time Column Conversions
+#' @description Internal function to convert time column.
 #' @param x A time column (vector)
 #' @param time_format see \code{\link{tidy_eurostat}}
 #' @keywords internal

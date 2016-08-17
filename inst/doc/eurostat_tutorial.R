@@ -10,10 +10,11 @@ opts_chunk$set(fig.path="fig/")
 #  library(devtools)
 #  install_github("ropengov/eurostat")
 
-## ---- echo=TRUE----------------------------------------------------------
+## ---- echo=FALSE---------------------------------------------------------
 library(eurostat)
-eurostat.functions <- sort(ls("package:eurostat"))
-kable(as.data.frame(eurostat.functions))
+
+## ---- echo=FALSE,comment=NA----------------------------------------------
+cat(paste0(library(help = "eurostat")$info[[2]], collapse = "\n"))
 
 ## ----get_eurostat_toc, warning=FALSE, message=FALSE----------------------
 # Load the package
@@ -46,7 +47,6 @@ str(dat)
 kable(head(dat))
 
 ## ----get_eurostat_json, warning=FALSE, message=FALSE, results='asis'-----
-
 dat2 <- get_eurostat(id, filters = list(geo = c("EU28", "FI"), lastTimePeriod=1), time_format = "num")
 kable(dat2)
 
@@ -60,12 +60,11 @@ kable(head(datl2))
 datl <- label_eurostat(dat)
 kable(head(datl))
 
-## ----name_labels---------------------------------------------------------
+## ----name_labels, eval = FALSE-------------------------------------------
+#  label_eurostat_vars(names(datl))
 
-label_eurostat_vars(names(datl))
-
-## ----vehicle_levels------------------------------------------------------
-levels(datl$vehicle)
+## ----vehicle_levels, eval = FALSE----------------------------------------
+#  levels(datl$vehicle)
 
 ## ---- echo=TRUE, eval=TRUE-----------------------------------------------
 data(efta_countries)
@@ -89,13 +88,13 @@ dat_trains <- subset(datl, geo %in% c("Austria", "Belgium", "Finland", "Sweden")
 dat_trains_wide <- spread(dat_trains, geo, values) 
 kable(subset(dat_trains_wide, select = -vehicle), row.names = FALSE)
 
-## ----trains_plot, fig.width=8, fig.height=3------------------------------
+## ----trains_plot, fig.width=6, fig.height=3------------------------------
 library(ggplot2)
 p <- ggplot(dat_trains, aes(x = time, y = values, colour = geo)) 
 p <- p + geom_line()
 print(p)
 
-## ----plotGallery, warning=FALSE, message=FALSE---------------------------
+## ----plotGallery, warning=FALSE, message=FALSE, , fig.width=6, fig.height=6----
 library(tidyr)
 
 transports <- spread(subset(dat, time == 2012, select = c(geo, vehicle, values)), vehicle, values)

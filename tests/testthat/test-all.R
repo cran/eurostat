@@ -29,7 +29,10 @@ test_that("get_eurostat handles daily data", {
   expect_equal(abs(as.numeric(difftime(dat1$time[1], dat1$time[2], units = "days"))), 1)
 })
 
-
+test_that("get_eurostat get non-normal variable order",{
+  skip_on_cran()
+  expect_gt(nrow(get_eurostat("cens_01rdhh")), 0)
+})
 
 context("cache")
 
@@ -80,6 +83,11 @@ test_that("Label ordering is ordered", {
                               dic = "geo", eu_order = TRUE)))
 })
 
+test_that("Dic downloading works", {
+  skip_on_cran()
+  expect_warning(get_eurostat_dic("na_item"), NA)
+})
+
 
 context("Flags")
 
@@ -103,6 +111,17 @@ test_that("Get json data",{
                                                              unit="EUR_HAB",
                                                              indic_na="B1GM")),
                c("geo", "unit", "indic_na", "time", "values"), 
+               ignore.order = TRUE)
+})
+
+test_that("Handle numbers in filter name",{
+  skip_on_cran()
+  expect_named(get_eurostat(id = "sts_inpr_a", filters = list(geo = "AT",
+                                                              nace_r2 = "B",
+                                                              s_adj = "CA",
+                                                              indic_bt = "PROD",
+                                                              unit = "I10")),
+               c("geo", "nace_r2", "s_adj", "indic_bt", "unit", "time", "values"), 
                ignore.order = TRUE)
 })
 

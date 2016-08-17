@@ -1,340 +1,141 @@
 <!DOCTYPE html>
-<html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="date" content="2016-08-17" />
 
 <title>Eurostat R tools</title>
 
-<script type="text/javascript">
-window.onload = function() {
-  var imgs = document.getElementsByTagName('img'), i, img;
-  for (i = 0; i < imgs.length; i++) {
-    img = imgs[i];
-    // center an image if it is the only element of its parent
-    if (img.parentElement.childElementCount === 1)
-      img.parentElement.style.textAlign = 'center';
-  }
-};
-</script>
 
-<!-- Styles for R syntax highlighter -->
+
+<style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-   pre .operator,
-   pre .paren {
-     color: rgb(104, 118, 135)
-   }
-
-   pre .literal {
-     color: #990073
-   }
-
-   pre .number {
-     color: #099;
-   }
-
-   pre .comment {
-     color: #998;
-     font-style: italic
-   }
-
-   pre .keyword {
-     color: #900;
-     font-weight: bold
-   }
-
-   pre .identifier {
-     color: rgb(0, 0, 0);
-   }
-
-   pre .string {
-     color: #d14;
-   }
-</style>
-
-<!-- R syntax highlighter -->
-<script type="text/javascript">
-var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
-hljs.initHighlightingOnLoad();
-</script>
-
-
-
-<style type="text/css">
-body, td {
-   font-family: sans-serif;
-   background-color: white;
-   font-size: 13px;
-}
-
-body {
-  max-width: 800px;
-  margin: auto;
-  padding: 1em;
-  line-height: 20px;
-}
-
-tt, code, pre {
-   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
-}
-
-h1 {
-   font-size:2.2em;
-}
-
-h2 {
-   font-size:1.8em;
-}
-
-h3 {
-   font-size:1.4em;
-}
-
-h4 {
-   font-size:1.0em;
-}
-
-h5 {
-   font-size:0.9em;
-}
-
-h6 {
-   font-size:0.8em;
-}
-
-a:visited {
-   color: rgb(50%, 0%, 50%);
-}
-
-pre, img {
-  max-width: 100%;
-}
-pre {
-  overflow-x: auto;
-}
-pre code {
-   display: block; padding: 0.5em;
-}
-
-code {
-  font-size: 92%;
-  border: 1px solid #ccc;
-}
-
-code[class] {
-  background-color: #F8F8F8;
-}
-
-table, td, th {
-  border: none;
-}
-
-blockquote {
-   color:#666666;
-   margin:0;
-   padding-left: 1em;
-   border-left: 0.5em #EEE solid;
-}
-
-hr {
-   height: 0px;
-   border-bottom: none;
-   border-top-width: thin;
-   border-top-style: dotted;
-   border-top-color: #999999;
-}
-
-@media print {
-   * {
-      background: transparent !important;
-      color: black !important;
-      filter:none !important;
-      -ms-filter: none !important;
-   }
-
-   body {
-      font-size:12pt;
-      max-width:100%;
-   }
-
-   a, a:visited {
-      text-decoration: underline;
-   }
-
-   hr {
-      visibility: hidden;
-      page-break-before: always;
-   }
-
-   pre, blockquote {
-      padding-right: 1em;
-      page-break-inside: avoid;
-   }
-
-   tr, img {
-      page-break-inside: avoid;
-   }
-
-   img {
-      max-width: 100% !important;
-   }
-
-   @page :left {
-      margin: 15mm 20mm 15mm 10mm;
-   }
-
-   @page :right {
-      margin: 15mm 10mm 15mm 20mm;
-   }
-
-   p, h2, h3 {
-      orphans: 3; widows: 3;
-   }
-
-   h2, h3 {
-      page-break-after: avoid;
-   }
-}
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
 
 </head>
 
 <body>
-<!--
-%\VignetteIndexEntry{eurostat tutorial}
-%\VignetteEngine{knitr::knitr}
-%\usepackage[utf8]{inputenc}
--->    
 
-<h1>Eurostat R tools</h1>
 
-<p>This R package provides tools to access 
-<a href="http://ec.europa.eu/eurostat/">Eurostat database</a> 
-as part of the <a href="http://ropengov.github.io">rOpenGov</a> project.</p>
 
-<p>For contact information and source code, see the <a href="https://github.com/rOpenGov/eurostat">github page</a></p>
 
-<h2>Available tools</h2>
+<h1 class="title toc-ignore">Eurostat R tools</h1>
+<h4 class="date"><em>2016-08-17</em></h4>
 
+
+<div id="TOC">
 <ul>
 <li><a href="#installation">Installation</a></li>
-<li><a href="#search">Finding data</a></li>
-<li><a href="#download">Downloading data</a><br/></li>
-<li><a href="#labeling">Replacing codes with labels</a><br/></li>
-<li><a href="#select">Selecting and modifying data</a><br/></li>
-<li><a href="#visualization">Visualization</a><br/>
-
-<ul>
-<li><a href="#triangle">Triangle plot</a><br/></li>
+<li><a href="#finding-data">Finding data</a></li>
+<li><a href="#downloading-data">Downloading data</a><ul>
+<li><a href="#replacing-codes-with-labels">Replacing codes with labels</a></li>
 </ul></li>
-<li><a href="#citing">Citing the package</a><br/></li>
-<li><a href="#acknowledgements">Acknowledgements</a><br/></li>
-<li><a href="#session">Session info</a><br/></li>
+<li><a href="#selecting-and-modifying-data">Selecting and modifying data</a><ul>
+<li><a href="#efta-eurozone-eu-and-eu-candidate-countries">EFTA, Eurozone, EU and EU candidate countries</a></li>
+<li><a href="#eu-data-from-2012-in-all-vehicles">EU data from 2012 in all vehicles:</a></li>
+<li><a href="#eu-data-from-2000---2012-with-vehicle-types-as-variables">EU data from 2000 - 2012 with vehicle types as variables:</a></li>
+<li><a href="#train-passengers-for-selected-eu-countries-in-2000---2012">Train passengers for selected EU countries in 2000 - 2012</a></li>
+</ul></li>
+<li><a href="#visualization">Visualization</a><ul>
+<li><a href="#citing-the-package">Citing the package</a></li>
+</ul></li>
+<li><a href="#acknowledgements">Acknowledgements</a></li>
+<li><a href="#session-info">Session info</a></li>
 </ul>
+</div>
 
-<h2><a name="installation"></a>Installation</h2>
-
+<p>This R package provides tools to access <a href="http://ec.europa.eu/eurostat/">Eurostat database</a> as part of the <a href="http://ropengov.github.io">rOpenGov</a> project.</p>
+<p>For contact information and source code, see the <a href="https://github.com/rOpenGov/eurostat">github page</a></p>
+<div id="installation" class="section level1">
+<h1>Installation</h1>
 <p>Release version:</p>
-
-<pre><code class="r">install.packages(&quot;eurostat&quot;)
-</code></pre>
-
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;eurostat&quot;</span>)</code></pre></div>
 <p>Development version:</p>
-
-<pre><code class="r">library(devtools)
-install_github(&quot;ropengov/eurostat&quot;)
-</code></pre>
-
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools)
+<span class="kw">install_github</span>(<span class="st">&quot;ropengov/eurostat&quot;</span>)</code></pre></div>
 <p>Overall, the eurostat package includes the following functions:</p>
+<pre><code>clean_eurostat_cache    Clean Eurostat Cache
+dic_order               Order of Variable Levels from Eurostat
+                        Dictionary.
+eu_countries            Countries and Country Codes
+eurostat-package        R Tools for Eurostat open data
+eurotime2date           Date Conversion from Eurostat Time Format
+eurotime2num            Conversion of Eurostat Time Format to Numeric
+get_eurostat            Read Eurostat Data
+get_eurostat_dic        Download Eurostat Dictionary
+get_eurostat_json       Get Data from Eurostat API in JSON
+get_eurostat_raw        Download Data from Eurostat Database
+get_eurostat_toc        Download Table of Contents of Eurostat Data
+                        Sets
+harmonize_country_code
+                        Harmonize Country Code
+label_eurostat          Get Eurostat Codes
+search_eurostat         Grep Datasets Titles from Eurostat</code></pre>
+</div>
+<div id="finding-data" class="section level1">
+<h1>Finding data</h1>
+<p>Function <code>get_eurostat_toc()</code> downloads a table of contents of eurostat datasets. The values in column ‘code’ should be used to download a selected dataset.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the package</span>
+<span class="kw">library</span>(eurostat)
+<span class="kw">library</span>(rvest)
 
-<pre><code class="r">library(eurostat)
-eurostat.functions &lt;- sort(ls(&quot;package:eurostat&quot;))
-kable(as.data.frame(eurostat.functions))
-</code></pre>
+<span class="co"># Get Eurostat data listing</span>
+toc &lt;-<span class="st"> </span><span class="kw">get_eurostat_toc</span>()
 
-<table><thead>
-<tr>
-<th align="left">eurostat.functions</th>
-</tr>
-</thead><tbody>
-<tr>
-<td align="left">candidate_countries</td>
-</tr>
-<tr>
-<td align="left">clean_eurostat_cache</td>
-</tr>
-<tr>
-<td align="left">dic_order</td>
-</tr>
-<tr>
-<td align="left">ea_countries</td>
-</tr>
-<tr>
-<td align="left">efta_countries</td>
-</tr>
-<tr>
-<td align="left">eu_countries</td>
-</tr>
-<tr>
-<td align="left">eurotime2date</td>
-</tr>
-<tr>
-<td align="left">eurotime2num</td>
-</tr>
-<tr>
-<td align="left">get_eurostat</td>
-</tr>
-<tr>
-<td align="left">get_eurostat_dic</td>
-</tr>
-<tr>
-<td align="left">getEurostatDictionary</td>
-</tr>
-<tr>
-<td align="left">get_eurostat_json</td>
-</tr>
-<tr>
-<td align="left">get_eurostat_toc</td>
-</tr>
-<tr>
-<td align="left">getEurostatTOC</td>
-</tr>
-<tr>
-<td align="left">grepEurostatTOC</td>
-</tr>
-<tr>
-<td align="left">label_eurostat</td>
-</tr>
-<tr>
-<td align="left">label_eurostat_tables</td>
-</tr>
-<tr>
-<td align="left">label_eurostat_vars</td>
-</tr>
-<tr>
-<td align="left">search_eurostat</td>
-</tr>
-</tbody></table>
-
-<h2><a name="search"></a>Finding data</h2>
-
-<p>Function <code>get_eurostat_toc()</code> downloads a table of contents of eurostat datasets. The values in column &#39;code&#39; should be used to download a selected dataset.</p>
-
-<pre><code class="r"># Load the package
-library(eurostat)
-library(rvest)
-
-# Get Eurostat data listing
-toc &lt;- get_eurostat_toc()
-
-# Check the first items
-library(knitr)
-kable(head(toc))
-</code></pre>
-
-<table><thead>
-<tr>
+<span class="co"># Check the first items</span>
+<span class="kw">library</span>(knitr)
+<span class="kw">kable</span>(<span class="kw">head</span>(toc))</code></pre></div>
+<table>
+<thead>
+<tr class="header">
 <th align="left">title</th>
 <th align="left">code</th>
 <th align="left">type</th>
@@ -344,8 +145,9 @@ kable(head(toc))
 <th align="left">data.end</th>
 <th align="left">values</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td align="left">Database by themes</td>
 <td align="left">data</td>
 <td align="left">folder</td>
@@ -355,7 +157,7 @@ kable(head(toc))
 <td align="left"></td>
 <td align="left">NA</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">General and regional statistics</td>
 <td align="left">general</td>
 <td align="left">folder</td>
@@ -365,7 +167,7 @@ kable(head(toc))
 <td align="left"></td>
 <td align="left">NA</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">European and national indicators for short-term analysis</td>
 <td align="left">euroind</td>
 <td align="left">folder</td>
@@ -375,7 +177,7 @@ kable(head(toc))
 <td align="left"></td>
 <td align="left">NA</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Business and consumer surveys (source: DG ECFIN)</td>
 <td align="left">ei_bcs</td>
 <td align="left">folder</td>
@@ -385,7 +187,7 @@ kable(head(toc))
 <td align="left"></td>
 <td align="left">NA</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">Consumer surveys (source: DG ECFIN)</td>
 <td align="left">ei_bcs_cs</td>
 <td align="left">folder</td>
@@ -395,26 +197,24 @@ kable(head(toc))
 <td align="left"></td>
 <td align="left">NA</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Consumers - monthly data</td>
 <td align="left">ei_bsco_m</td>
 <td align="left">dataset</td>
-<td align="left">26.02.2016</td>
-<td align="left">26.02.2016</td>
+<td align="left">28.07.2016</td>
+<td align="left">28.07.2016</td>
 <td align="left">1985M01</td>
-<td align="left">2016M02</td>
+<td align="left">2016M07</td>
 <td align="left">NA</td>
 </tr>
-</tbody></table>
-
-<p>With <code>search_eurostat()</code> you can search the table of contents for particular patterns, e.g. all datasets related to <em>passenger transport</em>. The kable function to produces nice markdown output. Note that with the <code>type</code> argument of this function you could restrict the search to for instance datasets or tables.</p>
-
-<pre><code class="r"># info about passengers
-kable(head(search_eurostat(&quot;passenger transport&quot;)))
-</code></pre>
-
-<table><thead>
-<tr>
+</tbody>
+</table>
+<p>With <code>search_eurostat()</code> you can search the table of contents for particular patterns, e.g. all datasets related to <em>passenger transport</em>. The kable function to produces nice markdown output. Note that with the <code>type</code> argument of this function you could restrict the search to for instance datasets or tables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># info about passengers</span>
+<span class="kw">kable</span>(<span class="kw">head</span>(<span class="kw">search_eurostat</span>(<span class="st">&quot;passenger transport&quot;</span>)))</code></pre></div>
+<table>
+<thead>
+<tr class="header">
 <th align="left"></th>
 <th align="left">title</th>
 <th align="left">code</th>
@@ -425,587 +225,548 @@ kable(head(search_eurostat(&quot;passenger transport&quot;)))
 <th align="left">data.end</th>
 <th align="left">values</th>
 </tr>
-</thead><tbody>
-<tr>
-<td align="left">5587</td>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">5688</td>
 <td align="left">Volume of passenger transport relative to GDP</td>
 <td align="left">tran_hv_pstra</td>
 <td align="left">dataset</td>
-<td align="left">05.06.2015</td>
-<td align="left">04.06.2015</td>
-<td align="left">1995</td>
-<td align="left">2013</td>
+<td align="left">03.08.2016</td>
+<td align="left">03.08.2016</td>
+<td align="left">2000</td>
+<td align="left">2014</td>
 <td align="left">NA</td>
 </tr>
-<tr>
-<td align="left">5588</td>
+<tr class="even">
+<td align="left">5689</td>
 <td align="left">Modal split of passenger transport</td>
 <td align="left">tran_hv_psmod</td>
 <td align="left">dataset</td>
-<td align="left">05.06.2015</td>
-<td align="left">05.06.2015</td>
+<td align="left">03.08.2016</td>
+<td align="left">02.08.2016</td>
 <td align="left">1990</td>
-<td align="left">2013</td>
+<td align="left">2014</td>
 <td align="left">NA</td>
 </tr>
-<tr>
-<td align="left">5627</td>
+<tr class="odd">
+<td align="left">5742</td>
 <td align="left">Railway transport - Total annual passenger transport (1 000 pass., million pkm)</td>
 <td align="left">rail_pa_total</td>
 <td align="left">dataset</td>
-<td align="left">03.03.2016</td>
-<td align="left">29.10.2015</td>
+<td align="left">09.08.2016</td>
+<td align="left">26.05.2016</td>
 <td align="left">2004</td>
-<td align="left">2014</td>
+<td align="left">2015</td>
 <td align="left">NA</td>
 </tr>
-<tr>
-<td align="left">5631</td>
+<tr class="even">
+<td align="left">5746</td>
 <td align="left">International railway passenger transport from the reporting country to the country of disembarkation (1 000 passengers)</td>
 <td align="left">rail_pa_intgong</td>
 <td align="left">dataset</td>
-<td align="left">03.03.2016</td>
-<td align="left">19.02.2016</td>
-<td align="left">2014</td>
-<td align="left">2014</td>
+<td align="left">09.08.2016</td>
+<td align="left">26.05.2016</td>
+<td align="left">2002</td>
+<td align="left">2015</td>
 <td align="left">NA</td>
 </tr>
-<tr>
-<td align="left">5632</td>
+<tr class="odd">
+<td align="left">5747</td>
 <td align="left">International railway passenger transport from the country of embarkation to the reporting country (1 000 passengers)</td>
 <td align="left">rail_pa_intcmng</td>
 <td align="left">dataset</td>
-<td align="left">03.03.2016</td>
-<td align="left">19.02.2016</td>
-<td align="left">2014</td>
-<td align="left">2014</td>
+<td align="left">09.08.2016</td>
+<td align="left">26.05.2016</td>
+<td align="left">2002</td>
+<td align="left">2015</td>
 <td align="left">NA</td>
 </tr>
-<tr>
-<td align="left">5981</td>
+<tr class="even">
+<td align="left">6097</td>
 <td align="left">Air passenger transport by reporting country</td>
 <td align="left">avia_paoc</td>
 <td align="left">dataset</td>
-<td align="left">23.02.2016</td>
-<td align="left">13.01.2016</td>
+<td align="left">15.07.2016</td>
+<td align="left">14.07.2016</td>
 <td align="left">1993</td>
-<td align="left">2015Q3</td>
+<td align="left">2016Q1</td>
 <td align="left">NA</td>
 </tr>
-</tbody></table>
-
-<p>Codes for the dataset can be searched also from the <a href="http://ec.europa.eu/eurostat/data/database">Eurostat
-database</a>. The Eurostat
-database gives codes in the Data Navigation Tree after every dataset
-in parenthesis.</p>
-
-<h2><a name="download"></a>Downloading data</h2>
-
-<p>The package supports two of the Eurostats download methods: the bulk download 
-facility and the Web Services&#39; JSON API. The bulk download facility is the 
-fastest method to download whole datasets. It is also often the only way as 
-the JSON API has limitation of maximum 50 sub-indicators at a time and 
-whole datasets usually exceeds that. To download only a small section of the 
-dataset the JSON API is faster, as it allows to make a data selection 
-before downloading.</p>
-
-<p>A user does not usually have to bother with methods, as both are used via main
-function <code>get_eurostat()</code>. If only the table id is given, the whole table is 
-downloaded from the bulk download facility. If also filters are defined 
-the JSON API is used.</p>
-
-<p>Here an example of indicator <a href="http://ec.europa.eu/eurostat/tgm/table.do?tab=table&amp;init=1&amp;plugin=1&amp;language=en&amp;pcode=tsdtr210">Modal split of passenger transport</a>. This is the percentage share of each mode of transport in total inland transport, expressed in passenger-kilometres (pkm) based on transport by passenger cars, buses and coaches, and trains. All data should be based on movements on national territory, regardless of the nationality of the vehicle. However, the data collection is not harmonized at the EU level. </p>
-
-<p>Pick and print the id of the data set to download: </p>
-
-<pre><code class="r">id &lt;- search_eurostat(&quot;Modal split of passenger transport&quot;, 
-                         type = &quot;table&quot;)$code[1]
-print(id)
-</code></pre>
-
-<p>[1] &ldquo;tsdtr210&rdquo;</p>
-
-<p>Get the whole corresponding table. As the table is annual data, it is more
-convient to use a numeric time variable than use the default date format:</p>
-
-<pre><code class="r">dat &lt;- get_eurostat(id, time_format = &quot;num&quot;)
-</code></pre>
-
+</tbody>
+</table>
+<p>Codes for the dataset can be searched also from the <a href="http://ec.europa.eu/eurostat/data/database">Eurostat database</a>. The Eurostat database gives codes in the Data Navigation Tree after every dataset in parenthesis.</p>
+</div>
+<div id="downloading-data" class="section level1">
+<h1>Downloading data</h1>
+<p>The package supports two of the Eurostats download methods: the bulk download facility and the Web Services’ JSON API. The bulk download facility is the fastest method to download whole datasets. It is also often the only way as the JSON API has limitation of maximum 50 sub-indicators at a time and whole datasets usually exceeds that. To download only a small section of the dataset the JSON API is faster, as it allows to make a data selection before downloading.</p>
+<p>A user does not usually have to bother with methods, as both are used via main function <code>get_eurostat()</code>. If only the table id is given, the whole table is downloaded from the bulk download facility. If also filters are defined the JSON API is used.</p>
+<p>Here an example of indicator <a href="http://ec.europa.eu/eurostat/tgm/table.do?tab=table&amp;init=1&amp;plugin=1&amp;language=en&amp;pcode=tsdtr210">Modal split of passenger transport</a>. This is the percentage share of each mode of transport in total inland transport, expressed in passenger-kilometres (pkm) based on transport by passenger cars, buses and coaches, and trains. All data should be based on movements on national territory, regardless of the nationality of the vehicle. However, the data collection is not harmonized at the EU level.</p>
+<p>Pick and print the id of the data set to download:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id &lt;-<span class="st"> </span><span class="kw">search_eurostat</span>(<span class="st">&quot;Modal split of passenger transport&quot;</span>, 
+                         <span class="dt">type =</span> <span class="st">&quot;table&quot;</span>)$code[<span class="dv">1</span>]
+<span class="kw">print</span>(id)</code></pre></div>
+<p>[1] “tsdtr210”</p>
+<p>Get the whole corresponding table. As the table is annual data, it is more convient to use a numeric time variable than use the default date format:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span><span class="kw">get_eurostat</span>(id, <span class="dt">time_format =</span> <span class="st">&quot;num&quot;</span>)</code></pre></div>
 <p>Investigate the structure of the downloaded data set:</p>
-
-<pre><code class="r">str(dat)
-</code></pre>
-
-<pre><code>## &#39;data.frame&#39;:    2520 obs. of  5 variables:
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(dat)</code></pre></div>
+<pre><code>## 'data.frame':    2326 obs. of  5 variables:
 ##  $ unit   : Factor w/ 1 level &quot;PC&quot;: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ vehicle: Factor w/ 3 levels &quot;BUS_TOT&quot;,&quot;CAR&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ geo    : Factor w/ 35 levels &quot;AT&quot;,&quot;BE&quot;,&quot;BG&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
-##  $ time   : num  2013 2013 2013 2013 2013 ...
-##  $ values : num  9.8 15.2 16.2 5.1 18.5 17.9 5.8 9.8 14.4 17.8 ...
-</code></pre>
-
-<pre><code class="r">kable(head(dat))
-</code></pre>
-
-<table><thead>
-<tr>
+##  $ geo    : Factor w/ 35 levels &quot;AT&quot;,&quot;BE&quot;,&quot;CH&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
+##  $ time   : num  1990 1990 1990 1990 1990 1990 1990 1990 1990 1990 ...
+##  $ values : num  11 10.6 3.7 9.1 11.3 32.4 14.9 13.5 6 24.8 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">head</span>(dat))</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
 <th align="left">unit</th>
 <th align="left">vehicle</th>
 <th align="left">geo</th>
 <th align="right">time</th>
 <th align="right">values</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
 <td align="left">PC</td>
 <td align="left">BUS_TOT</td>
 <td align="left">AT</td>
-<td align="right">2013</td>
-<td align="right">9.8</td>
+<td align="right">1990</td>
+<td align="right">11.0</td>
 </tr>
-<tr>
+<tr class="even">
+<td align="left">2</td>
 <td align="left">PC</td>
 <td align="left">BUS_TOT</td>
 <td align="left">BE</td>
-<td align="right">2013</td>
-<td align="right">15.2</td>
+<td align="right">1990</td>
+<td align="right">10.6</td>
 </tr>
-<tr>
-<td align="left">PC</td>
-<td align="left">BUS_TOT</td>
-<td align="left">BG</td>
-<td align="right">2013</td>
-<td align="right">16.2</td>
-</tr>
-<tr>
+<tr class="odd">
+<td align="left">4</td>
 <td align="left">PC</td>
 <td align="left">BUS_TOT</td>
 <td align="left">CH</td>
-<td align="right">2013</td>
-<td align="right">5.1</td>
+<td align="right">1990</td>
+<td align="right">3.7</td>
 </tr>
-<tr>
+<tr class="even">
+<td align="left">7</td>
 <td align="left">PC</td>
 <td align="left">BUS_TOT</td>
-<td align="left">CY</td>
-<td align="right">2013</td>
-<td align="right">18.5</td>
+<td align="left">DE</td>
+<td align="right">1990</td>
+<td align="right">9.1</td>
 </tr>
-<tr>
+<tr class="odd">
+<td align="left">8</td>
 <td align="left">PC</td>
 <td align="left">BUS_TOT</td>
-<td align="left">CZ</td>
-<td align="right">2013</td>
-<td align="right">17.9</td>
+<td align="left">DK</td>
+<td align="right">1990</td>
+<td align="right">11.3</td>
 </tr>
-</tbody></table>
-
-<p>Or you can get only a part of the dataset by defining <code>filters</code> argument. It
-should be named list, where names corresponds to variable names (lower case) and
-values are vectors of codes corresponding desidered series (upper case). For
-time variable, in addition to a <code>time</code>, also a <code>sinceTimePeriod</code> 
-and a <code>lastTimePeriod</code> can be used.</p>
-
-<pre><code class="r">dat2 &lt;- get_eurostat(id, filters = list(geo = c(&quot;EU28&quot;, &quot;FI&quot;), lastTimePeriod=1), time_format = &quot;num&quot;)
-kable(dat2)
-</code></pre>
-
-<table><thead>
-<tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="left">PC</td>
+<td align="left">BUS_TOT</td>
+<td align="left">EL</td>
+<td align="right">1990</td>
+<td align="right">32.4</td>
+</tr>
+</tbody>
+</table>
+<p>Or you can get only a part of the dataset by defining <code>filters</code> argument. It should be named list, where names corresponds to variable names (lower case) and values are vectors of codes corresponding desidered series (upper case). For time variable, in addition to a <code>time</code>, also a <code>sinceTimePeriod</code> and a <code>lastTimePeriod</code> can be used.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat2 &lt;-<span class="st"> </span><span class="kw">get_eurostat</span>(id, <span class="dt">filters =</span> <span class="kw">list</span>(<span class="dt">geo =</span> <span class="kw">c</span>(<span class="st">&quot;EU28&quot;</span>, <span class="st">&quot;FI&quot;</span>), <span class="dt">lastTimePeriod=</span><span class="dv">1</span>), <span class="dt">time_format =</span> <span class="st">&quot;num&quot;</span>)
+<span class="kw">kable</span>(dat2)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
 <th align="left">unit</th>
 <th align="left">vehicle</th>
 <th align="left">geo</th>
 <th align="right">time</th>
 <th align="right">values</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td align="left">PC</td>
 <td align="left">BUS_TOT</td>
 <td align="left">EU28</td>
-<td align="right">2013</td>
-<td align="right">9.2</td>
+<td align="right">2014</td>
+<td align="right">9.1</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">PC</td>
 <td align="left">BUS_TOT</td>
 <td align="left">FI</td>
-<td align="right">2013</td>
+<td align="right">2014</td>
 <td align="right">9.8</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">PC</td>
 <td align="left">CAR</td>
 <td align="left">EU28</td>
-<td align="right">2013</td>
-<td align="right">83.2</td>
+<td align="right">2014</td>
+<td align="right">83.4</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">PC</td>
 <td align="left">CAR</td>
 <td align="left">FI</td>
-<td align="right">2013</td>
-<td align="right">84.9</td>
+<td align="right">2014</td>
+<td align="right">85.2</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">PC</td>
 <td align="left">TRN</td>
 <td align="left">EU28</td>
-<td align="right">2013</td>
+<td align="right">2014</td>
 <td align="right">7.6</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">PC</td>
 <td align="left">TRN</td>
 <td align="left">FI</td>
-<td align="right">2013</td>
-<td align="right">5.3</td>
+<td align="right">2014</td>
+<td align="right">5.0</td>
 </tr>
-</tbody></table>
-
-<h3><a name="labeling"></a>Replacing codes with labels</h3>
-
-<p>By default variables are returned as Eurostat codes, but to get human-readable 
-labels instead, use a <code>type = &quot;label&quot;</code> argument.  </p>
-
-<pre><code class="r">datl2 &lt;- get_eurostat(id, filters = list(geo = c(&quot;EU28&quot;, &quot;FI&quot;), 
-                                         lastTimePeriod = 1), 
-                      type = &quot;label&quot;, time_format = &quot;num&quot;)
-kable(head(datl2))
-</code></pre>
-
-<table><thead>
-<tr>
+</tbody>
+</table>
+<div id="replacing-codes-with-labels" class="section level2">
+<h2>Replacing codes with labels</h2>
+<p>By default variables are returned as Eurostat codes, but to get human-readable labels instead, use a <code>type = &quot;label&quot;</code> argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">datl2 &lt;-<span class="st"> </span><span class="kw">get_eurostat</span>(id, <span class="dt">filters =</span> <span class="kw">list</span>(<span class="dt">geo =</span> <span class="kw">c</span>(<span class="st">&quot;EU28&quot;</span>, <span class="st">&quot;FI&quot;</span>), 
+                                         <span class="dt">lastTimePeriod =</span> <span class="dv">1</span>), 
+                      <span class="dt">type =</span> <span class="st">&quot;label&quot;</span>, <span class="dt">time_format =</span> <span class="st">&quot;num&quot;</span>)
+<span class="kw">kable</span>(<span class="kw">head</span>(datl2))</code></pre></div>
+<table>
+<thead>
+<tr class="header">
 <th align="left">unit</th>
 <th align="left">vehicle</th>
 <th align="left">geo</th>
 <th align="right">time</th>
 <th align="right">values</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td align="left">Percentage</td>
 <td align="left">Motor coaches, buses and trolley buses</td>
 <td align="left">European Union (28 countries)</td>
-<td align="right">2013</td>
-<td align="right">9.2</td>
+<td align="right">2014</td>
+<td align="right">9.1</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Percentage</td>
 <td align="left">Motor coaches, buses and trolley buses</td>
 <td align="left">Finland</td>
-<td align="right">2013</td>
+<td align="right">2014</td>
 <td align="right">9.8</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">Percentage</td>
 <td align="left">Passenger cars</td>
 <td align="left">European Union (28 countries)</td>
-<td align="right">2013</td>
-<td align="right">83.2</td>
+<td align="right">2014</td>
+<td align="right">83.4</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Percentage</td>
 <td align="left">Passenger cars</td>
 <td align="left">Finland</td>
-<td align="right">2013</td>
-<td align="right">84.9</td>
+<td align="right">2014</td>
+<td align="right">85.2</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">Percentage</td>
 <td align="left">Trains</td>
 <td align="left">European Union (28 countries)</td>
-<td align="right">2013</td>
+<td align="right">2014</td>
 <td align="right">7.6</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Percentage</td>
 <td align="left">Trains</td>
 <td align="left">Finland</td>
-<td align="right">2013</td>
-<td align="right">5.3</td>
+<td align="right">2014</td>
+<td align="right">5.0</td>
 </tr>
-</tbody></table>
-
-<p>Eurostat codes can be replaced also after downloadind with human-readable labels
-using a function <code>label_eurostat()</code>. It replaces the eurostat codes based on
-definitions from Eurostat dictionaries. </p>
-
-<pre><code class="r">datl &lt;- label_eurostat(dat)
-kable(head(datl))
-</code></pre>
-
-<table><thead>
-<tr>
+</tbody>
+</table>
+<p>Eurostat codes can be replaced also after downloadind with human-readable labels using a function <code>label_eurostat()</code>. It replaces the eurostat codes based on definitions from Eurostat dictionaries.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">datl &lt;-<span class="st"> </span><span class="kw">label_eurostat</span>(dat)
+<span class="kw">kable</span>(<span class="kw">head</span>(datl))</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
 <th align="left">unit</th>
 <th align="left">vehicle</th>
 <th align="left">geo</th>
 <th align="right">time</th>
 <th align="right">values</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
 <td align="left">Percentage</td>
 <td align="left">Motor coaches, buses and trolley buses</td>
 <td align="left">Austria</td>
-<td align="right">2013</td>
-<td align="right">9.8</td>
+<td align="right">1990</td>
+<td align="right">11.0</td>
 </tr>
-<tr>
+<tr class="even">
+<td align="left">2</td>
 <td align="left">Percentage</td>
 <td align="left">Motor coaches, buses and trolley buses</td>
 <td align="left">Belgium</td>
-<td align="right">2013</td>
-<td align="right">15.2</td>
+<td align="right">1990</td>
+<td align="right">10.6</td>
 </tr>
-<tr>
-<td align="left">Percentage</td>
-<td align="left">Motor coaches, buses and trolley buses</td>
-<td align="left">Bulgaria</td>
-<td align="right">2013</td>
-<td align="right">16.2</td>
-</tr>
-<tr>
+<tr class="odd">
+<td align="left">4</td>
 <td align="left">Percentage</td>
 <td align="left">Motor coaches, buses and trolley buses</td>
 <td align="left">Switzerland</td>
-<td align="right">2013</td>
-<td align="right">5.1</td>
+<td align="right">1990</td>
+<td align="right">3.7</td>
 </tr>
-<tr>
+<tr class="even">
+<td align="left">7</td>
 <td align="left">Percentage</td>
 <td align="left">Motor coaches, buses and trolley buses</td>
-<td align="left">Cyprus</td>
-<td align="right">2013</td>
-<td align="right">18.5</td>
+<td align="left">Germany (until 1990 former territory of the FRG)</td>
+<td align="right">1990</td>
+<td align="right">9.1</td>
 </tr>
-<tr>
+<tr class="odd">
+<td align="left">8</td>
 <td align="left">Percentage</td>
 <td align="left">Motor coaches, buses and trolley buses</td>
-<td align="left">Czech Republic</td>
-<td align="right">2013</td>
-<td align="right">17.9</td>
+<td align="left">Denmark</td>
+<td align="right">1990</td>
+<td align="right">11.3</td>
 </tr>
-</tbody></table>
-
-<p>The <code>label_eurostat()</code> allows also 
-conversion of individual variable vectors or variable names. </p>
-
-<pre><code class="r">label_eurostat_vars(names(datl))
-</code></pre>
-
-<pre><code>## [1] &quot;Unit of measure&quot;                                                                     
-## [2] &quot;Vehicles&quot;                                                                            
-## [3] &quot;Geopolitical entity (reporting)&quot;                                                     
-## [4] &quot;Period of time (a=annual, q=quarterly, m=monthly, d=daily, c=cumulated from January)&quot;
-</code></pre>
-
-<p>Vehicle information has 3 levels. They are:</p>
-
-<pre><code class="r">levels(datl$vehicle)
-</code></pre>
-
-<pre><code>## [1] &quot;Motor coaches, buses and trolley buses&quot;
-## [2] &quot;Passenger cars&quot;                        
-## [3] &quot;Trains&quot;
-</code></pre>
-
-<h2><a name="select"></a>Selecting and modifying data</h2>
-
-<h3>EFTA, Eurozone, EU and EU candidate countries</h3>
-
+<tr class="even">
+<td align="left">10</td>
+<td align="left">Percentage</td>
+<td align="left">Motor coaches, buses and trolley buses</td>
+<td align="left">Greece</td>
+<td align="right">1990</td>
+<td align="right">32.4</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>label_eurostat()</code> allows also conversion of individual variable vectors or variable names.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">label_eurostat_vars</span>(<span class="kw">names</span>(datl))</code></pre></div>
+<p>Vehicle information has 3 levels. You can check them now with:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">levels</span>(datl$vehicle)</code></pre></div>
+</div>
+</div>
+<div id="selecting-and-modifying-data" class="section level1">
+<h1>Selecting and modifying data</h1>
+<div id="efta-eurozone-eu-and-eu-candidate-countries" class="section level2">
+<h2>EFTA, Eurozone, EU and EU candidate countries</h2>
 <p>To facilititate fast plotting of standard European geographic areas, the package provides ready-made lists of the country codes used in the eurostat database for EFTA (efta_countries), Euro area (ea_countries), EU (eu_countries) and EU candidate countries (candidate_countries). This helps to select specific groups of countries for closer investigation. For conversions with other standard country coding systems, see the <a href="...">countrycode</a> R package. To retrieve the country code list for EFTA, for instance, use:</p>
-
-<pre><code class="r">data(efta_countries)
-kable(efta_countries)
-</code></pre>
-
-<table><thead>
-<tr>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(efta_countries)
+<span class="kw">kable</span>(efta_countries)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
 <th align="left">code</th>
 <th align="left">name</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td align="left">IS</td>
 <td align="left">Iceland</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">LI</td>
 <td align="left">Liechtenstein</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">NO</td>
 <td align="left">Norway</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">CH</td>
 <td align="left">Switzerland</td>
 </tr>
-</tbody></table>
-
-<h3>EU data from 2012 in all vehicles:</h3>
-
-<pre><code class="r">dat_eu12 &lt;- subset(datl, geo == &quot;European Union (28 countries)&quot; &amp; time == 2012)
-kable(dat_eu12, row.names = FALSE)
-</code></pre>
-
-<table><thead>
-<tr>
+</tbody>
+</table>
+</div>
+<div id="eu-data-from-2012-in-all-vehicles" class="section level2">
+<h2>EU data from 2012 in all vehicles:</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_eu12 &lt;-<span class="st"> </span><span class="kw">subset</span>(datl, geo ==<span class="st"> &quot;European Union (28 countries)&quot;</span> &amp;<span class="st"> </span>time ==<span class="st"> </span><span class="dv">2012</span>)
+<span class="kw">kable</span>(dat_eu12, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
 <th align="left">unit</th>
 <th align="left">vehicle</th>
 <th align="left">geo</th>
 <th align="right">time</th>
 <th align="right">values</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td align="left">Percentage</td>
 <td align="left">Motor coaches, buses and trolley buses</td>
 <td align="left">European Union (28 countries)</td>
 <td align="right">2012</td>
 <td align="right">9.3</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Percentage</td>
 <td align="left">Passenger cars</td>
 <td align="left">European Union (28 countries)</td>
 <td align="right">2012</td>
 <td align="right">83.0</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">Percentage</td>
 <td align="left">Trains</td>
 <td align="left">European Union (28 countries)</td>
 <td align="right">2012</td>
-<td align="right">7.6</td>
+<td align="right">7.7</td>
 </tr>
-</tbody></table>
-
-<h3>EU data from 2000 - 2012 with vehicle types as variables:</h3>
-
+</tbody>
+</table>
+</div>
+<div id="eu-data-from-2000---2012-with-vehicle-types-as-variables" class="section level2">
+<h2>EU data from 2000 - 2012 with vehicle types as variables:</h2>
 <p>Reshaping the data is best done with <code>spread()</code> in <code>tidyr</code>.</p>
-
-<pre><code class="r">library(&quot;tidyr&quot;)
-dat_eu_0012 &lt;- subset(dat, geo == &quot;EU28&quot; &amp; time %in% 2000:2012)
-dat_eu_0012_wide &lt;- spread(dat_eu_0012, vehicle, values)
-kable(subset(dat_eu_0012_wide, select = -geo), row.names = FALSE)
-</code></pre>
-
-<table><thead>
-<tr>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyr&quot;</span>)
+dat_eu_0012 &lt;-<span class="st"> </span><span class="kw">subset</span>(dat, geo ==<span class="st"> &quot;EU28&quot;</span> &amp;<span class="st"> </span>time %in%<span class="st"> </span><span class="dv">2000</span>:<span class="dv">2012</span>)
+dat_eu_0012_wide &lt;-<span class="st"> </span><span class="kw">spread</span>(dat_eu_0012, vehicle, values)
+<span class="kw">kable</span>(<span class="kw">subset</span>(dat_eu_0012_wide, <span class="dt">select =</span> -geo), <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
 <th align="left">unit</th>
 <th align="right">time</th>
 <th align="right">BUS_TOT</th>
 <th align="right">CAR</th>
 <th align="right">TRN</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td align="left">PC</td>
 <td align="right">2000</td>
 <td align="right">10.4</td>
 <td align="right">82.4</td>
 <td align="right">7.2</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">PC</td>
 <td align="right">2001</td>
 <td align="right">10.2</td>
 <td align="right">82.7</td>
 <td align="right">7.1</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">PC</td>
 <td align="right">2002</td>
 <td align="right">9.9</td>
 <td align="right">83.3</td>
 <td align="right">6.8</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">PC</td>
 <td align="right">2003</td>
 <td align="right">9.9</td>
 <td align="right">83.5</td>
 <td align="right">6.7</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">PC</td>
 <td align="right">2004</td>
 <td align="right">9.8</td>
 <td align="right">83.4</td>
 <td align="right">6.8</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">PC</td>
 <td align="right">2005</td>
 <td align="right">9.9</td>
 <td align="right">83.2</td>
 <td align="right">6.9</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">PC</td>
 <td align="right">2006</td>
 <td align="right">9.7</td>
 <td align="right">83.2</td>
 <td align="right">7.1</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">PC</td>
 <td align="right">2007</td>
 <td align="right">9.8</td>
 <td align="right">83.1</td>
 <td align="right">7.2</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">PC</td>
 <td align="right">2008</td>
 <td align="right">9.7</td>
 <td align="right">83.1</td>
 <td align="right">7.3</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">PC</td>
 <td align="right">2009</td>
 <td align="right">9.2</td>
 <td align="right">83.7</td>
 <td align="right">7.1</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">PC</td>
 <td align="right">2010</td>
 <td align="right">9.2</td>
 <td align="right">83.6</td>
 <td align="right">7.2</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">PC</td>
 <td align="right">2011</td>
 <td align="right">9.2</td>
 <td align="right">83.4</td>
 <td align="right">7.3</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">PC</td>
 <td align="right">2012</td>
 <td align="right">9.3</td>
 <td align="right">83.0</td>
-<td align="right">7.6</td>
+<td align="right">7.7</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
+<div id="train-passengers-for-selected-eu-countries-in-2000---2012" class="section level2">
+<h2>Train passengers for selected EU countries in 2000 - 2012</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat_trains &lt;-<span class="st"> </span><span class="kw">subset</span>(datl, geo %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Austria&quot;</span>, <span class="st">&quot;Belgium&quot;</span>, <span class="st">&quot;Finland&quot;</span>, <span class="st">&quot;Sweden&quot;</span>)
+                     &amp;<span class="st"> </span>time %in%<span class="st"> </span><span class="dv">2000</span>:<span class="dv">2012</span> 
+                     &amp;<span class="st"> </span>vehicle ==<span class="st"> &quot;Trains&quot;</span>)
 
-<h3>Train passengers for selected EU countries in 2000 - 2012</h3>
-
-<pre><code class="r">dat_trains &lt;- subset(datl, geo %in% c(&quot;Austria&quot;, &quot;Belgium&quot;, &quot;Finland&quot;, &quot;Sweden&quot;)
-                     &amp; time %in% 2000:2012 
-                     &amp; vehicle == &quot;Trains&quot;)
-
-dat_trains_wide &lt;- spread(dat_trains, geo, values) 
-kable(subset(dat_trains_wide, select = -vehicle), row.names = FALSE)
-</code></pre>
-
-<table><thead>
-<tr>
+dat_trains_wide &lt;-<span class="st"> </span><span class="kw">spread</span>(dat_trains, geo, values) 
+<span class="kw">kable</span>(<span class="kw">subset</span>(dat_trains_wide, <span class="dt">select =</span> -vehicle), <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
 <th align="left">unit</th>
 <th align="right">time</th>
 <th align="right">Austria</th>
@@ -1013,16 +774,17 @@ kable(subset(dat_trains_wide, select = -vehicle), row.names = FALSE)
 <th align="right">Finland</th>
 <th align="right">Sweden</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td align="left">Percentage</td>
 <td align="right">2000</td>
-<td align="right">9.8</td>
+<td align="right">9.7</td>
 <td align="right">6.3</td>
 <td align="right">5.1</td>
 <td align="right">7.5</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Percentage</td>
 <td align="right">2001</td>
 <td align="right">9.7</td>
@@ -1030,7 +792,7 @@ kable(subset(dat_trains_wide, select = -vehicle), row.names = FALSE)
 <td align="right">4.8</td>
 <td align="right">7.9</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">Percentage</td>
 <td align="right">2002</td>
 <td align="right">9.7</td>
@@ -1038,7 +800,7 @@ kable(subset(dat_trains_wide, select = -vehicle), row.names = FALSE)
 <td align="right">4.8</td>
 <td align="right">7.8</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Percentage</td>
 <td align="right">2003</td>
 <td align="right">9.5</td>
@@ -1046,15 +808,15 @@ kable(subset(dat_trains_wide, select = -vehicle), row.names = FALSE)
 <td align="right">4.7</td>
 <td align="right">7.7</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">Percentage</td>
 <td align="right">2004</td>
-<td align="right">9.5</td>
+<td align="right">9.4</td>
 <td align="right">7.1</td>
 <td align="right">4.7</td>
 <td align="right">7.5</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Percentage</td>
 <td align="right">2005</td>
 <td align="right">9.8</td>
@@ -1062,7 +824,7 @@ kable(subset(dat_trains_wide, select = -vehicle), row.names = FALSE)
 <td align="right">4.8</td>
 <td align="right">7.7</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">Percentage</td>
 <td align="right">2006</td>
 <td align="right">10.0</td>
@@ -1070,15 +832,15 @@ kable(subset(dat_trains_wide, select = -vehicle), row.names = FALSE)
 <td align="right">4.8</td>
 <td align="right">8.3</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Percentage</td>
 <td align="right">2007</td>
-<td align="right">10.1</td>
+<td align="right">10.0</td>
 <td align="right">7.1</td>
 <td align="right">5.0</td>
 <td align="right">8.7</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">Percentage</td>
 <td align="right">2008</td>
 <td align="right">11.1</td>
@@ -1086,7 +848,7 @@ kable(subset(dat_trains_wide, select = -vehicle), row.names = FALSE)
 <td align="right">5.4</td>
 <td align="right">9.4</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Percentage</td>
 <td align="right">2009</td>
 <td align="right">11.1</td>
@@ -1094,7 +856,7 @@ kable(subset(dat_trains_wide, select = -vehicle), row.names = FALSE)
 <td align="right">5.1</td>
 <td align="right">9.5</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">Percentage</td>
 <td align="right">2010</td>
 <td align="right">11.0</td>
@@ -1102,68 +864,53 @@ kable(subset(dat_trains_wide, select = -vehicle), row.names = FALSE)
 <td align="right">5.2</td>
 <td align="right">9.4</td>
 </tr>
-<tr>
+<tr class="even">
 <td align="left">Percentage</td>
 <td align="right">2011</td>
-<td align="right">11.0</td>
+<td align="right">11.3</td>
 <td align="right">7.7</td>
 <td align="right">5.0</td>
 <td align="right">8.8</td>
 </tr>
-<tr>
+<tr class="odd">
 <td align="left">Percentage</td>
 <td align="right">2012</td>
-<td align="right">11.5</td>
-<td align="right">7.4</td>
+<td align="right">11.8</td>
+<td align="right">7.8</td>
 <td align="right">5.3</td>
 <td align="right">9.1</td>
 </tr>
-</tbody></table>
-
-<h2><a name="visualization"></a>Visualization</h2>
-
+</tbody>
+</table>
+</div>
+</div>
+<div id="visualization" class="section level1">
+<h1>Visualization</h1>
 <p>Visualizing train passenger data with <code>ggplot2</code>:</p>
-
-<pre><code class="r">library(ggplot2)
-p &lt;- ggplot(dat_trains, aes(x = time, y = values, colour = geo)) 
-p &lt;- p + geom_line()
-print(p)
-</code></pre>
-
-<p><img src="data:image/png;base64,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" alt="plot of chunk trains_plot"/></p>
-
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(dat_trains, <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> values, <span class="dt">colour =</span> geo)) 
+p &lt;-<span class="st"> </span>p +<span class="st"> </span><span class="kw">geom_line</span>()
+<span class="kw">print</span>(p)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <p><a name="triangle"></a><strong>Triangle plot</strong></p>
-
 <p>Triangle plot on passenger transport distributions with 2012 data for all countries with data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)
 
-<pre><code class="r">library(tidyr)
+transports &lt;-<span class="st"> </span><span class="kw">spread</span>(<span class="kw">subset</span>(dat, time ==<span class="st"> </span><span class="dv">2012</span>, <span class="dt">select =</span> <span class="kw">c</span>(geo, vehicle, values)), vehicle, values)
 
-transports &lt;- spread(subset(dat, time == 2012, select = c(geo, vehicle, values)), vehicle, values)
+transports &lt;-<span class="st"> </span><span class="kw">na.omit</span>(transports)
 
-transports &lt;- na.omit(transports)
-
-# triangle plot
-library(plotrix)
-triax.plot(transports[, -1], show.grid = TRUE, 
-           label.points = TRUE, point.labels = transports$geo, 
-           pch = 19)
-</code></pre>
-
-<p><img src="data:image/png;base64,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" alt="plot of chunk plotGallery"/></p>
-
-<p>For further examples, see also the <a href="...">blog post on the eurostat R
-package</a>.</p>
-
-<h2><a name="citing"></a>Citing the package</h2>
-
-<p><strong>Citing the Data</strong> Kindly cite <a href="http://ec.europa.eu/eurostat/">Eurostat</a>. </p>
-
-<p><strong>Citing the R tools</strong> This work can be freely used, modified and
-distributed under the BSD-2-clause (modified FreeBSD) license:</p>
-
-<pre><code class="r">citation(&quot;eurostat&quot;)
-</code></pre>
-
+<span class="co"># triangle plot</span>
+<span class="kw">library</span>(plotrix)
+<span class="kw">triax.plot</span>(transports[, -<span class="dv">1</span>], <span class="dt">show.grid =</span> <span class="ot">TRUE</span>, 
+           <span class="dt">label.points =</span> <span class="ot">TRUE</span>, <span class="dt">point.labels =</span> transports$geo, 
+           <span class="dt">pch =</span> <span class="dv">19</span>)</code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAkAAAAJACAMAAABSRCkEAAAACVBMVEUAAAC+vr7////xRzILAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAgAElEQVR4nO2d26KjIAxFwf//6JnTVuWShGhQI+z10FpNIZBdBFQaFgAMhKcdAO8GAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImICBgAgICJiAgYAICAiYgIGACAgImIKAGqCAZ1I9MCKghEVSPTEANyaB6RMKCKpJB7YhAQC1QOxIheaWPTQ+qQeDXgWb60ehe/4FKEAjFe3kUEoKAJAKxVVig+lADPG0BQUIQEE9gtkuzuatw7tKLKAU0eR1OXXiRIHwCG6gYhuLMNPmJigf1wlBWDCqKBvVCU9cLaooE1UIjCig0phhnAjVAQlVLIpp9Enr6+pu+AmgaAvq8oer+QC1QqK6/o+r+QC0QyJffAzpACagEAvbaaXEYlYc6oBAunf7e0IPeQB3UNAX0UxC60QsERCBVyX72Cnjg5wMqoUTUBaqrBDVSItcIej8FE9ZEdu6pTkSNCkHvp2C+msge9aqf+2pVSNAYTcR8VZFqpn7uq10fYcZK45muLjLN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cv1nopmdfDSGDgW0diYap4HktUN+fYwWVThVrrd6eAfyuxSXAtKcBzpWXMfbxXS3JKqaReX8xNMBfDp/ElX/+GAn+p78gq4JUibV5vnwPe8BYHhHaN7hJXALBARMQEDABAQETEBAwAQEBExAQMAEBARMQEDABAQETEBAwAQEBExAQMAEBARMQEDAxMwCIh4wD/uB2nLbuS+O8fgqu4+Dsme3qoZif2W9lLe6z1yBf/R06cYAAAFASURBVMxc/uSxmVQOjDTK3eqHbsZm5vJDQB2YufzyKYy2rh4im7kC/5i5/EkPuOxEU9bZ2wIBfZm5/Mwp7PNeawgCIpm5/IlqiH4PMwqDgHJmLj8jIHSijzBz+SGgDsxc/lQC6fkIE4kHmLn85eWJ5O8D+E707zi1e0pmLz8wAgEBExCQAK62t0HdABMQEDABAQETEBAwAQEBExAQMAEBARMQEDABAQETEBAwAQEBExAQMAEBARMQEDABAQETEBAwAQEBExAQMAEBARMQEDABAQETEBAwAQEBExAQMAEBARMQEDABAQETEBAwAQEBExAQMAEBARMQEDABAQETEBAwAQEBExAQMAEBARMQEDABAQETEBAwAQEBExAQMAEBARMQEDABAQETEBAwAQEBExAQMAEBARMQEDABAQETEBAw8Q+6m+GZMGqjdAAAAABJRU5ErkJggg==" /><!-- --></p>
+<div id="citing-the-package" class="section level2">
+<h2>Citing the package</h2>
+<p><strong>Citing the Data</strong> Kindly cite <a href="http://ec.europa.eu/eurostat/">Eurostat</a>.</p>
+<p><strong>Citing the R tools</strong> This work can be freely used, modified and distributed under the BSD-2-clause (modified FreeBSD) license:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">citation</span>(<span class="st">&quot;eurostat&quot;</span>)</code></pre></div>
 <pre><code>## 
 ## Kindly cite the eurostat R package as follows:
 ## 
@@ -1176,25 +923,22 @@ distributed under the BSD-2-clause (modified FreeBSD) license:</p>
 ##   @Misc{,
 ##     title = {eurostat R package},
 ##     author = {Leo Lahti and Janne Huovari and Markus Kainu and Przemyslaw Biecek},
-##     year = {2014},
+##     year = {2014-2016},
 ##     url = {https://github.com/rOpenGov/eurostat},
-##   }
-</code></pre>
-
-<h2><a name="acknowledgements"></a>Acknowledgements</h2>
-
+##   }</code></pre>
+</div>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1>Acknowledgements</h1>
 <p>We are grateful to all <a href="https://github.com/rOpenGov/eurostat/graphs/contributors">contributors</a> and <a href="http://ec.europa.eu/eurostat/">Eurostat</a> open data portal! This <a href="http://ropengov.github.io">rOpenGov</a> R package is based on earlier CRAN packages <a href="https://cran.r-project.org/package=statfi">statfi</a> and <a href="https://cran.r-project.org/package=SmarterPoland">smarterpoland</a>. The <a href="https://cran.r-project.org/package=datamart">datamart</a> and <a href="https://github.com/Tungurahua/reurostat">reurostat</a> packages seem to develop related Eurostat tools but at the time of writing this tutorial this package seems to be in an experimental stage. The <a href="https://cran.r-project.org/package=quandl">quandl</a> package may also provides access to some versions of eurostat data sets.</p>
-
-<h2><a name="session"></a>Session info</h2>
-
+</div>
+<div id="session-info" class="section level1">
+<h1>Session info</h1>
 <p>This tutorial was created with</p>
-
-<pre><code class="r">sessionInfo()
-</code></pre>
-
-<pre><code>## R version 3.2.2 (2015-08-14)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
+<pre><code>## R version 3.3.1 (2016-06-21)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 15.10
+## Running under: Ubuntu 16.04 LTS
 ## 
 ## locale:
 ##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -1208,18 +952,32 @@ distributed under the BSD-2-clause (modified FreeBSD) license:</p>
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] plotrix_3.6-1   ggplot2_2.0.0   tidyr_0.4.1     rvest_0.3.1    
-## [5] xml2_0.1.2      eurostat_1.2.21 knitr_1.12.3   
+## [1] plotrix_3.6-2   ggplot2_2.1.0   tidyr_0.5.1     rvest_0.3.2    
+## [5] xml2_1.0.0      eurostat_1.2.24 knitr_1.13     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.3      magrittr_1.5     munsell_0.4.3    colorspace_1.2-6
-##  [5] R6_2.1.2         plyr_1.8.3       stringr_1.0.0    httr_1.1.0      
-##  [9] highr_0.5.1      dplyr_0.4.3      tools_3.2.2      parallel_3.2.2  
-## [13] grid_3.2.2       gtable_0.1.2     DBI_0.3.1        digest_0.6.9    
-## [17] assertthat_0.1   formatR_1.2.1    curl_0.9.5       evaluate_0.8    
-## [21] labeling_0.3     stringi_1.0-1    scales_0.3.0     jsonlite_0.9.19
-</code></pre>
+##  [1] Rcpp_0.12.5        magrittr_1.5       munsell_0.4.3     
+##  [4] colorspace_1.2-6   R6_2.1.2           plyr_1.8.4        
+##  [7] stringr_1.0.0      httr_1.2.1         highr_0.6         
+## [10] tools_3.3.1        grid_3.3.1         gtable_0.2.0      
+## [13] htmltools_0.3.5    yaml_2.1.13        digest_0.6.9      
+## [16] assertthat_0.1     tibble_1.1         formatR_1.4       
+## [19] curl_0.9.7         evaluate_0.9       rmarkdown_0.9.6.14
+## [22] labeling_0.3       stringi_1.1.1      scales_0.4.0      
+## [25] jsonlite_1.0</code></pre>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 </body>
-
 </html>
