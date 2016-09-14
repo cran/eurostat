@@ -22,7 +22,7 @@
 #'        frequency. For datasets with multiple time
 #'        frequencies, select the desired time format with:
 #'    	  Y = annual, S = semi-annual, Q = quarterly, M = monthly.
-#'        For all frequencies in same data.frame \code{time_format = "raw"}
+#'        For all frequencies in same data frame \code{time_format = "raw"}
 #'        should be used.
 #' @param cache a logical whether to do caching. Default is \code{TRUE}. Affects 
 #'        only queries from the bulk download facility.
@@ -69,7 +69,7 @@
 #' \url{http://ec.europa.eu/eurostat/data/database}. The Eurostat
 #' database gives codes in the Data Navigation Tree after every dataset
 #' in parenthesis.
-#' @return a data.frame. One column for each dimension in the data and
+#' @return a tibble. One column for each dimension in the data and
 #'         the values column for numerical values.
 #'         The time column for a time dimension. Data from bulk download 
 #'         facility do not include items whose all values are missing. 

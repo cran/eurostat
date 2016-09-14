@@ -10,13 +10,12 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
+# R Tools for Eurostat Open Data
 
-This R package provides tools to access 
-[Eurostat database](http://ec.europa.eu/eurostat/) 
-as part of the [rOpenGov](http://ropengov.github.io) project.
-
-For contact information and source code, see the [github page](https://github.com/rOpenGov/eurostat)
-
+This [rOpenGov](http://ropengov.github.io) R package provides tools to
+access [Eurostat database](http://ec.europa.eu/eurostat/). For contact
+information and source code, see
+the [README](https://github.com/rOpenGov/eurostat).
 
 ```{r setup, include=FALSE}
 # Global options
@@ -26,13 +25,13 @@ opts_chunk$set(fig.path="fig/")
 
 # Installation
 
-Release version:
+Release version [(CRAN)](https://cran.r-project.org/web/packages/eurostat/index.html):
 
 ```{r install, eval=FALSE}
 install.packages("eurostat")
 ```
 
-Development version:
+Development version [(Github)](https://github.com/rOpenGov/eurostat):
 
 ```{r install2, eval=FALSE}
 library(devtools)
@@ -143,17 +142,17 @@ datl2 <- get_eurostat(id, filters = list(geo = c("EU28", "FI"),
 kable(head(datl2))
 ```
 
-Eurostat codes can be replaced also after downloadind with human-readable labels
-using a function `label_eurostat()`. It replaces the eurostat codes based on
-definitions from Eurostat dictionaries. 
+Eurostat codes in the downloaded data set can be replaced with
+human-readable labels from the Eurostat dictionaries with the
+`label_eurostat()` function.
 
 ```{r labels, warning=FALSE, message=FALSE, results='asis'}
 datl <- label_eurostat(dat)
 kable(head(datl))
 ```
 
-The `label_eurostat()` allows also 
-conversion of individual variable vectors or variable names. 
+The `label_eurostat()` allows conversion of individual variable
+vectors or variable names as well.
 
 ```{r name_labels, eval = FALSE}
 label_eurostat_vars(names(datl))
@@ -172,7 +171,7 @@ levels(datl$vehicle)
 
 ## EFTA, Eurozone, EU and EU candidate countries
 
-To facilititate fast plotting of standard European geographic areas, the package provides ready-made lists of the country codes used in the eurostat database for EFTA (efta\_countries), Euro area (ea\_countries), EU (eu\_countries) and EU candidate countries (candidate\_countries). This helps to select specific groups of countries for closer investigation. For conversions with other standard country coding systems, see the [countrycode](...) R package. To retrieve the country code list for EFTA, for instance, use:
+To facilitate smooth visualization of standard European geographic areas, the package provides ready-made lists of the country codes used in the eurostat database for EFTA (efta\_countries), Euro area (ea\_countries), EU (eu\_countries) and EU candidate countries (eu\_candidate\_countries). These can be used to select specific groups of countries for closer investigation. For conversions with other standard country coding systems, see the [countrycode](...) R package. To retrieve the country code list for EFTA, for instance, use:
 
 ```{r, echo=TRUE, eval=TRUE}
 data(efta_countries)
@@ -223,16 +222,18 @@ print(p)
 
 <a name="triangle"></a>**Triangle plot**
 
-Triangle plot on passenger transport distributions with 2012 data for all countries with data.
+Triangle plot is handy for visualizing data sets with three variables. For instance, the passenger transport distributions across three vehicle types in 2012 for all countries where data is available:
 
-```{r plotGallery, warning=FALSE, message=FALSE, , fig.width=6, fig.height=6}
+```{r plotGallery, warning=FALSE, message=FALSE, fig.width=6, fig.height=6}
 library(tidyr)
 
+# Download and modify the transport data
 transports <- spread(subset(dat, time == 2012, select = c(geo, vehicle, values)), vehicle, values)
 
+# Remove countries with missing data
 transports <- na.omit(transports)
 
-# triangle plot
+# Use triangle plot to visualize vehicle distributions:
 library(plotrix)
 triax.plot(transports[, -1], show.grid = TRUE, 
            label.points = TRUE, point.labels = transports$geo, 
@@ -241,24 +242,139 @@ triax.plot(transports[, -1], show.grid = TRUE,
 
 
 
-## Citing the package
+## Maps 
 
-**Citing the Data** Kindly cite [Eurostat](http://ec.europa.eu/eurostat/). 
+###  Disposable income of private households by NUTS 2 regions at 1:60mln resolution using ggplot2
 
-**Citing the R tools** This work can be freely used, modified and
-distributed under the BSD-2-clause (modified FreeBSD) license:
+```{r maps1, eval=TRUE, fig.width=8, fig.height=8}
+library(eurostat)
+library(dplyr)
+library(ggplot2)
+# Data from Eurostat
+eurostat::get_eurostat("tgs00026", time_format = "raw") %>% 
+  # subset to have only a single row per geo
+  dplyr::filter(time == 2010, nchar(as.character(geo)) == 4) %>% 
+  # categorise
+  dplyr::mutate(cat = cut_to_classes(values, n = 5)) %>% 
+  # merge with geodata
+  merge_eurostat_geodata(data=.,geocolumn="geo",resolution = "60", output_class = "df", all_regions = TRUE) %>% 
+  # plot map
+  ggplot(data=., aes(x=long,y=lat,group=group)) +
+  geom_polygon(aes(fill=cat),color="white", size=.1) +
+  scale_fill_brewer(palette ="Oranges")
 
-```{r citation, message=FALSE, eval=TRUE}
+```
+
+
+### Disposable income of private households by NUTS 2 regions in Poland with labels at 1:1mln resolution using ggplot2
+
+```{r maps2, fig.width=8, fig.height=8}
+library(eurostat)
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+# Downloading and manipulating the tabular data
+df <- get_eurostat("tgs00026", time_format = "raw") %>% 
+  # subsetting to year 2005 and NUTS-3 level
+  dplyr::filter(time == 2005, nchar(as.character(geo)) == 4, grepl("PL",geo)) %>% 
+  # label the single geo column
+  mutate(label = label_eurostat(.)[["geo"]],
+         cat = cut_to_classes(values)) %>% 
+  # merge with geodata
+  merge_eurostat_geodata(data=.,geocolumn="geo",resolution = "01", all_regions = FALSE, output_class="df")
+
+# plot map
+p <- ggplot(data=df, aes(long,lat,group=group))
+p <- p + geom_polygon(aes(fill = cat),colour="white",size=.8)
+p <- p + scale_fill_manual(values=brewer.pal(n = 5, name = "Oranges"))
+
+p <- p + geom_label(data=df %>% group_by(label,values,cat) %>% summarise(long = mean(long),
+                                                         lat = mean(lat)), 
+                    aes(long, lat, label = paste(label,"\n",values,"€"), group=label,fill=cat), 
+                    size=3.5, color="white", fontface="bold", lineheight=.8, show.legend=FALSE)
+p <- p + labs(title = paste0("Disposable household incomes in 2005"))
+p <- p + guides(fill = guide_legend(title = "EUR per Year",title.position = "top", title.hjust=0))
+p
+```
+
+### Disposable income of private households by NUTS 2 regions at 1:60mln resolution using spplot
+
+```{r maps3, fig.width=8, fig.height=8, dev='CairoPNG'}
+library(sp)
+library(eurostat)
+library(dplyr)
+dat <- get_eurostat("tgs00026", time_format = "raw") %>% 
+  # subsetting to year 2005 and NUTS-3 level
+  dplyr::filter(time == 2005, nchar(as.character(geo)) == 4) %>% 
+  # classifying the values the variable
+  dplyr::mutate(cat = cut_to_classes(values)) %>% 
+  # merge Eurostat data with geodata from Cisco
+  merge_eurostat_geodata(data=.,geocolumn="geo",resolution = "10", output_class ="spdf", all_regions=FALSE) 
+
+# plot map
+sp::spplot(obj = dat, "cat", main = "Disposable household income",
+	   xlim=c(-22,34), ylim=c(35,70), 
+           col.regions = c("dim grey", brewer.pal(n = 5, name = "Oranges")),
+	   col = "white", usePolypath = FALSE)
+```
+
+
+
+# Further examples
+
+For further examples, see:
+
+  * [Blog post](http://ropengov.github.io/r/2015/05/01/eurostat-package-examples/)
+  * [Journal manuscript](https://github.com/rOpenGov/eurostat/blob/master/vignettes/2015-RJournal/lahti-huovari-kainu-biecek.md)
+
+
+
+# Citations and related work
+
+### Citing the data sources
+
+Eurostat data: cite [Eurostat](http://ec.europa.eu/eurostat/).
+
+Administrative boundaries: cite EuroGeographics
+
+
+### Citing the eurostat R package
+
+For main developers and contributors, see the [README](../README.md).
+
+This work can be freely used, modified and distributed under the
+BSD-2-clause (modified FreeBSD) license:
+
+```{r citation, message=FALSE, eval=TRUE, echo=TRUE}
 citation("eurostat")
 ```
 
-# Acknowledgements
+### Related work
+
+This [rOpenGov](http://ropengov.github.io) R package is based on the
+earlier CRAN packages
+[statfi](https://cran.r-project.org/package=statfi) and
+[smarterpoland](https://cran.r-project.org/package=SmarterPoland).
+
+The independent [reurostat](https://github.com/Tungurahua/reurostat)
+package develops related Eurostat tools but seems to be in an
+experimental stage at the time of writing this tutorial.
+
+The more generic [quandl](https://cran.r-project.org/package=quandl),
+[datamart](https://cran.r-project.org/package=datamart), and
+[pdfetch](https://cran.r-project.org/package=pdfetch) packages may
+provide access to some versions of eurostat data but these packages
+are more generic and hence, in contrast to the eurostat R package,
+lack tools that are specifically customized to facilitate eurostat
+analysis.
 
 
-We are grateful to all [contributors](https://github.com/rOpenGov/eurostat/graphs/contributors) and [Eurostat](http://ec.europa.eu/eurostat/) open data portal! This [rOpenGov](http://ropengov.github.io) R package is based on earlier CRAN packages [statfi](https://cran.r-project.org/package=statfi) and [smarterpoland](https://cran.r-project.org/package=SmarterPoland). The [datamart](https://cran.r-project.org/package=datamart) and [reurostat](https://github.com/Tungurahua/reurostat) packages seem to develop related Eurostat tools but at the time of writing this tutorial this package seems to be in an experimental stage. The [quandl](https://cran.r-project.org/package=quandl) package may also provides access to some versions of eurostat data sets.
+### Contact
+
+For contact information, see the [README](../README.md).
 
 
-# Session info
+# Version info
 
 This tutorial was created with
 

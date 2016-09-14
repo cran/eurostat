@@ -1,18 +1,20 @@
-This R package provides tools to access [Eurostat
-database](http://ec.europa.eu/eurostat/) as part of the
-[rOpenGov](http://ropengov.github.io) project.
+R Tools for Eurostat Open Data
+==============================
 
-For contact information and source code, see the [github
-page](https://github.com/rOpenGov/eurostat)
+This [rOpenGov](http://ropengov.github.io) R package provides tools to
+access [Eurostat database](http://ec.europa.eu/eurostat/). For contact
+information and source code, see the
+[README](https://github.com/rOpenGov/eurostat).
 
 Installation
 ============
 
-Release version:
+Release version
+[(CRAN)](https://cran.r-project.org/web/packages/eurostat/index.html):
 
     install.packages("eurostat")
 
-Development version:
+Development version [(Github)](https://github.com/rOpenGov/eurostat):
 
     library(devtools)
     install_github("ropengov/eurostat")
@@ -20,6 +22,8 @@ Development version:
 Overall, the eurostat package includes the following functions:
 
     clean_eurostat_cache    Clean Eurostat Cache
+    cut_to_classes          Cuts the Values Column into Classes and
+                            Polishes the Labels
     dic_order               Order of Variable Levels from Eurostat
                             Dictionary.
     eu_countries            Countries and Country Codes
@@ -28,6 +32,9 @@ Overall, the eurostat package includes the following functions:
     eurotime2num            Conversion of Eurostat Time Format to Numeric
     get_eurostat            Read Eurostat Data
     get_eurostat_dic        Download Eurostat Dictionary
+    get_eurostat_geospatial
+                            Downloads Preprocessed Geospatial Data from
+                            CISGO
     get_eurostat_json       Get Data from Eurostat API in JSON
     get_eurostat_raw        Download Data from Eurostat Database
     get_eurostat_toc        Download Table of Contents of Eurostat Data
@@ -35,6 +42,9 @@ Overall, the eurostat package includes the following functions:
     harmonize_country_code
                             Harmonize Country Code
     label_eurostat          Get Eurostat Codes
+    merge_eurostat_geodata
+                            Merge Preprocessed Geospatial Data from CISGO
+                            with data_frame from Eurostat
     search_eurostat         Grep Datasets Titles from Eurostat
 
 Finding data
@@ -61,10 +71,10 @@ selected dataset.
 <th align="left">title</th>
 <th align="left">code</th>
 <th align="left">type</th>
-<th align="left">last.update.of.data</th>
-<th align="left">last.table.structure.change</th>
-<th align="left">data.start</th>
-<th align="left">data.end</th>
+<th align="left">last update of data</th>
+<th align="left">last table structure change</th>
+<th align="left">data start</th>
+<th align="left">data end</th>
 <th align="left">values</th>
 </tr>
 </thead>
@@ -123,10 +133,10 @@ selected dataset.
 <td align="left">Consumers - monthly data</td>
 <td align="left">ei_bsco_m</td>
 <td align="left">dataset</td>
-<td align="left">28.07.2016</td>
-<td align="left">28.07.2016</td>
+<td align="left">30.08.2016</td>
+<td align="left">30.08.2016</td>
 <td align="left">1985M01</td>
-<td align="left">2016M07</td>
+<td align="left">2016M08</td>
 <td align="left">NA</td>
 </tr>
 </tbody>
@@ -144,20 +154,18 @@ instance datasets or tables.
 <table>
 <thead>
 <tr class="header">
-<th align="left"></th>
 <th align="left">title</th>
 <th align="left">code</th>
 <th align="left">type</th>
-<th align="left">last.update.of.data</th>
-<th align="left">last.table.structure.change</th>
-<th align="left">data.start</th>
-<th align="left">data.end</th>
+<th align="left">last update of data</th>
+<th align="left">last table structure change</th>
+<th align="left">data start</th>
+<th align="left">data end</th>
 <th align="left">values</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">5688</td>
 <td align="left">Volume of passenger transport relative to GDP</td>
 <td align="left">tran_hv_pstra</td>
 <td align="left">dataset</td>
@@ -168,7 +176,6 @@ instance datasets or tables.
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">5689</td>
 <td align="left">Modal split of passenger transport</td>
 <td align="left">tran_hv_psmod</td>
 <td align="left">dataset</td>
@@ -179,40 +186,36 @@ instance datasets or tables.
 <td align="left">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">5742</td>
 <td align="left">Railway transport - Total annual passenger transport (1 000 pass., million pkm)</td>
 <td align="left">rail_pa_total</td>
 <td align="left">dataset</td>
-<td align="left">09.08.2016</td>
+<td align="left">06.09.2016</td>
 <td align="left">26.05.2016</td>
 <td align="left">2004</td>
 <td align="left">2015</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">5746</td>
 <td align="left">International railway passenger transport from the reporting country to the country of disembarkation (1 000 passengers)</td>
 <td align="left">rail_pa_intgong</td>
 <td align="left">dataset</td>
-<td align="left">09.08.2016</td>
+<td align="left">06.09.2016</td>
 <td align="left">26.05.2016</td>
 <td align="left">2002</td>
 <td align="left">2015</td>
 <td align="left">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">5747</td>
 <td align="left">International railway passenger transport from the country of embarkation to the reporting country (1 000 passengers)</td>
 <td align="left">rail_pa_intcmng</td>
 <td align="left">dataset</td>
-<td align="left">09.08.2016</td>
+<td align="left">06.09.2016</td>
 <td align="left">26.05.2016</td>
 <td align="left">2002</td>
 <td align="left">2015</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">6097</td>
 <td align="left">Air passenger transport by reporting country</td>
 <td align="left">avia_paoc</td>
 <td align="left">dataset</td>
@@ -272,7 +275,7 @@ Investigate the structure of the downloaded data set:
 
     str(dat)
 
-    ## 'data.frame':    2326 obs. of  5 variables:
+    ## Classes 'tbl_df', 'tbl' and 'data.frame':    2326 obs. of  5 variables:
     ##  $ unit   : Factor w/ 1 level "PC": 1 1 1 1 1 1 1 1 1 1 ...
     ##  $ vehicle: Factor w/ 3 levels "BUS_TOT","CAR",..: 1 1 1 1 1 1 1 1 1 1 ...
     ##  $ geo    : Factor w/ 35 levels "AT","BE","CH",..: 1 2 3 4 5 6 7 8 9 10 ...
@@ -284,7 +287,6 @@ Investigate the structure of the downloaded data set:
 <table>
 <thead>
 <tr class="header">
-<th align="left"></th>
 <th align="left">unit</th>
 <th align="left">vehicle</th>
 <th align="left">geo</th>
@@ -294,7 +296,6 @@ Investigate the structure of the downloaded data set:
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
 <td align="left">PC</td>
 <td align="left">BUS_TOT</td>
 <td align="left">AT</td>
@@ -302,7 +303,6 @@ Investigate the structure of the downloaded data set:
 <td align="right">11.0</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
 <td align="left">PC</td>
 <td align="left">BUS_TOT</td>
 <td align="left">BE</td>
@@ -310,7 +310,6 @@ Investigate the structure of the downloaded data set:
 <td align="right">10.6</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
 <td align="left">PC</td>
 <td align="left">BUS_TOT</td>
 <td align="left">CH</td>
@@ -318,7 +317,6 @@ Investigate the structure of the downloaded data set:
 <td align="right">3.7</td>
 </tr>
 <tr class="even">
-<td align="left">7</td>
 <td align="left">PC</td>
 <td align="left">BUS_TOT</td>
 <td align="left">DE</td>
@@ -326,7 +324,6 @@ Investigate the structure of the downloaded data set:
 <td align="right">9.1</td>
 </tr>
 <tr class="odd">
-<td align="left">8</td>
 <td align="left">PC</td>
 <td align="left">BUS_TOT</td>
 <td align="left">DK</td>
@@ -334,7 +331,6 @@ Investigate the structure of the downloaded data set:
 <td align="right">11.3</td>
 </tr>
 <tr class="even">
-<td align="left">10</td>
 <td align="left">PC</td>
 <td align="left">BUS_TOT</td>
 <td align="left">EL</td>
@@ -476,9 +472,9 @@ human-readable labels instead, use a `type = "label"` argument.
 </tbody>
 </table>
 
-Eurostat codes can be replaced also after downloadind with
-human-readable labels using a function `label_eurostat()`. It replaces
-the eurostat codes based on definitions from Eurostat dictionaries.
+Eurostat codes in the downloaded data set can be replaced with
+human-readable labels from the Eurostat dictionaries with the
+`label_eurostat()` function.
 
     datl <- label_eurostat(dat)
     kable(head(datl))
@@ -486,7 +482,6 @@ the eurostat codes based on definitions from Eurostat dictionaries.
 <table>
 <thead>
 <tr class="header">
-<th align="left"></th>
 <th align="left">unit</th>
 <th align="left">vehicle</th>
 <th align="left">geo</th>
@@ -496,7 +491,6 @@ the eurostat codes based on definitions from Eurostat dictionaries.
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
 <td align="left">Percentage</td>
 <td align="left">Motor coaches, buses and trolley buses</td>
 <td align="left">Austria</td>
@@ -504,7 +498,6 @@ the eurostat codes based on definitions from Eurostat dictionaries.
 <td align="right">11.0</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
 <td align="left">Percentage</td>
 <td align="left">Motor coaches, buses and trolley buses</td>
 <td align="left">Belgium</td>
@@ -512,7 +505,6 @@ the eurostat codes based on definitions from Eurostat dictionaries.
 <td align="right">10.6</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
 <td align="left">Percentage</td>
 <td align="left">Motor coaches, buses and trolley buses</td>
 <td align="left">Switzerland</td>
@@ -520,7 +512,6 @@ the eurostat codes based on definitions from Eurostat dictionaries.
 <td align="right">3.7</td>
 </tr>
 <tr class="even">
-<td align="left">7</td>
 <td align="left">Percentage</td>
 <td align="left">Motor coaches, buses and trolley buses</td>
 <td align="left">Germany (until 1990 former territory of the FRG)</td>
@@ -528,7 +519,6 @@ the eurostat codes based on definitions from Eurostat dictionaries.
 <td align="right">9.1</td>
 </tr>
 <tr class="odd">
-<td align="left">8</td>
 <td align="left">Percentage</td>
 <td align="left">Motor coaches, buses and trolley buses</td>
 <td align="left">Denmark</td>
@@ -536,7 +526,6 @@ the eurostat codes based on definitions from Eurostat dictionaries.
 <td align="right">11.3</td>
 </tr>
 <tr class="even">
-<td align="left">10</td>
 <td align="left">Percentage</td>
 <td align="left">Motor coaches, buses and trolley buses</td>
 <td align="left">Greece</td>
@@ -546,8 +535,8 @@ the eurostat codes based on definitions from Eurostat dictionaries.
 </tbody>
 </table>
 
-The `label_eurostat()` allows also conversion of individual variable
-vectors or variable names.
+The `label_eurostat()` allows conversion of individual variable vectors
+or variable names as well.
 
     label_eurostat_vars(names(datl))
 
@@ -561,14 +550,14 @@ Selecting and modifying data
 EFTA, Eurozone, EU and EU candidate countries
 ---------------------------------------------
 
-To facilititate fast plotting of standard European geographic areas, the
-package provides ready-made lists of the country codes used in the
-eurostat database for EFTA (efta\_countries), Euro area (ea\_countries),
-EU (eu\_countries) and EU candidate countries (candidate\_countries).
-This helps to select specific groups of countries for closer
-investigation. For conversions with other standard country coding
-systems, see the [countrycode](...) R package. To retrieve the country
-code list for EFTA, for instance, use:
+To facilitate smooth visualization of standard European geographic
+areas, the package provides ready-made lists of the country codes used
+in the eurostat database for EFTA (efta\_countries), Euro area
+(ea\_countries), EU (eu\_countries) and EU candidate countries
+(eu\_candidate\_countries). These can be used to select specific groups
+of countries for closer investigation. For conversions with other
+standard country coding systems, see the [countrycode](...) R package.
+To retrieve the country code list for EFTA, for instance, use:
 
     data(efta_countries)
     kable(efta_countries)
@@ -899,16 +888,19 @@ Visualizing train passenger data with `ggplot2`:
 
 <a name="triangle"></a>**Triangle plot**
 
-Triangle plot on passenger transport distributions with 2012 data for
-all countries with data.
+Triangle plot is handy for visualizing data sets with three variables.
+For instance, the passenger transport distributions across three vehicle
+types in 2012 for all countries where data is available:
 
     library(tidyr)
 
+    # Download and modify the transport data
     transports <- spread(subset(dat, time == 2012, select = c(geo, vehicle, values)), vehicle, values)
 
+    # Remove countries with missing data
     transports <- na.omit(transports)
 
-    # triangle plot
+    # Use triangle plot to visualize vehicle distributions:
     library(plotrix)
     triax.plot(transports[, -1], show.grid = TRUE, 
                label.points = TRUE, point.labels = transports$geo, 
@@ -916,14 +908,211 @@ all countries with data.
 
 ![](fig/plotGallery-1.png)
 
-Citing the package
-------------------
+Maps
+----
 
-**Citing the Data** Kindly cite
-[Eurostat](http://ec.europa.eu/eurostat/).
+### Disposable income of private households by NUTS 2 regions at 1:60mln resolution using ggplot2
 
-**Citing the R tools** This work can be freely used, modified and
-distributed under the BSD-2-clause (modified FreeBSD) license:
+    library(eurostat)
+    library(dplyr)
+    library(ggplot2)
+    # Data from Eurostat
+    eurostat::get_eurostat("tgs00026", time_format = "raw") %>% 
+      # subset to have only a single row per geo
+      dplyr::filter(time == 2010, nchar(as.character(geo)) == 4) %>% 
+      # categorise
+      dplyr::mutate(cat = cut_to_classes(values, n = 5)) %>% 
+      # merge with geodata
+      merge_eurostat_geodata(data=.,geocolumn="geo",resolution = "60", output_class = "df", all_regions = TRUE) %>% 
+      # plot map
+      ggplot(data=., aes(x=long,y=lat,group=group)) +
+      geom_polygon(aes(fill=cat),color="white", size=.1) +
+      scale_fill_brewer(palette ="Oranges")
+
+    ## Reading cache file /tmp/RtmpeWRiWa/eurostat/tgs00026_raw_code_TF.rds
+
+    ## Table  tgs00026  read from cache file:  /tmp/RtmpeWRiWa/eurostat/tgs00026_raw_code_TF.rds
+
+    ## 
+    ##       COPYRIGHT NOTICE
+    ## 
+    ##       When data downloaded from this page 
+    ##       <http://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units>
+    ##       is used in any printed or electronic publication, 
+    ##       in addition to any other provisions 
+    ##       applicable to the whole Eurostat website, 
+    ##       data source will have to be acknowledged 
+    ##       in the legend of the map and 
+    ##       in the introductory page of the publication 
+    ##       with the following copyright notice:
+    ## 
+    ##       - EN: (C) EuroGeographics for the administrative boundaries
+    ##       - FR: (C) EuroGeographics pour les limites administratives
+    ##       - DE: (C) EuroGeographics bezuglich der Verwaltungsgrenzen
+    ## 
+    ##       For publications in languages other than 
+    ##       English, French or German, 
+    ##       the translation of the copyright notice 
+    ##       in the language of the publication shall be used.
+    ## 
+    ##       If you intend to use the data commercially, 
+    ##       please contact EuroGeographics for 
+    ##       information regarding their licence agreements.
+    ## 
+
+    ## Reading cache file /tmp/RtmpeWRiWa/eurostat/df60.RData
+
+    ## data_frame at resolution 1: 60  read from cache file:  /tmp/RtmpeWRiWa/eurostat/df60.RData
+
+![](fig/maps1-1.png)
+
+### Disposable income of private households by NUTS 2 regions in Poland with labels at 1:1mln resolution using ggplot2
+
+    library(eurostat)
+    library(dplyr)
+    library(ggplot2)
+    library(RColorBrewer)
+    # Downloading and manipulating the tabular data
+    df <- get_eurostat("tgs00026", time_format = "raw") %>% 
+      # subsetting to year 2005 and NUTS-3 level
+      dplyr::filter(time == 2005, nchar(as.character(geo)) == 4, grepl("PL",geo)) %>% 
+      # label the single geo column
+      mutate(label = label_eurostat(.)[["geo"]],
+             cat = cut_to_classes(values)) %>% 
+      # merge with geodata
+      merge_eurostat_geodata(data=.,geocolumn="geo",resolution = "01", all_regions = FALSE, output_class="df")
+
+    ## Reading cache file /tmp/RtmpeWRiWa/eurostat/tgs00026_raw_code_TF.rds
+
+    ## Table  tgs00026  read from cache file:  /tmp/RtmpeWRiWa/eurostat/tgs00026_raw_code_TF.rds
+
+    ## 
+    ##       COPYRIGHT NOTICE
+    ## 
+    ##       When data downloaded from this page 
+    ##       <http://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units>
+    ##       is used in any printed or electronic publication, 
+    ##       in addition to any other provisions 
+    ##       applicable to the whole Eurostat website, 
+    ##       data source will have to be acknowledged 
+    ##       in the legend of the map and 
+    ##       in the introductory page of the publication 
+    ##       with the following copyright notice:
+    ## 
+    ##       - EN: (C) EuroGeographics for the administrative boundaries
+    ##       - FR: (C) EuroGeographics pour les limites administratives
+    ##       - DE: (C) EuroGeographics bezuglich der Verwaltungsgrenzen
+    ## 
+    ##       For publications in languages other than 
+    ##       English, French or German, 
+    ##       the translation of the copyright notice 
+    ##       in the language of the publication shall be used.
+    ## 
+    ##       If you intend to use the data commercially, 
+    ##       please contact EuroGeographics for 
+    ##       information regarding their licence agreements.
+    ## 
+
+    ## Reading cache file /tmp/RtmpeWRiWa/eurostat/df01.RData
+
+    ## data_frame at resolution 1: 01  read from cache file:  /tmp/RtmpeWRiWa/eurostat/df01.RData
+
+    # plot map
+    p <- ggplot(data=df, aes(long,lat,group=group))
+    p <- p + geom_polygon(aes(fill = cat),colour="white",size=.8)
+    p <- p + scale_fill_manual(values=brewer.pal(n = 5, name = "Oranges"))
+
+    p <- p + geom_label(data=df %>% group_by(label,values,cat) %>% summarise(long = mean(long),
+                                                             lat = mean(lat)), 
+                        aes(long, lat, label = paste(label,"\n",values,"€"), group=label,fill=cat), 
+                        size=3.5, color="white", fontface="bold", lineheight=.8, show.legend=FALSE)
+    p <- p + labs(title = paste0("Disposable household incomes in 2005"))
+    p <- p + guides(fill = guide_legend(title = "EUR per Year",title.position = "top", title.hjust=0))
+    p
+
+![](fig/maps2-1.png)
+
+### Disposable income of private households by NUTS 2 regions at 1:60mln resolution using spplot
+
+    library(sp)
+    library(eurostat)
+    library(dplyr)
+    dat <- get_eurostat("tgs00026", time_format = "raw") %>% 
+      # subsetting to year 2005 and NUTS-3 level
+      dplyr::filter(time == 2005, nchar(as.character(geo)) == 4) %>% 
+      # classifying the values the variable
+      dplyr::mutate(cat = cut_to_classes(values)) %>% 
+      # merge Eurostat data with geodata from Cisco
+      merge_eurostat_geodata(data=.,geocolumn="geo",resolution = "10", output_class ="spdf", all_regions=FALSE) 
+
+    ## Reading cache file /tmp/RtmpeWRiWa/eurostat/tgs00026_raw_code_TF.rds
+
+    ## Table  tgs00026  read from cache file:  /tmp/RtmpeWRiWa/eurostat/tgs00026_raw_code_TF.rds
+
+    ## 
+    ##       COPYRIGHT NOTICE
+    ## 
+    ##       When data downloaded from this page 
+    ##       <http://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units>
+    ##       is used in any printed or electronic publication, 
+    ##       in addition to any other provisions 
+    ##       applicable to the whole Eurostat website, 
+    ##       data source will have to be acknowledged 
+    ##       in the legend of the map and 
+    ##       in the introductory page of the publication 
+    ##       with the following copyright notice:
+    ## 
+    ##       - EN: (C) EuroGeographics for the administrative boundaries
+    ##       - FR: (C) EuroGeographics pour les limites administratives
+    ##       - DE: (C) EuroGeographics bezuglich der Verwaltungsgrenzen
+    ## 
+    ##       For publications in languages other than 
+    ##       English, French or German, 
+    ##       the translation of the copyright notice 
+    ##       in the language of the publication shall be used.
+    ## 
+    ##       If you intend to use the data commercially, 
+    ##       please contact EuroGeographics for 
+    ##       information regarding their licence agreements.
+    ## 
+
+    ## Reading cache file /tmp/RtmpeWRiWa/eurostat/spdf10.RData
+
+    ## SpatialPolygonDataFrame at resolution 1: 10  read from cache file:  /tmp/RtmpeWRiWa/eurostat/spdf10.RData
+
+    # plot map
+    sp::spplot(obj = dat, "cat", main = "Disposable household income",
+           xlim=c(-22,34), ylim=c(35,70), 
+               col.regions = c("dim grey", brewer.pal(n = 5, name = "Oranges")),
+           col = "white", usePolypath = FALSE)
+
+![](fig/maps3-1.png)
+
+Further examples
+================
+
+For further examples, see:
+
+-   [Blog
+    post](http://ropengov.github.io/r/2015/05/01/eurostat-package-examples/)
+-   [Journal
+    manuscript](https://github.com/rOpenGov/eurostat/blob/master/vignettes/2015-RJournal/lahti-huovari-kainu-biecek.md)
+
+Citations and related work
+==========================
+
+### Citing the data sources
+
+Eurostat data: cite [Eurostat](http://ec.europa.eu/eurostat/).
+
+Administrative boundaries: cite EuroGeographics
+
+### Citing the eurostat R package
+
+For main developers and contributors, see the [README](../README.md).
+
+This work can be freely used, modified and distributed under the
+BSD-2-clause (modified FreeBSD) license:
 
     citation("eurostat")
 
@@ -931,7 +1120,7 @@ distributed under the BSD-2-clause (modified FreeBSD) license:
     ## Kindly cite the eurostat R package as follows:
     ## 
     ##   (C) Leo Lahti, Janne Huovari, Markus Kainu, Przemyslaw Biecek
-    ##   2014-2016. eurostat R package URL:
+    ##   2014-2016. eurostat R package. R package version 2.1.1 URL:
     ##   https://github.com/rOpenGov/eurostat
     ## 
     ## A BibTeX entry for LaTeX users is
@@ -941,25 +1130,32 @@ distributed under the BSD-2-clause (modified FreeBSD) license:
     ##     author = {Leo Lahti and Janne Huovari and Markus Kainu and Przemyslaw Biecek},
     ##     year = {2014-2016},
     ##     url = {https://github.com/rOpenGov/eurostat},
+    ##     note = {R package version 2.1.1},
     ##   }
 
-Acknowledgements
-================
+### Related work
 
-We are grateful to all
-[contributors](https://github.com/rOpenGov/eurostat/graphs/contributors)
-and [Eurostat](http://ec.europa.eu/eurostat/) open data portal! This
-[rOpenGov](http://ropengov.github.io) R package is based on earlier CRAN
-packages [statfi](https://cran.r-project.org/package=statfi) and
-[smarterpoland](https://cran.r-project.org/package=SmarterPoland). The
-[datamart](https://cran.r-project.org/package=datamart) and
-[reurostat](https://github.com/Tungurahua/reurostat) packages seem to
-develop related Eurostat tools but at the time of writing this tutorial
-this package seems to be in an experimental stage. The
-[quandl](https://cran.r-project.org/package=quandl) package may also
-provides access to some versions of eurostat data sets.
+This [rOpenGov](http://ropengov.github.io) R package is based on the
+earlier CRAN packages
+[statfi](https://cran.r-project.org/package=statfi) and
+[smarterpoland](https://cran.r-project.org/package=SmarterPoland).
 
-Session info
+The independent [reurostat](https://github.com/Tungurahua/reurostat)
+package develops related Eurostat tools but seems to be in an
+experimental stage at the time of writing this tutorial.
+
+The more generic [quandl](https://cran.r-project.org/package=quandl),
+[datamart](https://cran.r-project.org/package=datamart), and
+[pdfetch](https://cran.r-project.org/package=pdfetch) packages may
+provide access to some versions of eurostat data but these packages are
+more generic and hence, in contrast to the eurostat R package, lack
+tools that are specifically customized to facilitate eurostat analysis.
+
+### Contact
+
+For contact information, see the [README](../README.md).
+
+Version info
 ============
 
 This tutorial was created with
@@ -982,14 +1178,18 @@ This tutorial was created with
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] plotrix_3.6-2      ggplot2_2.1.0      tidyr_0.5.1       
-    ## [4] rvest_0.3.2        xml2_1.0.0         eurostat_1.2.23   
-    ## [7] rmarkdown_0.9.6.14 knitr_1.13        
+    ##  [1] sp_1.2-3           RColorBrewer_1.1-2 dplyr_0.5.0       
+    ##  [4] plotrix_3.6-2      ggplot2_2.1.0      tidyr_0.5.1       
+    ##  [7] rvest_0.3.2        xml2_1.0.0         eurostat_2.1.1    
+    ## [10] rmarkdown_0.9.6.14 knitr_1.13        
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.5      magrittr_1.5     munsell_0.4.3    colorspace_1.2-6
-    ##  [5] R6_2.1.2         plyr_1.8.4       stringr_1.0.0    httr_1.2.1      
-    ##  [9] highr_0.6        tools_3.3.1      grid_3.3.1       gtable_0.2.0    
-    ## [13] htmltools_0.3.5  yaml_2.1.13      digest_0.6.9     assertthat_0.1  
-    ## [17] tibble_1.1       formatR_1.4      curl_0.9.7       evaluate_0.9    
-    ## [21] labeling_0.3     stringi_1.1.1    scales_0.4.0     jsonlite_1.0
+    ##  [1] Rcpp_0.12.7      formatR_1.4      highr_0.6        plyr_1.8.4      
+    ##  [5] class_7.3-14     tools_3.3.1      digest_0.6.9     jsonlite_1.0    
+    ##  [9] evaluate_0.9     tibble_1.1       gtable_0.2.0     lattice_0.20-33 
+    ## [13] DBI_0.4-1        rgdal_1.1-10     curl_0.9.7       yaml_2.1.13     
+    ## [17] e1071_1.6-7      httr_1.2.1       stringr_1.0.0    classInt_0.1-23 
+    ## [21] grid_3.3.1       R6_2.1.2         readr_0.2.2      magrittr_1.5    
+    ## [25] scales_0.4.0     htmltools_0.3.5  assertthat_0.1   colorspace_1.2-6
+    ## [29] labeling_0.3     stringi_1.1.1    lazyeval_0.2.0   munsell_0.4.3   
+    ## [33] Cairo_1.5-9

@@ -2,7 +2,7 @@
 #' @description Download data from the eurostat database.
 #' @param id A code name for the dataset of interested. See the table of
 #'  contents of eurostat datasets for more details.
-#' @return A dataset in data.frame format. First column contains comma 
+#' @return A dataset in tibble format. First column contains comma 
 #' 	  separated codes of cases. Other columns usually corresponds to 
 #'	  years and column names are years with preceding X. Data is in 
 #'	  character format as it contains values together with eurostat 
@@ -21,17 +21,19 @@ get_eurostat_raw <- function(id) {
 
   base <- eurostat_url()		   
 
-  url <- paste(base, 
+  url <- paste0(base, 
     "estat-navtree-portlet-prod/BulkDownloadListing?sort=1&file=data%2F",
-    id, ".tsv.gz", sep = "")
+    id, ".tsv.gz")
 
   tfile <- tempfile()
   on.exit(unlink(tfile))
   
   # download and read file
   utils::download.file(url, tfile)
-  dat <- utils::read.table(gzfile(tfile), sep = "\t", na.strings = ": ", 
-                    header = TRUE, stringsAsFactors = FALSE)
+  
+  dat <- readr::read_tsv(gzfile(tfile), na = ":",  
+                         col_types = readr::cols(.default = readr::col_character()))
+  
   # check validity
   if (ncol(dat) < 2 | nrow(dat) < 1) {
     if (grepl("does not exist or is not readable", dat[1])) {

@@ -1,7 +1,7 @@
 #' @title Transform Data into Row-Column-Value Format
 #' @description Transform raw Eurostat data table into the row-column-value
 #' format (RCV).
-#' @param dat a data.frame from \code{\link{get_eurostat_raw}}.
+#' @param dat a data_frame from \code{\link{get_eurostat_raw}}.
 #' @param time_format a string giving a type of the conversion of the
 #'                    time column from the eurostat format.
 #'                    A "date" (default) convers to a \code{\link{Date}}
@@ -18,7 +18,7 @@
 #' @param keepFlags a logical whether the flags (e.g. "confidential",
 #'     "provisional") should be kept in a separate column or if they
 #'     can be removed. Default is \code{FALSE}
-#' @return data.frame in the molten format with the last column 'values'.
+#' @return tibble in the molten format with the last column 'values'.
 #' @seealso \code{\link{get_eurostat}}
 #' @references See citation("eurostat").
 #' @author Przemyslaw Biecek, Leo Lahti and Janne Huovari \email{ropengov-forum@@googlegroups.com} \url{http://github.com/ropengov/eurostat}
@@ -31,7 +31,7 @@ tidy_eurostat <- function(dat, time_format = "date", select_time = NULL,
     time <- NULL
 
     # Separate codes to columns
-    cnames <- strsplit(colnames(dat)[1], split = "\\.")[[1]]
+    cnames <- strsplit(colnames(dat)[1], split = "[\\,]")[[1]]
     cnames1 <- cnames[-length(cnames)]  # for columns
     cnames2 <- cnames[length(cnames)]   # for colnames
     
@@ -54,8 +54,8 @@ tidy_eurostat <- function(dat, time_format = "date", select_time = NULL,
     
     # clean time and values
     dat2$time <- gsub("X", "", dat2$time)
-    dat2$values <- tidyr::extract_numeric(dat2$values)
-    
+    dat2$values <- as.numeric(gsub("[^0-9.-]+", "", as.character(dat2$values)))
+      
     # variable columns
     var_cols <- names(dat2)[!(names(dat2) %in% c("time", "values"))]
     
@@ -70,7 +70,6 @@ tidy_eurostat <- function(dat, time_format = "date", select_time = NULL,
     }
 
     # For multiple time frequency
-
     freqs <- available_freq(dat2$time)
     
     if (!is.null(select_time)){

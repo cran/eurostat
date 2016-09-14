@@ -8,7 +8,7 @@ tidy_eurostat(dat, time_format = "date", select_time = NULL,
   stringsAsFactors = default.stringsAsFactors(), keepFlags = FALSE)
 }
 \arguments{
-\item{dat}{a data.frame from \code{\link{get_eurostat_raw}}.}
+\item{dat}{a data_frame from \code{\link{get_eurostat_raw}}.}
 
 \item{time_format}{a string giving a type of the conversion of the
            time column from the eurostat format.
@@ -31,7 +31,7 @@ they are returned as strings.}
 can be removed. Default is \code{FALSE}}
 }
 \value{
-data.frame in the molten format with the last column 'values'.
+tibble in the molten format with the last column 'values'.
 }
 \description{
 Transform raw Eurostat data table into the row-column-value
