@@ -33,6 +33,8 @@ kable(head(toc))
 kable(head(search_eurostat("passenger transport")))
 
 ## ----get_id, warning=FALSE, message=FALSE, results='asis'----------------
+# For the original data, see
+# http://ec.europa.eu/eurostat/tgm/table.do?tab=table&init=1&plugin=1&language=en&pcode=tsdtr210
 id <- search_eurostat("Modal split of passenger transport", 
         	             type = "table")$code[1]
 print(id)
@@ -46,15 +48,15 @@ str(dat)
 ## ----head_dat, warning=FALSE, message=FALSE, results='asis'--------------
 kable(head(dat))
 
-## ----get_eurostat_json, warning=FALSE, message=FALSE, results='asis'-----
-dat2 <- get_eurostat(id, filters = list(geo = c("EU28", "FI"), lastTimePeriod=1), time_format = "num")
-kable(dat2)
+## ----get_eurostat_json, warning=FALSE, message=FALSE, results='asis', eval=FALSE----
+#  dat2 <- get_eurostat(id, filters = list(geo = c("EU28", "FI"), lastTimePeriod=1), time_format = "num")
+#  kable(dat2)
 
-## ----json_labels, warning=FALSE, message=FALSE, results='asis'-----------
-datl2 <- get_eurostat(id, filters = list(geo = c("EU28", "FI"), 
-                                         lastTimePeriod = 1), 
-                      type = "label", time_format = "num")
-kable(head(datl2))
+## ----json_labels, warning=FALSE, message=FALSE, results='asis', eval=FALSE----
+#  datl2 <- get_eurostat(id, filters = list(geo = c("EU28", "FI"),
+#                                           lastTimePeriod = 1),
+#                        type = "label", time_format = "num")
+#  kable(head(datl2))
 
 ## ----labels, warning=FALSE, message=FALSE, results='asis'----------------
 datl <- label_eurostat(dat)

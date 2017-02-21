@@ -33,8 +33,7 @@ Overall, the eurostat package includes the following functions:
     get_eurostat            Read Eurostat Data
     get_eurostat_dic        Download Eurostat Dictionary
     get_eurostat_geospatial
-                            Downloads Preprocessed Geospatial Data from
-                            CISGO
+                            Download Geospatial Data from CISGO
     get_eurostat_json       Get Data from Eurostat API in JSON
     get_eurostat_raw        Download Data from Eurostat Database
     get_eurostat_toc        Download Table of Contents of Eurostat Data
@@ -83,60 +82,60 @@ selected dataset.
 <td align="left">Database by themes</td>
 <td align="left">data</td>
 <td align="left">folder</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
 <td align="left">General and regional statistics</td>
 <td align="left">general</td>
 <td align="left">folder</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="odd">
 <td align="left">European and national indicators for short-term analysis</td>
 <td align="left">euroind</td>
 <td align="left">folder</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
 <td align="left">Business and consumer surveys (source: DG ECFIN)</td>
 <td align="left">ei_bcs</td>
 <td align="left">folder</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="odd">
 <td align="left">Consumer surveys (source: DG ECFIN)</td>
 <td align="left">ei_bcs_cs</td>
 <td align="left">folder</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
 <td align="left">Consumers - monthly data</td>
 <td align="left">ei_bsco_m</td>
 <td align="left">dataset</td>
-<td align="left">30.08.2016</td>
-<td align="left">30.08.2016</td>
-<td align="left">1985M01</td>
-<td align="left">2016M08</td>
+<td align="left">02.02.2017</td>
+<td align="left">30.01.2017</td>
+<td align="left">1980M01</td>
+<td align="left">2017M01</td>
 <td align="left">NA</td>
 </tr>
 </tbody>
@@ -189,8 +188,8 @@ instance datasets or tables.
 <td align="left">Railway transport - Total annual passenger transport (1 000 pass., million pkm)</td>
 <td align="left">rail_pa_total</td>
 <td align="left">dataset</td>
-<td align="left">06.09.2016</td>
-<td align="left">26.05.2016</td>
+<td align="left">09.02.2017</td>
+<td align="left">08.11.2016</td>
 <td align="left">2004</td>
 <td align="left">2015</td>
 <td align="left">NA</td>
@@ -199,8 +198,8 @@ instance datasets or tables.
 <td align="left">International railway passenger transport from the reporting country to the country of disembarkation (1 000 passengers)</td>
 <td align="left">rail_pa_intgong</td>
 <td align="left">dataset</td>
-<td align="left">06.09.2016</td>
-<td align="left">26.05.2016</td>
+<td align="left">09.02.2017</td>
+<td align="left">21.09.2016</td>
 <td align="left">2002</td>
 <td align="left">2015</td>
 <td align="left">NA</td>
@@ -209,7 +208,7 @@ instance datasets or tables.
 <td align="left">International railway passenger transport from the country of embarkation to the reporting country (1 000 passengers)</td>
 <td align="left">rail_pa_intcmng</td>
 <td align="left">dataset</td>
-<td align="left">06.09.2016</td>
+<td align="left">09.02.2017</td>
 <td align="left">26.05.2016</td>
 <td align="left">2002</td>
 <td align="left">2015</td>
@@ -219,10 +218,10 @@ instance datasets or tables.
 <td align="left">Air passenger transport by reporting country</td>
 <td align="left">avia_paoc</td>
 <td align="left">dataset</td>
-<td align="left">15.07.2016</td>
-<td align="left">14.07.2016</td>
+<td align="left">19.12.2016</td>
+<td align="left">19.12.2016</td>
 <td align="left">1993</td>
-<td align="left">2016Q1</td>
+<td align="left">2016Q3</td>
 <td align="left">NA</td>
 </tr>
 </tbody>
@@ -249,9 +248,8 @@ via main function `get_eurostat()`. If only the table id is given, the
 whole table is downloaded from the bulk download facility. If also
 filters are defined the JSON API is used.
 
-Here an example of indicator [Modal split of passenger
-transport](http://ec.europa.eu/eurostat/tgm/table.do?tab=table&init=1&plugin=1&language=en&pcode=tsdtr210).
-This is the percentage share of each mode of transport in total inland
+Here an example of indicator 'Modal split of passenger transport'. This
+is the percentage share of each mode of transport in total inland
 transport, expressed in passenger-kilometres (pkm) based on transport by
 passenger cars, buses and coaches, and trains. All data should be based
 on movements on national territory, regardless of the nationality of the
@@ -259,6 +257,8 @@ vehicle. However, the data collection is not harmonized at the EU level.
 
 Pick and print the id of the data set to download:
 
+    # For the original data, see
+    # http://ec.europa.eu/eurostat/tgm/table.do?tab=table&init=1&plugin=1&language=en&pcode=tsdtr210
     id <- search_eurostat("Modal split of passenger transport", 
                              type = "table")$code[1]
     print(id)
@@ -349,62 +349,6 @@ desidered series (upper case). For time variable, in addition to a
     dat2 <- get_eurostat(id, filters = list(geo = c("EU28", "FI"), lastTimePeriod=1), time_format = "num")
     kable(dat2)
 
-<table>
-<thead>
-<tr class="header">
-<th align="left">unit</th>
-<th align="left">vehicle</th>
-<th align="left">geo</th>
-<th align="right">time</th>
-<th align="right">values</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">PC</td>
-<td align="left">BUS_TOT</td>
-<td align="left">EU28</td>
-<td align="right">2014</td>
-<td align="right">9.1</td>
-</tr>
-<tr class="even">
-<td align="left">PC</td>
-<td align="left">BUS_TOT</td>
-<td align="left">FI</td>
-<td align="right">2014</td>
-<td align="right">9.8</td>
-</tr>
-<tr class="odd">
-<td align="left">PC</td>
-<td align="left">CAR</td>
-<td align="left">EU28</td>
-<td align="right">2014</td>
-<td align="right">83.4</td>
-</tr>
-<tr class="even">
-<td align="left">PC</td>
-<td align="left">CAR</td>
-<td align="left">FI</td>
-<td align="right">2014</td>
-<td align="right">85.2</td>
-</tr>
-<tr class="odd">
-<td align="left">PC</td>
-<td align="left">TRN</td>
-<td align="left">EU28</td>
-<td align="right">2014</td>
-<td align="right">7.6</td>
-</tr>
-<tr class="even">
-<td align="left">PC</td>
-<td align="left">TRN</td>
-<td align="left">FI</td>
-<td align="right">2014</td>
-<td align="right">5.0</td>
-</tr>
-</tbody>
-</table>
-
 Replacing codes with labels
 ---------------------------
 
@@ -415,62 +359,6 @@ human-readable labels instead, use a `type = "label"` argument.
                                              lastTimePeriod = 1), 
                           type = "label", time_format = "num")
     kable(head(datl2))
-
-<table>
-<thead>
-<tr class="header">
-<th align="left">unit</th>
-<th align="left">vehicle</th>
-<th align="left">geo</th>
-<th align="right">time</th>
-<th align="right">values</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Percentage</td>
-<td align="left">Motor coaches, buses and trolley buses</td>
-<td align="left">European Union (28 countries)</td>
-<td align="right">2014</td>
-<td align="right">9.1</td>
-</tr>
-<tr class="even">
-<td align="left">Percentage</td>
-<td align="left">Motor coaches, buses and trolley buses</td>
-<td align="left">Finland</td>
-<td align="right">2014</td>
-<td align="right">9.8</td>
-</tr>
-<tr class="odd">
-<td align="left">Percentage</td>
-<td align="left">Passenger cars</td>
-<td align="left">European Union (28 countries)</td>
-<td align="right">2014</td>
-<td align="right">83.4</td>
-</tr>
-<tr class="even">
-<td align="left">Percentage</td>
-<td align="left">Passenger cars</td>
-<td align="left">Finland</td>
-<td align="right">2014</td>
-<td align="right">85.2</td>
-</tr>
-<tr class="odd">
-<td align="left">Percentage</td>
-<td align="left">Trains</td>
-<td align="left">European Union (28 countries)</td>
-<td align="right">2014</td>
-<td align="right">7.6</td>
-</tr>
-<tr class="even">
-<td align="left">Percentage</td>
-<td align="left">Trains</td>
-<td align="left">Finland</td>
-<td align="right">2014</td>
-<td align="right">5.0</td>
-</tr>
-</tbody>
-</table>
 
 Eurostat codes in the downloaded data set can be replaced with
 human-readable labels from the Eurostat dictionaries with the
@@ -929,9 +817,9 @@ Maps
       geom_polygon(aes(fill=cat),color="white", size=.1) +
       scale_fill_brewer(palette ="Oranges")
 
-    ## Reading cache file /tmp/RtmpeWRiWa/eurostat/tgs00026_raw_code_TF.rds
+    ## Reading cache file /tmp/Rtmp7lGa2B/eurostat/tgs00026_raw_code_TF.rds
 
-    ## Table  tgs00026  read from cache file:  /tmp/RtmpeWRiWa/eurostat/tgs00026_raw_code_TF.rds
+    ## Table  tgs00026  read from cache file:  /tmp/Rtmp7lGa2B/eurostat/tgs00026_raw_code_TF.rds
 
     ## 
     ##       COPYRIGHT NOTICE
@@ -960,9 +848,9 @@ Maps
     ##       information regarding their licence agreements.
     ## 
 
-    ## Reading cache file /tmp/RtmpeWRiWa/eurostat/df60.RData
+    ## Reading cache file /tmp/Rtmp7lGa2B/eurostat/df60.RData
 
-    ## data_frame at resolution 1: 60  read from cache file:  /tmp/RtmpeWRiWa/eurostat/df60.RData
+    ## data_frame at resolution 1: 60  read from cache file:  /tmp/Rtmp7lGa2B/eurostat/df60.RData
 
 ![](fig/maps1-1.png)
 
@@ -982,9 +870,9 @@ Maps
       # merge with geodata
       merge_eurostat_geodata(data=.,geocolumn="geo",resolution = "01", all_regions = FALSE, output_class="df")
 
-    ## Reading cache file /tmp/RtmpeWRiWa/eurostat/tgs00026_raw_code_TF.rds
+    ## Reading cache file /tmp/Rtmp7lGa2B/eurostat/tgs00026_raw_code_TF.rds
 
-    ## Table  tgs00026  read from cache file:  /tmp/RtmpeWRiWa/eurostat/tgs00026_raw_code_TF.rds
+    ## Table  tgs00026  read from cache file:  /tmp/Rtmp7lGa2B/eurostat/tgs00026_raw_code_TF.rds
 
     ## 
     ##       COPYRIGHT NOTICE
@@ -1013,9 +901,9 @@ Maps
     ##       information regarding their licence agreements.
     ## 
 
-    ## Reading cache file /tmp/RtmpeWRiWa/eurostat/df01.RData
+    ## Reading cache file /tmp/Rtmp7lGa2B/eurostat/df01.RData
 
-    ## data_frame at resolution 1: 01  read from cache file:  /tmp/RtmpeWRiWa/eurostat/df01.RData
+    ## data_frame at resolution 1: 01  read from cache file:  /tmp/Rtmp7lGa2B/eurostat/df01.RData
 
     # plot map
     p <- ggplot(data=df, aes(long,lat,group=group))
@@ -1045,9 +933,9 @@ Maps
       # merge Eurostat data with geodata from Cisco
       merge_eurostat_geodata(data=.,geocolumn="geo",resolution = "10", output_class ="spdf", all_regions=FALSE) 
 
-    ## Reading cache file /tmp/RtmpeWRiWa/eurostat/tgs00026_raw_code_TF.rds
+    ## Reading cache file /tmp/Rtmp7lGa2B/eurostat/tgs00026_raw_code_TF.rds
 
-    ## Table  tgs00026  read from cache file:  /tmp/RtmpeWRiWa/eurostat/tgs00026_raw_code_TF.rds
+    ## Table  tgs00026  read from cache file:  /tmp/Rtmp7lGa2B/eurostat/tgs00026_raw_code_TF.rds
 
     ## 
     ##       COPYRIGHT NOTICE
@@ -1076,9 +964,9 @@ Maps
     ##       information regarding their licence agreements.
     ## 
 
-    ## Reading cache file /tmp/RtmpeWRiWa/eurostat/spdf10.RData
+    ## Reading cache file /tmp/Rtmp7lGa2B/eurostat/spdf10.RData
 
-    ## SpatialPolygonDataFrame at resolution 1: 10  read from cache file:  /tmp/RtmpeWRiWa/eurostat/spdf10.RData
+    ## SpatialPolygonDataFrame at resolution 1: 10  read from cache file:  /tmp/Rtmp7lGa2B/eurostat/spdf10.RData
 
     # plot map
     sp::spplot(obj = dat, "cat", main = "Disposable household income",
@@ -1120,7 +1008,7 @@ BSD-2-clause (modified FreeBSD) license:
     ## Kindly cite the eurostat R package as follows:
     ## 
     ##   (C) Leo Lahti, Janne Huovari, Markus Kainu, Przemyslaw Biecek
-    ##   2014-2016. eurostat R package. R package version 2.1.1 URL:
+    ##   2014-2017. eurostat R package. R package version 2.2.43 URL:
     ##   https://github.com/rOpenGov/eurostat
     ## 
     ## A BibTeX entry for LaTeX users is
@@ -1128,9 +1016,9 @@ BSD-2-clause (modified FreeBSD) license:
     ##   @Misc{,
     ##     title = {eurostat R package},
     ##     author = {Leo Lahti and Janne Huovari and Markus Kainu and Przemyslaw Biecek},
-    ##     year = {2014-2016},
+    ##     year = {2014-2017},
     ##     url = {https://github.com/rOpenGov/eurostat},
-    ##     note = {R package version 2.1.1},
+    ##     note = {R package version 2.2.43},
     ##   }
 
 ### Related work
@@ -1162,34 +1050,33 @@ This tutorial was created with
 
     sessionInfo()
 
-    ## R version 3.3.1 (2016-06-21)
+    ## R version 3.3.2 (2016-10-31)
     ## Platform: x86_64-pc-linux-gnu (64-bit)
-    ## Running under: Ubuntu 16.04 LTS
+    ## Running under: Ubuntu 16.04.2 LTS
     ## 
     ## locale:
     ##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
-    ##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
-    ##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
-    ##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+    ##  [3] LC_TIME=de_BE.UTF-8        LC_COLLATE=en_US.UTF-8    
+    ##  [5] LC_MONETARY=de_BE.UTF-8    LC_MESSAGES=en_US.UTF-8   
+    ##  [7] LC_PAPER=de_BE.UTF-8       LC_NAME=C                 
     ##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-    ## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+    ## [11] LC_MEASUREMENT=de_BE.UTF-8 LC_IDENTIFICATION=C       
     ## 
     ## attached base packages:
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
     ##  [1] sp_1.2-3           RColorBrewer_1.1-2 dplyr_0.5.0       
-    ##  [4] plotrix_3.6-2      ggplot2_2.1.0      tidyr_0.5.1       
-    ##  [7] rvest_0.3.2        xml2_1.0.0         eurostat_2.1.1    
-    ## [10] rmarkdown_0.9.6.14 knitr_1.13        
+    ##  [4] plotrix_3.6-3      ggplot2_2.1.0      tidyr_0.6.0.9000  
+    ##  [7] rvest_0.3.2        xml2_1.1.0         eurostat_2.2.43   
+    ## [10] rmarkdown_1.1      knitr_1.14        
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.7      formatR_1.4      highr_0.6        plyr_1.8.4      
-    ##  [5] class_7.3-14     tools_3.3.1      digest_0.6.9     jsonlite_1.0    
-    ##  [9] evaluate_0.9     tibble_1.1       gtable_0.2.0     lattice_0.20-33 
-    ## [13] DBI_0.4-1        rgdal_1.1-10     curl_0.9.7       yaml_2.1.13     
-    ## [17] e1071_1.6-7      httr_1.2.1       stringr_1.0.0    classInt_0.1-23 
-    ## [21] grid_3.3.1       R6_2.1.2         readr_0.2.2      magrittr_1.5    
-    ## [25] scales_0.4.0     htmltools_0.3.5  assertthat_0.1   colorspace_1.2-6
-    ## [29] labeling_0.3     stringi_1.1.1    lazyeval_0.2.0   munsell_0.4.3   
-    ## [33] Cairo_1.5-9
+    ##  [1] Rcpp_0.12.9      formatR_1.4      highr_0.6        plyr_1.8.4      
+    ##  [5] class_7.3-14     tools_3.3.2      digest_0.6.10    jsonlite_1.2    
+    ##  [9] evaluate_0.10    tibble_1.2       gtable_0.2.0     lattice_0.20-34 
+    ## [13] DBI_0.5-1        yaml_2.1.13      rgdal_1.1-10     e1071_1.6-7     
+    ## [17] httr_1.2.1       stringr_1.1.0    classInt_0.1-23  grid_3.3.2      
+    ## [21] R6_2.2.0         readr_1.0.0      magrittr_1.5     scales_0.4.0    
+    ## [25] htmltools_0.3.5  assertthat_0.1   colorspace_1.2-7 labeling_0.3    
+    ## [29] stringi_1.1.2    lazyeval_0.2.0   munsell_0.4.3    Cairo_1.5-9
