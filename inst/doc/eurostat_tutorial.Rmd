@@ -1,5 +1,5 @@
 ---
-title: "Eurostat R tools"
+title: "Tutorial (vignette) for the eurostat R package"
 date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
@@ -7,15 +7,15 @@ output:
 vignette: >
   %\VignetteIndexEntry{eurostat tutorial}
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteDepends{Cairo}
+  %\VignetteEncoding{UTF-8}
   \usepackage[utf8]{inputenc}
 ---
 
 # R Tools for Eurostat Open Data
 
-This [rOpenGov](http://ropengov.github.io) R package provides tools to
-access [Eurostat database](http://ec.europa.eu/eurostat/). For contact
-information and source code, see
-the [README](https://github.com/rOpenGov/eurostat).
+This [rOpenGov](http://ropengov.github.io) R package provides tools to access [Eurostat database](http://ec.europa.eu/eurostat/data/database), which you can also browse on-line for the data sets and documentation. For contact information and source code, see the [package website](http://ropengov.github.io/eurostat/).
+
 
 ```{r setup, include=FALSE}
 # Global options
@@ -224,22 +224,58 @@ print(p)
 
 <a name="triangle"></a>**Triangle plot**
 
-Triangle plot is handy for visualizing data sets with three variables. For instance, the passenger transport distributions across three vehicle types in 2012 for all countries where data is available:
+Triangle plot is handy for visualizing data sets with three variables. 
 
 ```{r plotGallery, warning=FALSE, message=FALSE, fig.width=6, fig.height=6}
 library(tidyr)
-
-# Download and modify the transport data
-transports <- spread(subset(dat, time == 2012, select = c(geo, vehicle, values)), vehicle, values)
-
-# Remove countries with missing data
-transports <- na.omit(transports)
-
-# Use triangle plot to visualize vehicle distributions:
 library(plotrix)
-triax.plot(transports[, -1], show.grid = TRUE, 
-           label.points = TRUE, point.labels = transports$geo, 
-           pch = 19)
+library(eurostat)
+library(dplyr)
+library(tidyr)
+
+# All sources of renewable energy are to be grouped into three sets
+ dict <- c("Solid biofuels (excluding charcoal)" = "Biofuels",
+ "Biogasoline" = "Biofuels",
+ "Other liquid biofuels" = "Biofuels",
+ "Biodiesels" = "Biofuels",
+ "Biogas" = "Biofuels",
+ "Hydro power" = "Hydro power",
+ "Tide, Wave and Ocean" = "Hydro power",
+ "Solar thermal" = "Wind, solar, waste and Other",
+ "Geothermal Energy" = "Wind, solar, waste and Other",
+ "Solar photovoltaic" = "Wind, solar, waste and Other",
+ "Municipal waste (renewable)" = "Wind, solar, waste and Other",
+ "Wind power" = "Wind, solar, waste and Other",
+ "Bio jet kerosene" = "Wind, solar, waste and Other")
+# Some cleaning of the data is required
+ energy3 <- get_eurostat("ten00081") %>%
+ label_eurostat(dat) %>%
+ filter(time == "2013-01-01",
+ product != "Renewable energies") %>%
+ mutate(nproduct = dict[as.character(product)], # just three categories
+ geo = gsub(geo, pattern=" \\(.*", replacement="")) %>%
+ select(nproduct, geo, values) %>%
+ group_by(nproduct, geo) %>%
+ summarise(svalue = sum(values)) %>%
+ group_by(geo) %>%
+ mutate(tvalue = sum(svalue),
+ svalue = svalue/sum(svalue)) %>%
+ filter(tvalue > 1000) %>% # only large countries
+ spread(nproduct, svalue)
+ 
+# Triangle plot
+ par(cex=0.75, mar=c(0,0,0,0))
+ positions <- plotrix::triax.plot(as.matrix(energy3[, c(3,5,4)]),
+                     show.grid = TRUE,
+                     label.points= FALSE, point.labels = energy3$geo,
+                     col.axis="gray50", col.grid="gray90",
+                     pch = 19, cex.axis=0.8, cex.ticks=0.7, col="grey50")
+
+ # Larger labels
+ ind <- which(energy3$geo %in%  c("Norway", "Iceland","Denmark","Estonia", "Turkey", "Italy", "Finland"))
+ df <- data.frame(positions$xypos, geo = energy3$geo)
+ points(df$x[ind], df$y[ind], cex=2, col="red", pch=19)
+ text(df$x[ind], df$y[ind], df$geo[ind], adj = c(0.5,-1), cex=1.5)
 ```
 
 
@@ -322,13 +358,31 @@ sp::spplot(obj = dat, "cat", main = "Disposable household income",
 
 
 
+## SDMX
+
+Eurostat data is available also in the SDMX format. The eurostat R package does not provide custom tools for this but the generic rsdmx R package can be used to access data in that format when necessary:
+
+```{r rsdmx, fig.width=8, fig.height=8, dev='CairoPNG'}
+library(rsdmx)
+
+# Data set URL
+url <- "http://ec.europa.eu/eurostat/SDMX/diss-web/rest/data/cdh_e_fos/..PC.FOS1.BE/?startperiod=2005&endPeriod=2011 "
+
+# Read the data from eurostat
+d <- readSDMX(url)
+
+# Convert to data frame and show the first entries
+df <- as.data.frame(d)
+
+kable(head(df))
+```
+
+
+
+
 # Further examples
 
-For further examples, see:
-
-  * [Blog post](http://ropengov.github.io/r/2015/05/01/eurostat-package-examples/)
-  * [Journal manuscript](https://github.com/rOpenGov/eurostat/blob/master/vignettes/2015-RJournal/lahti-huovari-kainu-biecek.md)
-
+For further examples, see the [package homepage](http://ropengov.github.io/eurostat/articles/index.html).
 
 
 # Citations and related work
@@ -342,7 +396,7 @@ Administrative boundaries: cite EuroGeographics
 
 ### Citing the eurostat R package
 
-For main developers and contributors, see the [README](../README.md).
+For main developers and contributors, see the [package homepage](http://ropengov.github.io/eurostat).
 
 This work can be freely used, modified and distributed under the
 BSD-2-clause (modified FreeBSD) license:
@@ -363,7 +417,8 @@ package develops related Eurostat tools but seems to be in an
 experimental stage at the time of writing this tutorial.
 
 The more generic [quandl](https://cran.r-project.org/package=quandl),
-[datamart](https://cran.r-project.org/package=datamart), and
+[datamart](https://cran.r-project.org/package=datamart),
+[rsdmx](https://cran.r-project.org/package=rsdmx), and
 [pdfetch](https://cran.r-project.org/package=pdfetch) packages may
 provide access to some versions of eurostat data but these packages
 are more generic and hence, in contrast to the eurostat R package,
@@ -373,7 +428,7 @@ analysis.
 
 ### Contact
 
-For contact information, see the [README](../README.md).
+For contact information, see the [package homepage](http://ropengov.github.io/eurostat).
 
 
 # Version info
