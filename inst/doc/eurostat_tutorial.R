@@ -147,83 +147,106 @@ library(tidyr)
  points(df$x[ind], df$y[ind], cex=2, col="red", pch=19)
  text(df$x[ind], df$y[ind], df$geo[ind], adj = c(0.5,-1), cex=1.5)
 
-## ----maps1, eval=TRUE, fig.width=8, fig.height=8-------------------------
-library(eurostat)
+## ----maps1-1, eval=TRUE, fig.width=8, fig.height=8-----------------------
 library(dplyr)
-library(ggplot2)
+library(eurostat)
+library(tmap)
+
+# Load example data set
+data("tgs00026")
+# Can be retrieved from the eurostat service with:
+# tgs00026 <- get_eurostat("tgs00026", time_format = "raw")
+
 # Data from Eurostat
-eurostat::get_eurostat("tgs00026", time_format = "raw") %>% 
+sp_data <- tgs00026 %>% 
   # subset to have only a single row per geo
   dplyr::filter(time == 2010, nchar(as.character(geo)) == 4) %>% 
   # categorise
-  dplyr::mutate(cat = cut_to_classes(values, n = 5)) %>% 
+  dplyr::mutate(income = cut_to_classes(values, n = 5)) %>% 
   # merge with geodata
-  merge_eurostat_geodata(data=.,geocolumn="geo",resolution = "60", output_class = "df", all_regions = TRUE) %>% 
-  # plot map
-  ggplot(data=., aes(x=long,y=lat,group=group)) +
-  geom_polygon(aes(fill=cat),color="white", size=.1) +
-  scale_fill_brewer(palette ="Oranges")
+  merge_eurostat_geodata(data = ., geocolumn = "geo",resolution = "60", 
+                         output_class = "spdf", all_regions = TRUE) 
 
+## ----maps1-1b, eval=TRUE-------------------------------------------------
+data(Europe)
+
+## ----maps1-1c, eval=TRUE-------------------------------------------------
+map1 <- tmap::tm_shape(Europe) +
+  tmap::tm_fill("lightgrey") +
+  tmap::tm_shape(sp_data) +
+  tmap::tm_grid() +
+  tmap::tm_polygons("income", title = "Disposable household\nincomes in 2010",  
+                    palette = "Oranges") +
+  tmap::tm_format_Europe()  
+
+## ----maps1-2, eval=FALSE, fig.width=8, fig.height=8----------------------
+#  # Interactive
+#  tmap_mode("view")
+#  map1
+#  
+#  # Set the mode back to normal plotting
+#  tmap_mode("plot")
+#  print(map1)
 
 ## ----maps2, fig.width=8, fig.height=8------------------------------------
 library(eurostat)
 library(dplyr)
 library(ggplot2)
 library(RColorBrewer)
+
 # Downloading and manipulating the tabular data
-df <- get_eurostat("tgs00026", time_format = "raw") %>% 
-  # subsetting to year 2005 and NUTS-3 level
-  dplyr::filter(time == 2005, nchar(as.character(geo)) == 4, grepl("PL",geo)) %>% 
+sp_data <- tgs00026 %>% 
+  # subsetting to year 2014 and NUTS-3 level
+  dplyr::filter(time == 2014, nchar(as.character(geo)) == 4, grepl("PL",geo)) %>% 
   # label the single geo column
-  mutate(label = label_eurostat(.)[["geo"]],
-         cat = cut_to_classes(values)) %>% 
+  mutate(label = paste0(label_eurostat(.)[["geo"]], "\n", values, "€"),
+         income = cut_to_classes(values)) %>% 
   # merge with geodata
-  merge_eurostat_geodata(data=.,geocolumn="geo",resolution = "01", all_regions = FALSE, output_class="df")
+  merge_eurostat_geodata(data=.,geocolumn="geo",resolution = "01", all_regions = FALSE, output_class="spdf")
 
 # plot map
-p <- ggplot(data=df, aes(long,lat,group=group))
-p <- p + geom_polygon(aes(fill = cat),colour="white",size=.8)
-p <- p + scale_fill_manual(values=brewer.pal(n = 5, name = "Oranges"))
-
-p <- p + geom_label(data=df %>% group_by(label,values,cat) %>% summarise(long = mean(long),
-                                                         lat = mean(lat)), 
-                    aes(long, lat, label = paste(label,"\n",values,"€"), group=label,fill=cat), 
-                    size=3.5, color="white", fontface="bold", lineheight=.8, show.legend=FALSE)
-p <- p + labs(title = paste0("Disposable household incomes in 2005"))
-p <- p + guides(fill = guide_legend(title = "EUR per Year",title.position = "top", title.hjust=0))
-p
+map2 <- tm_shape(Europe) +
+  tm_fill("lightgrey") +
+  tm_shape(sp_data, is.master = TRUE) +
+  tm_polygons("income", title = "Disposable household incomes in 2014",
+              palette = "Oranges", border.col = "white") + 
+  tm_text("label", just = "center") + 
+  tm_scale_bar() +
+  tm_format_Europe(legend.outside = TRUE, attr.outside = TRUE)
+map2
 
 ## ----maps3, fig.width=8, fig.height=8, dev='CairoPNG'--------------------
 library(sp)
 library(eurostat)
 library(dplyr)
-dat <- get_eurostat("tgs00026", time_format = "raw") %>% 
-  # subsetting to year 2005 and NUTS-3 level
-  dplyr::filter(time == 2005, nchar(as.character(geo)) == 4) %>% 
+dat <- tgs00026 %>% 
+  # subsetting to year 2014 and NUTS-3 level
+  dplyr::filter(time == 2014, nchar(as.character(geo)) == 4) %>% 
   # classifying the values the variable
   dplyr::mutate(cat = cut_to_classes(values)) %>% 
   # merge Eurostat data with geodata from Cisco
-  merge_eurostat_geodata(data=.,geocolumn="geo",resolution = "10", output_class ="spdf", all_regions=FALSE) 
+  merge_eurostat_geodata(data = .,geocolumn = "geo",resolution = "10", 
+                         output_class = "spdf", all_regions = FALSE) 
 
 # plot map
 sp::spplot(obj = dat, "cat", main = "Disposable household income",
-	   xlim=c(-22,34), ylim=c(35,70), 
+	   xlim = c(-22,34), ylim = c(35,70), 
            col.regions = c("dim grey", brewer.pal(n = 5, name = "Oranges")),
 	   col = "white", usePolypath = FALSE)
 
-## ----rsdmx, fig.width=8, fig.height=8, dev='CairoPNG'--------------------
-library(rsdmx)
-
-# Data set URL
-url <- "http://ec.europa.eu/eurostat/SDMX/diss-web/rest/data/cdh_e_fos/..PC.FOS1.BE/?startperiod=2005&endPeriod=2011 "
-
-# Read the data from eurostat
-d <- readSDMX(url)
-
-# Convert to data frame and show the first entries
-df <- as.data.frame(d)
-
-kable(head(df))
+## ----rsdmx, fig.width=8, fig.height=8, dev='CairoPNG', eval=FALSE--------
+#  library(rsdmx)
+#  
+#  # Data set URL
+#  url <- "http://ec.europa.eu/eurostat/SDMX/diss-web/rest/data/cdh_e_fos/..PC.FOS1.BE/?startperiod=2005&endPeriod=2011"
+#  
+#  # Read the data from eurostat
+#  d <- readSDMX(url)
+#  
+#  # Convert to data frame and show the first entries
+#  df <- as.data.frame(d)
+#  
+#  kable(head(df))
 
 ## ----citation, message=FALSE, eval=TRUE, echo=TRUE-----------------------
 citation("eurostat")
