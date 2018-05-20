@@ -1,58 +1,76 @@
-#' @title Get Data from Eurostat API in JSON 
+#' @title Get Data from Eurostat API in JSON
 #' @description Retrieve data from Eurostat API in JSON format.
-#' @details Data to retrieve from \href{http://ec.europa.eu/eurostat/web/json-and-unicode-web-services}{The Eurostat Web Services} can be specified with filters. Normally, it is better to use JSON query through \code{\link{get_eurostat}}, than to use \code{\link{get_eurostat_json}} directly.
-#' @details Queries are limited to 50 sub-indicators at a time.
-#'    A time can be filtered with fixed "time" filter or with "sinceTimePeriod"
-#'    and "lastTimePeriod" filters. A \code{sinceTimePeriod = 2000} returns
-#'    observations from 2000 to a last available. A \code{lastTimePeriod = 10}
-#'    returns a 10 last observations.
+#' @details 
+#'   Data to retrieve from
+#'   \href{http://ec.europa.eu/eurostat/web/json-and-unicode-web-services}{The
+#'   Eurostat Web Services} can be specified with filters. Normally, it is
+#'   better to use JSON query through \code{\link{get_eurostat}}, than to use
+#'   \code{\link{get_eurostat_json}} directly.
+#'   
+#'   Queries are limited to 50 sub-indicators at a time. A time can be
+#'   filtered with fixed "time" filter or with "sinceTimePeriod" and
+#'   "lastTimePeriod" filters. A \code{sinceTimePeriod = 2000} returns
+#'   observations from 2000 to a last available. A \code{lastTimePeriod = 10}
+#'   returns a 10 last observations.
+#'  
+#'   To use a proxy to connect, a \code{\link[httr]{use_proxy}} can be
+#'   passed to \code{\link[httr]{GET}}. For example 
+#'   \code{get_eurostat_json(id, filters, 
+#'   config = httr::use_proxy(url, port, username, password))}.
+#'    
 #' @param id A code name for the dataset of interested. See the table of
-#'        contents of eurostat datasets for more details. 
-#' @param filters A named list of filters. Names of list objects are 
-#'        Eurostat variable codes and values are vectors of observation codes. 
-#'        If \code{NULL} (default) the whole 
-#'        dataset is returned. See details for more on filters and 
-#'        limitations per query.
+#'   contents of eurostat datasets for more details.
+#' @param filters A named list of filters. Names of list objects are Eurostat
+#'   variable codes and values are vectors of observation codes. If \code{NULL}
+#'   (default) the whole dataset is returned. See details for more on filters
+#'   and limitations per query.
 #' @param lang A language used for metadata (en/fr/de).
-#' @param type A type of variables, "code" (default), "label" or "both". The 
-#'        "both" will return a data_frame with named vectors, labels as values 
-#'        and codes as names.
-#' @param stringsAsFactors if \code{TRUE} (the default) variables are
-#'         converted to factors in original Eurostat order. If \code{FALSE}
-#'         they are returned as a character.
+#' @param type A type of variables, "code" (default), "label" or "both". The
+#'   "both" will return a data_frame with named vectors, labels as values and
+#'   codes as names.
+#' @param stringsAsFactors if \code{TRUE} (the default) variables are converted
+#'   to factors in original Eurostat order. If \code{FALSE} they are returned as
+#'   a character.
+#' @param ... Other arguments passed on to \code{\link[httr]{GET}}. For example
+#'   a proxy parameters, see details.
+#'   .
 #'
 #' @return A dataset as a data_frame.
 #' @export
-#' @author Przemyslaw Biecek, Leo Lahti, Janne Huovari and Markus Kainu \email{ropengov-forum@@googlegroups.com} \url{http://github.com/ropengov/eurostat}
+#' @author Przemyslaw Biecek, Leo Lahti, Janne Huovari and Markus Kainu
+#'   \email{ropengov-forum@@googlegroups.com}
+#'   \url{http://github.com/ropengov/eurostat}
 #' @examples
 #'  \dontrun{
 #'    tmp <- get_eurostat_json("cdh_e_fos")
-#'    yy <- get_eurostat_json(id = "nama_gdp_c", filters = list(geo=c("EU28", "FI"), 
+#'    yy <- get_eurostat_json(id = "nama_gdp_c", filters = list(geo=c("EU28", "FI"),
 #'                                                         unit="EUR_HAB",
-#'                                                         indic_na="B1GM")) 
+#'                                                         indic_na="B1GM"))
 #' }
 #' @keywords utilities database
 get_eurostat_json <- function(id, filters = NULL, 
                               type = c("code", "label", "both"), 
                               lang = c("en", "fr", "de"),
-                              stringsAsFactors = default.stringsAsFactors()){
+                              stringsAsFactors = default.stringsAsFactors(),
+                              ...){
   
   #get response
   url <- eurostat_json_url(id = id, filters = filters, lang = lang)
-  resp <- httr::GET(url)
+  resp <- httr::GET(url, ...)
   status <- httr::status_code(resp)
   
   # check status and get json
+  msg <- ". Some datasets are not accessible via the eurostat interface. You can try to search the data manually from the comext database at http://epp.eurostat.ec.europa.eu/newxtweb/ or bulk download facility at http://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing or annual Excel files http://ec.europa.eu/eurostat/web/prodcom/data/excel-files-nace-rev.2"
   if (status == 200){
     jdat <- jsonlite::fromJSON(url)
   } else if (status == 400){
     stop("Failure to get data. Probably invalid dataset id. Status code: ", 
-         status)
+         status, msg)
   } else if (status == 500){
     stop("Failure to get data. Probably filters did not return any data 
-         or data exceeded query size limitation. Status code: ", status)
+         or data exceeded query size limitation. Status code: ", status, msg)
   } else {
-    stop("Failure to get data. Status code: ", status)
+    stop("Failure to get data. Status code: ", status, msg)
   }
   
   # get json data

@@ -3,21 +3,22 @@ context("Get")
 test_that("get_eurostat includes time and value",{
   skip_on_cran()
   expect_true(all(c("time", "values") %in%
-                    names(get_eurostat("namq_aux_lp"))))
+                    names(get_eurostat("road_eqr_trams"))))
 })
 
 test_that("get_eurostat works with multi-frequency",{
   skip_on_cran()
   expect_error(get_eurostat("avia_gonc", cache = FALSE))
-  matches("-01-01", unique(get_eurostat("avia_gonc", select_time = "Y" , cache = FALSE)$time))
+  expect_match(as.character(unique(get_eurostat("avia_gonc", select_time = "Y" , 
+                                                cache = FALSE)$time)), "-01-01")
 })
 
 test_that("get_eurostat return right classes",{
   skip_on_cran()
   expect_true(all(c("factor", "numeric") %in%
-                    sapply(get_eurostat("namq_aux_lp"), class)))
+                    sapply(get_eurostat("road_eqr_trams"), class)))
   expect_true(all(c("character", "numeric") %in%
-                    sapply(get_eurostat("namq_aux_lp", stringsAsFactors = FALSE),
+                    sapply(get_eurostat("road_eqr_trams", stringsAsFactors = FALSE),
                            class)))
 })
 
@@ -71,15 +72,17 @@ context("Label")
 test_that("Variable names are labeled",{
   skip_on_cran()
   expect_equal(label_eurostat_vars("geo"), "Geopolitical entity (reporting)")
-  expect_equal(label_eurostat_vars("indic_na", lang = "fr"), "Indicateur des comptes nationaux")
+  expect_equal(label_eurostat_vars("housing", lang = "fr"), "Habitation")
+
   expect_true(any(grepl("_code",
                         names(label_eurostat(
-                          get_eurostat("namq_aux_lp"), code = "geo")))))
+                          get_eurostat("road_eqr_trams"), code = "geo")))))
 })
 
 test_that("Label ordering is ordered", {
   skip_on_cran()
-  expect_equal(c("European Union (28 countries)", "Finland", "United States"),
+  expect_equal(c("European Union (current composition)",
+               "Finland", "United States"),
                levels(label_eurostat(factor(c("FI", "US", "EU28")),
                               dic = "geo", eu_order = TRUE)))
 })
@@ -109,12 +112,15 @@ test_that("Duplicated with fix_duplicated does not give an error", {
 
 context("Flags")
 
-flag_dat <- get_eurostat("tsdtr210", type = "label", keepFlags=T, cache = FALSE)
+#flag_dat <- get_eurostat("t2020_rk310", type = "label", keepFlags=T, cache = FALSE)
+#flag_dat <- get_eurostat("tsdtr210", type = "label", keepFlags=T, cache = FALSE)
+flag_dat <- get_eurostat("road_pa_buscoa", type = "label", keepFlags=T, cache = FALSE)
+
 
 test_that("get_eurostat includes flags",{
   skip_on_cran()
   expect_true(all(c("flags") %in%
-                    names(get_eurostat("namq_aux_lp", keepFlags = TRUE))))
+                    names(get_eurostat("road_eqr_trams", keepFlags = TRUE))))
 })
 
 test_that("keepFlags + label as in #61",{
@@ -125,7 +131,7 @@ test_that("keepFlags + label as in #61",{
 
 test_that("flag content",{
   skip_on_cran()
-  expect_true(all(c("b", "be") %in%
+  expect_true(all(c("b", "e") %in%
               unique(flag_dat$flags)))
 })
 
@@ -133,10 +139,10 @@ context("json")
 
 test_that("Get json data",{
   skip_on_cran()
-  expect_named(get_eurostat_json("nama_gdp_c", filters = list(geo=c("EU28", "FI"), 
-                                                             unit="EUR_HAB",
-                                                             indic_na="B1GM")),
-               c("geo", "unit", "indic_na", "time", "values"), 
+  expect_named(get_eurostat_json("nama_10_gdp", filters = list(geo = "FI",
+                                                               na_item = "B1GQ",
+                                                               unit = "CLV_I10")),
+               c("geo", "unit", "na_item", "time", "values"), 
                ignore.order = TRUE)
 })
 
