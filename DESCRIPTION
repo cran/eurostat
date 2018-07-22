@@ -1,8 +1,8 @@
 Package: eurostat
 Type: Package
 Title: Tools for Eurostat Open Data
-Date: 2018-05-18
-Version: 3.2.1
+Date: 2018-07-21
+Version: 3.2.2
 Encoding: UTF-8
 Authors@R: c(
   person("Leo", "Lahti", email = "leo.lahti@iki.fi", role = c("aut", "cre")),
@@ -18,9 +18,9 @@ Description: Tools to download data from the Eurostat database
     <http://ec.europa.eu/eurostat> together with search and
     manipulation utilities.
 License: BSD_2_clause + file LICENSE
-Depends: dplyr, methods, R (>= 3.4.0)
-Imports: broom, classInt, curl, httr, jsonlite, RColorBrewer, sp,
-        stringi, stringr, tibble, sf, tidyr, readr
+Depends: methods, R (>= 3.4.0)
+Imports: broom, classInt, dplyr, httr, jsonlite, RColorBrewer, readr,
+        sf, sp, stringi, stringr, tibble, tidyr
 Suggests: Cairo, ggplot2, knitr, lubridate, mapproj, plotrix,
         rmarkdown, roxygen2, rsdmx, rvest, testthat, tmap
 LazyData: true
@@ -30,7 +30,7 @@ VignetteBuilder: knitr
 NeedsCompilation: no
 Repository: CRAN
 RoxygenNote: 6.0.1
-Packaged: 2018-05-20 11:48:06 UTC; lei
+Packaged: 2018-07-22 18:19:18 UTC; lei
 Author: Leo Lahti [aut, cre],
   Janne Huovari [aut],
   Markus Kainu [aut],
@@ -38,4 +38,4 @@ Author: Leo Lahti [aut, cre],
   Joona Lehtomaki [ctb],
   Francois Briatte [ctb],
   Oliver Reiter [ctb]
-Date/Publication: 2018-05-20 12:07:56 UTC
+Date/Publication: 2018-07-22 20:30:03 UTC
