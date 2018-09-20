@@ -1,8 +1,8 @@
 Package: eurostat
 Type: Package
 Title: Tools for Eurostat Open Data
-Date: 2018-07-21
-Version: 3.2.2
+Date: 2018-09-20
+Version: 3.2.9
 Encoding: UTF-8
 Authors@R: c(
   person("Leo", "Lahti", email = "leo.lahti@iki.fi", role = c("aut", "cre")),
@@ -29,8 +29,8 @@ BugReports: https://github.com/ropengov/eurostat/issues
 VignetteBuilder: knitr
 NeedsCompilation: no
 Repository: CRAN
-RoxygenNote: 6.0.1
-Packaged: 2018-07-22 18:19:18 UTC; lei
+RoxygenNote: 6.1.0
+Packaged: 2018-09-20 18:38:13 UTC; lei
 Author: Leo Lahti [aut, cre],
   Janne Huovari [aut],
   Markus Kainu [aut],
@@ -38,4 +38,4 @@ Author: Leo Lahti [aut, cre],
   Joona Lehtomaki [ctb],
   Francois Briatte [ctb],
   Oliver Reiter [ctb]
-Date/Publication: 2018-07-22 20:30:03 UTC
+Date/Publication: 2018-09-20 19:50:12 UTC

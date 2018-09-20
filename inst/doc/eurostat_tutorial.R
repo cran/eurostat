@@ -161,19 +161,18 @@ sp_data <- eurostat::get_eurostat("tgs00026", time_format = "raw", stringsAsFact
   dplyr::mutate(income = cut_to_classes(values, n = 5))
 
 # Download geospatial data from GISCO
-geodata <- get_eurostat_geospatial(output_class = "sf", resolution = "60", nuts_level = 2)
+geodata <- get_eurostat_geospatial(output_class = "sf", resolution = "60", nuts_level = 2, year = 2013)
 
 # merge with attribute data with geodata
 map_data <- inner_join(geodata, sp_data)
 
-## ----map1ex, eval=TRUE---------------------------------------------------
+## ----map1ex, eval=TRUE, warning=FALSE------------------------------------
 map1 <- tmap::tm_shape(geodata) +
   tmap::tm_fill("lightgrey") +
   tmap::tm_shape(map_data) +
   tmap::tm_grid() +
   tmap::tm_polygons("income", title = "Disposable household\nincomes in 2010",  
-                    palette = "Oranges") +
-  tmap::tm_format_Europe(legend.outside = TRUE, attr.outside = TRUE)
+                    palette = "Oranges")
 print(map1)  
 
 ## ----maps1-2, eval=FALSE, fig.width=8, fig.height=8----------------------
@@ -204,7 +203,7 @@ euro_sf2 <- get_eurostat("tgs00026", time_format = "raw",
          income = cut_to_classes(values))
 
 print("Download geospatial data from GISCO")
-geodata <- get_eurostat_geospatial(output_class = "sf", resolution = "60", nuts_level = 2)
+geodata <- get_eurostat_geospatial(output_class = "sf", resolution = "60", nuts_level = 2, year = 2013)
 
 # Merge with attribute data with geodata
 map_data <- inner_join(geodata, euro_sf2)
@@ -216,8 +215,7 @@ map2 <- tm_shape(geodata) +
   tm_polygons("income", title = "Disposable household incomes in 2014",
               palette = "Oranges", border.col = "white") + 
   tm_text("NUTS_NAME", just = "center") + 
-  tm_scale_bar() +
-  tm_format_Europe(legend.outside = TRUE, attr.outside = TRUE)
+  tm_scale_bar()
 map2
 
 ## ----maps3, fig.width=8, fig.height=8, dev='CairoPNG'--------------------
@@ -232,7 +230,7 @@ dat <- get_eurostat("tgs00026", time_format = "raw", stringsAsFactors = FALSE) %
   dplyr::mutate(cat = cut_to_classes(values))
 
 # Download geospatial data from GISCO
-geodata <- get_eurostat_geospatial(output_class = "spdf", resolution = "10", nuts_level = 2)
+geodata <- get_eurostat_geospatial(output_class = "spdf", resolution = "10", nuts_level = 2, year = 2013)
 
 # merge with attribute data with geodata
 geodata@data <- left_join(geodata@data, dat)
@@ -254,7 +252,7 @@ dat <- get_eurostat("tgs00026", time_format = "raw", stringsAsFactors = FALSE) %
   dplyr::mutate(cat = cut_to_classes(values))
 
 # Download geospatial data from GISCO
-geodata <- get_eurostat_geospatial(resolution = "60", nuts_level = "2")
+geodata <- get_eurostat_geospatial(resolution = "60", nuts_level = "2", year = 2013)
 
 # merge with attribute data with geodata
 map_data <- inner_join(geodata, dat)
@@ -267,8 +265,6 @@ ggplot(data=map_data) + geom_sf(aes(fill=cat),color="dim grey", size=.1) +
                 Map produced in R with a help from Eurostat-package <github.com/ropengov/eurostat/>") +
   theme_light() + theme(legend.position=c(.8,.8)) +
   coord_sf(xlim=c(-12,44), ylim=c(35,70))
-
-
 
 
 ## ----rsdmx, fig.width=8, fig.height=8, dev='CairoPNG'--------------------
