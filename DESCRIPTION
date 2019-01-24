@@ -2,7 +2,7 @@ Package: eurostat
 Type: Package
 Title: Tools for Eurostat Open Data
 Date: 2018-10-16
-Version: 3.3.1.1
+Version: 3.3.1.2
 Encoding: UTF-8
 Authors@R: c(
   person("Leo", "Lahti", email = "leo.lahti@iki.fi", role = c("aut", "cre")),
@@ -30,7 +30,7 @@ VignetteBuilder: knitr
 NeedsCompilation: no
 Repository: CRAN
 RoxygenNote: 6.1.0
-Packaged: 2019-01-22 09:07:10 UTC; ripley
+Packaged: 2019-01-24 13:13:11 UTC; ripley
 Author: Leo Lahti [aut, cre],
   Janne Huovari [aut],
   Markus Kainu [aut],
@@ -38,7 +38,7 @@ Author: Leo Lahti [aut, cre],
   Joona Lehtomaki [ctb],
   Francois Briatte [ctb],
   Oliver Reiter [ctb]
-Date/Publication: 2019-01-23 13:37:56 UTC
+Date/Publication: 2019-01-24 13:18:14 UTC
 X-CRAN-Original-Maintainer: Leo Lahti <leo.lahti@iki.fi>
 X-CRAN-Comment: Orphaned on 2019-01-23 as no response to request to fix
         check issues.

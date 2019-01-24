@@ -11,7 +11,7 @@ Installation
 ============
 
 Release version
-[(CRAN)](https://cran.r-project.org/web/packages/eurostat/index.html):
+[(CRAN)](https://cran.r-project.org/package=eurostat):
 
     install.packages("eurostat")
 
@@ -1164,7 +1164,7 @@ SDMX
 
 Eurostat data is available also in the SDMX format. The eurostat R
 package does not provide custom tools for this but the generic
-[rsdmx](https://cran.r-project.org/web/packages/rsdmx/index.html) and
+[rsdmx](https://cran.r-project.org/package=rsdmx) and
 [rjsdmx](https://github.com/amattioc/SDMX/wiki) R packages can be used
 to access data in that format when necessary:
 
@@ -1297,7 +1297,7 @@ The independent [reurostat](https://github.com/Tungurahua/reurostat)
 package develops related Eurostat tools but seems to be in an
 experimental stage at the time of writing this tutorial.
 
-The more generic [quandl](https://cran.r-project.org/package=quandl),
+The more generic
 [datamart](https://cran.r-project.org/package=datamart),
 [rsdmx](https://cran.r-project.org/package=rsdmx), and
 [pdfetch](https://cran.r-project.org/package=pdfetch) packages may

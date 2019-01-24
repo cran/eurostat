@@ -1,4 +1,4 @@
-e251bd3b25026b84d8e25d9e68e8040c *DESCRIPTION
+f1c054947ef4831d5a6b6acb82fc1096 *DESCRIPTION
 dcca9802b53f9f6258c8cd0d15f418a4 *LICENSE
 52fb00f538243cc3c2e8a2f21fb6b01c *NAMESPACE
 e39b986b63780c1cba776262ce35ec1a *NEWS
@@ -36,15 +36,14 @@ f5400bc6f509983558fbec4aaf1ac085 *R/tidy_eurostat.R
 be3a16896be4562788c5908aa0d5ebe6 *data/tgs00026.rda
 1a5aaf33ae13542d5321f6d536e31b56 *inst/CITATION
 d3ef0de29cdf36efb68387f2f55f64f3 *inst/doc/blogposts.Rmd
-ba3793c723992e807b230ae7eab803d0 *inst/doc/blogposts.html
+46dfb8270770b225dc6fa31752fd6986 *inst/doc/blogposts.html
 8347c3f61d009dcd794f18afcecdb471 *inst/doc/cheatsheet.Rmd
-e9c3cac6262ed606574083edfc82f873 *inst/doc/cheatsheet.html
+99bcdc01587246f57c53f7fe603874c1 *inst/doc/cheatsheet.html
 1b3ef9d06a0d2d3665d99c363bd0af6e *inst/doc/eurostat_tutorial.R
-9d12b4813845827456811a97920a3518 *inst/doc/eurostat_tutorial.Rmd
-47939694b893ef4f9ea5818040ffe883 *inst/doc/eurostat_tutorial.html
-e89ab63c81dc14736ee3f839b58be2b1 *inst/doc/eurostat_tutorial.pdf
+33221c7a26c8d88f039acd5fc81179c4 *inst/doc/eurostat_tutorial.Rmd
+4bea1c1a76a1f7dcf2dab6238c8c2184 *inst/doc/eurostat_tutorial.html
 cb1f9b48339adba913bec6bcddac64ca *inst/doc/publications.Rmd
-cbb3c757cbd8abda787ed640687b7dc8 *inst/doc/publications.html
+375587a41bec3edda53997250f9bfd61 *inst/doc/publications.html
 5cf793d77461e4887b5a45a5d66fe60a *man/clean_eurostat_cache.Rd
 298f82d18db5ce8919bee0f3a5e10b11 *man/convert_time_col.Rd
 e5bf3df332c6cee647caf99d2e672b54 *man/cut_to_classes.Rd
@@ -70,8 +69,8 @@ b687ae6793816a468f08e84fd5c4e179 *man/tidy_eurostat.Rd
 cd6e1574e193668fc27a4e9829425e34 *tests/testthat/test-all.R
 d3ef0de29cdf36efb68387f2f55f64f3 *vignettes/blogposts.Rmd
 8347c3f61d009dcd794f18afcecdb471 *vignettes/cheatsheet.Rmd
-9d12b4813845827456811a97920a3518 *vignettes/eurostat_tutorial.Rmd
-0ddb20c31d6fcf5f6efdaf8115f700c7 *vignettes/eurostat_tutorial.md
+33221c7a26c8d88f039acd5fc81179c4 *vignettes/eurostat_tutorial.Rmd
+5676ae4970bd8668d36858df2ec9c883 *vignettes/eurostat_tutorial.md
 72c4253039840a1d6dc2e4c0da21b634 *vignettes/fig/map1ex-1.pdf
 d86839b8b9684c872c26db183009ca1d *vignettes/fig/map1ex-1.png
 009b9b4d41e8e32adb95f66452f82981 *vignettes/fig/maps2-1.pdf

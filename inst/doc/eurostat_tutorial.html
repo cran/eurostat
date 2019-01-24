@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="date" content="2019-01-22" />
+<meta name="date" content="2019-01-24" />
 
 <title>Tutorial (vignette) for the eurostat R package</title>
 
@@ -298,7 +298,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 
 <h1 class="title toc-ignore">Tutorial (vignette) for the eurostat R package</h1>
-<h4 class="date"><em>2019-01-22</em></h4>
+<h4 class="date"><em>2019-01-24</em></h4>
 
 
 <div id="TOC">
@@ -341,7 +341,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </div>
 <div id="installation" class="section level1">
 <h1>Installation</h1>
-<p>Release version <a href="https://cran.r-project.org/web/packages/eurostat/index.html">(CRAN)</a>:</p>
+<p>Release version <a href="https://cran.r-project.org/package=eurostat">(CRAN)</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;eurostat&quot;</span>)</a></code></pre></div>
 <p>Development version <a href="https://github.com/rOpenGov/eurostat">(Github)</a>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(devtools)</a>
@@ -1087,7 +1087,7 @@ tgs00026                Auxiliary Data</code></pre>
 <a class="sourceLine" id="cb24-8" title="8"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(time <span class="op">==</span><span class="st"> </span><span class="dv">2010</span>, <span class="kw">nchar</span>(geo) <span class="op">==</span><span class="st"> </span><span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb24-9" title="9"><span class="st">  </span><span class="co"># categorise</span></a>
 <a class="sourceLine" id="cb24-10" title="10"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">income =</span> <span class="kw">cut_to_classes</span>(values, <span class="dt">n =</span> <span class="dv">5</span>))</a></code></pre></div>
-<pre><code>## Table tgs00026 cached at /tmp/RtmpXKx2fA/eurostat/tgs00026_raw_code_FF.rds</code></pre>
+<pre><code>## Table tgs00026 cached at /tmp/RtmpKAbiMB/eurostat/tgs00026_raw_code_FF.rds</code></pre>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="co"># Download geospatial data from GISCO</span></a>
 <a class="sourceLine" id="cb26-2" title="2">geodata &lt;-<span class="st"> </span><span class="kw">get_eurostat_geospatial</span>(<span class="dt">output_class =</span> <span class="st">&quot;sf&quot;</span>,</a>
 <a class="sourceLine" id="cb26-3" title="3">                                   <span class="dt">resolution =</span> <span class="st">&quot;60&quot;</span>,</a>
@@ -1245,8 +1245,8 @@ tgs00026                Auxiliary Data</code></pre>
 <a class="sourceLine" id="cb46-7" title="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(time <span class="op">==</span><span class="st"> </span><span class="dv">2014</span>, <span class="kw">nchar</span>(geo) <span class="op">==</span><span class="st"> </span><span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb46-8" title="8"><span class="st">  </span><span class="co"># classifying the values the variable</span></a>
 <a class="sourceLine" id="cb46-9" title="9"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">cat =</span> <span class="kw">cut_to_classes</span>(values))</a></code></pre></div>
-<pre><code>## Reading cache file /tmp/RtmpXKx2fA/eurostat/tgs00026_raw_code_FF.rds</code></pre>
-<pre><code>## Table  tgs00026  read from cache file:  /tmp/RtmpXKx2fA/eurostat/tgs00026_raw_code_FF.rds</code></pre>
+<pre><code>## Reading cache file /tmp/RtmpKAbiMB/eurostat/tgs00026_raw_code_FF.rds</code></pre>
+<pre><code>## Table  tgs00026  read from cache file:  /tmp/RtmpKAbiMB/eurostat/tgs00026_raw_code_FF.rds</code></pre>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1"><span class="co"># Download geospatial data from GISCO</span></a>
 <a class="sourceLine" id="cb49-2" title="2">geodata &lt;-<span class="st"> </span><span class="kw">get_eurostat_geospatial</span>(<span class="dt">output_class =</span> <span class="st">&quot;spdf&quot;</span>, <span class="dt">resolution =</span> <span class="st">&quot;10&quot;</span>, <span class="dt">nuts_level =</span> <span class="dv">2</span>, <span class="dt">year =</span> <span class="dv">2013</span>)</a></code></pre></div>
 <pre><code>## 
@@ -1276,7 +1276,7 @@ tgs00026                Auxiliary Data</code></pre>
 ## information regarding their licence agreements.
 ## </code></pre>
 <pre><code>## No encoding supplied: defaulting to UTF-8.</code></pre>
-<pre><code>## SpatialPolygonDataFrame at resolution 1: 10  cached at:  /tmp/RtmpXKx2fA/eurostat/spdf1022013.RData</code></pre>
+<pre><code>## SpatialPolygonDataFrame at resolution 1: 10  cached at:  /tmp/RtmpKAbiMB/eurostat/spdf1022013.RData</code></pre>
 <pre><code>## 
 ## # --------------------------
 ## HEADS UP!!
@@ -1312,8 +1312,8 @@ tgs00026                Auxiliary Data</code></pre>
 <a class="sourceLine" id="cb57-6" title="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(time <span class="op">==</span><span class="st"> </span><span class="dv">2014</span>, <span class="kw">nchar</span>(geo) <span class="op">==</span><span class="st"> </span><span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb57-7" title="7"><span class="st">  </span><span class="co"># classifying the values the variable</span></a>
 <a class="sourceLine" id="cb57-8" title="8"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">cat =</span> <span class="kw">cut_to_classes</span>(values))</a></code></pre></div>
-<pre><code>## Reading cache file /tmp/RtmpXKx2fA/eurostat/tgs00026_raw_code_FF.rds</code></pre>
-<pre><code>## Table  tgs00026  read from cache file:  /tmp/RtmpXKx2fA/eurostat/tgs00026_raw_code_FF.rds</code></pre>
+<pre><code>## Reading cache file /tmp/RtmpKAbiMB/eurostat/tgs00026_raw_code_FF.rds</code></pre>
+<pre><code>## Table  tgs00026  read from cache file:  /tmp/RtmpKAbiMB/eurostat/tgs00026_raw_code_FF.rds</code></pre>
 <div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1"><span class="co"># Download geospatial data from GISCO</span></a>
 <a class="sourceLine" id="cb60-2" title="2">geodata &lt;-<span class="st"> </span><span class="kw">get_eurostat_geospatial</span>(<span class="dt">resolution =</span> <span class="st">&quot;60&quot;</span>, <span class="dt">nuts_level =</span> <span class="st">&quot;2&quot;</span>, <span class="dt">year =</span> <span class="dv">2013</span>)</a></code></pre></div>
 <pre><code>## 
@@ -1373,7 +1373,7 @@ tgs00026                Auxiliary Data</code></pre>
 </div>
 <div id="sdmx" class="section level2">
 <h2>SDMX</h2>
-<p>Eurostat data is available also in the SDMX format. The eurostat R package does not provide custom tools for this but the generic <a href="https://cran.r-project.org/web/packages/rsdmx/index.html">rsdmx</a> and <a href="https://github.com/amattioc/SDMX/wiki">rjsdmx</a> R packages can be used to access data in that format when necessary:</p>
+<p>Eurostat data is available also in the SDMX format. The eurostat R package does not provide custom tools for this but the generic <a href="https://cran.r-project.org/package=rsdmx">rsdmx</a> and <a href="https://github.com/amattioc/SDMX/wiki">rjsdmx</a> R packages can be used to access data in that format when necessary:</p>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1"><span class="kw">library</span>(rsdmx)</a>
 <a class="sourceLine" id="cb67-2" title="2"></a>
 <a class="sourceLine" id="cb67-3" title="3"><span class="co"># Data set URL</span></a>
@@ -1465,7 +1465,7 @@ tgs00026                Auxiliary Data</code></pre>
 ## 
 ##   (C) Leo Lahti, Janne Huovari, Markus Kainu, Przemyslaw Biecek.
 ##   Retrieval and analysis of Eurostat open data with the eurostat
-##   package. R Journal 9(1):385-392, 2017. Version 3.3.1.1 Package
+##   package. R Journal 9(1):385-392, 2017. Version 3.3.1.2 Package
 ##   URL: http://ropengov.github.io/eurostat Manuscript URL:
 ##   https://journal.r-project.org/archive/2017/RJ-2017-019/index.html
 ## 
@@ -1480,14 +1480,14 @@ tgs00026                Auxiliary Data</code></pre>
 ##     pages = {385-392},
 ##     year = {2017},
 ##     url = {https://journal.r-project.org/archive/2017/RJ-2017-019/index.html},
-##     note = {Version 3.3.1.1},
+##     note = {Version 3.3.1.2},
 ##   }</code></pre>
 </div>
 <div id="related-work" class="section level3">
 <h3>Related work</h3>
 <p>This <a href="http://ropengov.github.io">rOpenGov</a> R package is based on the earlier CRAN packages <a href="https://cran.r-project.org/package=statfi">statfi</a> and <a href="https://cran.r-project.org/package=SmarterPoland">smarterpoland</a>.</p>
 <p>The independent <a href="https://github.com/Tungurahua/reurostat">reurostat</a> package develops related Eurostat tools but seems to be in an experimental stage at the time of writing this tutorial.</p>
-<p>The more generic <a href="https://cran.r-project.org/package=quandl">quandl</a>, <a href="https://cran.r-project.org/package=datamart">datamart</a>, <a href="https://cran.r-project.org/package=rsdmx">rsdmx</a>, and <a href="https://cran.r-project.org/package=pdfetch">pdfetch</a> packages may provide access to some versions of eurostat data but these packages are more generic and hence, in contrast to the eurostat R package, lack tools that are specifically customized to facilitate eurostat analysis.</p>
+<p>The more generic <a href="https://cran.r-project.org/package=datamart">datamart</a>, <a href="https://cran.r-project.org/package=rsdmx">rsdmx</a>, and <a href="https://cran.r-project.org/package=pdfetch">pdfetch</a> packages may provide access to some versions of eurostat data but these packages are more generic and hence, in contrast to the eurostat R package, lack tools that are specifically customized to facilitate eurostat analysis.</p>
 </div>
 <div id="contact" class="section level3">
 <h3>Contact</h3>
@@ -1498,7 +1498,7 @@ tgs00026                Auxiliary Data</code></pre>
 <h1>Version info</h1>
 <p>This tutorial was created with</p>
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1"><span class="kw">sessionInfo</span>()</a></code></pre></div>
-<pre><code>## R version 3.5.2 Patched (2019-01-14 r76000)
+<pre><code>## R version 3.5.2 Patched (2019-01-23 r76008)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Fedora 28 (Workstation Edition)
 ## 
@@ -1522,7 +1522,7 @@ tgs00026                Auxiliary Data</code></pre>
 ##  [4] tmap_2.2           sf_0.7-2           dplyr_0.7.8       
 ##  [7] plotrix_3.7-4      ggplot2_3.1.0      tidyr_0.8.2       
 ## [10] bindrcpp_0.2.2     rvest_0.3.2        xml2_1.2.0        
-## [13] eurostat_3.3.1.1   knitr_1.21        
+## [13] eurostat_3.3.1.2   knitr_1.21        
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] httr_1.4.0         jsonlite_1.6       viridisLite_0.3.0 
