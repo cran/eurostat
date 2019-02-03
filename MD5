@@ -1,4 +1,4 @@
-f1c054947ef4831d5a6b6acb82fc1096 *DESCRIPTION
+e22f21940e43705e2b5f55ba041df509 *DESCRIPTION
 dcca9802b53f9f6258c8cd0d15f418a4 *LICENSE
 52fb00f538243cc3c2e8a2f21fb6b01c *NAMESPACE
 e39b986b63780c1cba776262ce35ec1a *NEWS
@@ -36,14 +36,14 @@ f5400bc6f509983558fbec4aaf1ac085 *R/tidy_eurostat.R
 be3a16896be4562788c5908aa0d5ebe6 *data/tgs00026.rda
 1a5aaf33ae13542d5321f6d536e31b56 *inst/CITATION
 d3ef0de29cdf36efb68387f2f55f64f3 *inst/doc/blogposts.Rmd
-46dfb8270770b225dc6fa31752fd6986 *inst/doc/blogposts.html
+4b323022d64778538931a46e8c474add *inst/doc/blogposts.html
 8347c3f61d009dcd794f18afcecdb471 *inst/doc/cheatsheet.Rmd
-99bcdc01587246f57c53f7fe603874c1 *inst/doc/cheatsheet.html
+7758cbedc35bcf157c7ea59a4cfb6f70 *inst/doc/cheatsheet.html
 1b3ef9d06a0d2d3665d99c363bd0af6e *inst/doc/eurostat_tutorial.R
 33221c7a26c8d88f039acd5fc81179c4 *inst/doc/eurostat_tutorial.Rmd
-4bea1c1a76a1f7dcf2dab6238c8c2184 *inst/doc/eurostat_tutorial.html
+77e9363698d14494c186ebb4e95b8368 *inst/doc/eurostat_tutorial.html
 cb1f9b48339adba913bec6bcddac64ca *inst/doc/publications.Rmd
-375587a41bec3edda53997250f9bfd61 *inst/doc/publications.html
+9d0a157f2d95cecfe2db72a4d17488e3 *inst/doc/publications.html
 5cf793d77461e4887b5a45a5d66fe60a *man/clean_eurostat_cache.Rd
 298f82d18db5ce8919bee0f3a5e10b11 *man/convert_time_col.Rd
 e5bf3df332c6cee647caf99d2e672b54 *man/cut_to_classes.Rd
@@ -66,7 +66,7 @@ f42d256694a602fadaa54b24d5aa1701 *man/search_eurostat.Rd
 bcf00faec4c9385e849e152a7cbea111 *man/tgs00026.Rd
 b687ae6793816a468f08e84fd5c4e179 *man/tidy_eurostat.Rd
 540e10c097dcd96bd3e77a262cbedcf2 *tests/testthat.R
-cd6e1574e193668fc27a4e9829425e34 *tests/testthat/test-all.R
+fd444c90bb0a8f7945fe3839262a9d01 *tests/testthat/test-all.R
 d3ef0de29cdf36efb68387f2f55f64f3 *vignettes/blogposts.Rmd
 8347c3f61d009dcd794f18afcecdb471 *vignettes/cheatsheet.Rmd
 33221c7a26c8d88f039acd5fc81179c4 *vignettes/eurostat_tutorial.Rmd

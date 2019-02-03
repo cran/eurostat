@@ -103,7 +103,7 @@ test_that("Countrycodes return NA for countrycode_nomatch = NA", {
 test_that("Countrycodes use eurostat for missing", {
   expect_equal(suppressWarnings(label_eurostat(c("FI", "DE", "EU28"), dic = "geo",
                               countrycode = "country.name", countrycode_nomatch = "eurostat")),
-               c("Finland", "Germany", "European Union (current composition)"))
+               c("Finland", "Germany", "European Union - 28 countries"))
 })
 
 test_that("custom_dic works", {
