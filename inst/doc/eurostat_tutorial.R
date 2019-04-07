@@ -96,56 +96,56 @@ p <- ggplot(dat_trains, aes(x = time, y = values, colour = geo))
 p <- p + geom_line()
 print(p)
 
-## ----plotGallery, warning=FALSE, message=FALSE, fig.width=6, fig.height=6----
-library(tidyr)
-library(plotrix)
-library(eurostat)
-library(dplyr)
-library(tidyr)
-
-# All sources of renewable energy are to be grouped into three sets
- dict <- c("Solid biofuels (excluding charcoal)" = "Biofuels",
- "Biogasoline" = "Biofuels",
- "Other liquid biofuels" = "Biofuels",
- "Biodiesels" = "Biofuels",
- "Biogas" = "Biofuels",
- "Hydro power" = "Hydro power",
- "Tide, Wave and Ocean" = "Hydro power",
- "Solar thermal" = "Wind, solar, waste and Other",
- "Geothermal Energy" = "Wind, solar, waste and Other",
- "Solar photovoltaic" = "Wind, solar, waste and Other",
- "Municipal waste (renewable)" = "Wind, solar, waste and Other",
- "Wind power" = "Wind, solar, waste and Other",
- "Bio jet kerosene" = "Wind, solar, waste and Other")
-# Some cleaning of the data is required
- energy3 <- get_eurostat("ten00081") %>%
- label_eurostat(dat) %>%
- filter(time == "2013-01-01",
- product != "Renewable energies") %>%
- mutate(nproduct = dict[as.character(product)], # just three categories
- geo = gsub(geo, pattern=" \\(.*", replacement="")) %>%
- select(nproduct, geo, values) %>%
- group_by(nproduct, geo) %>%
- summarise(svalue = sum(values)) %>%
- group_by(geo) %>%
- mutate(tvalue = sum(svalue),
- svalue = svalue/sum(svalue)) %>%
- filter(tvalue > 1000) %>% # only large countries
- spread(nproduct, svalue)
- 
-# Triangle plot
- par(cex=0.75, mar=c(0,0,0,0))
- positions <- plotrix::triax.plot(as.matrix(energy3[, c(3,5,4)]),
-                     show.grid = TRUE,
-                     label.points= FALSE, point.labels = energy3$geo,
-                     col.axis="gray50", col.grid="gray90",
-                     pch = 19, cex.axis=0.8, cex.ticks=0.7, col="grey50")
-
- # Larger labels
- ind <- which(energy3$geo %in%  c("Norway", "Iceland","Denmark","Estonia", "Turkey", "Italy", "Finland"))
- df <- data.frame(positions$xypos, geo = energy3$geo)
- points(df$x[ind], df$y[ind], cex=2, col="red", pch=19)
- text(df$x[ind], df$y[ind], df$geo[ind], adj = c(0.5,-1), cex=1.5)
+## ----plotGallery, warning=FALSE, message=FALSE, fig.width=6, fig.height=6, eval=FALSE----
+#  library(tidyr)
+#  library(plotrix)
+#  library(eurostat)
+#  library(dplyr)
+#  library(tidyr)
+#  
+#  # All sources of renewable energy are to be grouped into three sets
+#   dict <- c("Solid biofuels (excluding charcoal)" = "Biofuels",
+#   "Biogasoline" = "Biofuels",
+#   "Other liquid biofuels" = "Biofuels",
+#   "Biodiesels" = "Biofuels",
+#   "Biogas" = "Biofuels",
+#   "Hydro power" = "Hydro power",
+#   "Tide, Wave and Ocean" = "Hydro power",
+#   "Solar thermal" = "Wind, solar, waste and Other",
+#   "Geothermal Energy" = "Wind, solar, waste and Other",
+#   "Solar photovoltaic" = "Wind, solar, waste and Other",
+#   "Municipal waste (renewable)" = "Wind, solar, waste and Other",
+#   "Wind power" = "Wind, solar, waste and Other",
+#   "Bio jet kerosene" = "Wind, solar, waste and Other")
+#  # Some cleaning of the data is required
+#   energy3 <- get_eurostat("ten00081") %>%
+#   label_eurostat(dat) %>%
+#   filter(time == "2013-01-01",
+#   product != "Renewable energies") %>%
+#   mutate(nproduct = dict[as.character(product)], # just three categories
+#   geo = gsub(geo, pattern=" \\(.*", replacement="")) %>%
+#   select(nproduct, geo, values) %>%
+#   group_by(nproduct, geo) %>%
+#   summarise(svalue = sum(values)) %>%
+#   group_by(geo) %>%
+#   mutate(tvalue = sum(svalue),
+#   svalue = svalue/sum(svalue)) %>%
+#   filter(tvalue > 1000) %>% # only large countries
+#   spread(nproduct, svalue)
+#  
+#  # Triangle plot
+#   par(cex=0.75, mar=c(0,0,0,0))
+#   positions <- plotrix::triax.plot(as.matrix(energy3[, c(3,5,4)]),
+#                       show.grid = TRUE,
+#                       label.points= FALSE, point.labels = energy3$geo,
+#                       col.axis="gray50", col.grid="gray90",
+#                       pch = 19, cex.axis=0.8, cex.ticks=0.7, col="grey50")
+#  
+#   # Larger labels
+#   ind <- which(energy3$geo %in%  c("Norway", "Iceland","Denmark","Estonia", "Turkey", "Italy", "Finland"))
+#   df <- data.frame(positions$xypos, geo = energy3$geo)
+#   points(df$x[ind], df$y[ind], cex=2, col="red", pch=19)
+#   text(df$x[ind], df$y[ind], df$geo[ind], adj = c(0.5,-1), cex=1.5)
 
 ## ----maps1-1, eval=TRUE, fig.width=8, fig.height=8-----------------------
 library(dplyr)

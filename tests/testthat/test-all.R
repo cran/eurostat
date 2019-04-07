@@ -81,7 +81,7 @@ test_that("Variable names are labeled",{
 
 test_that("Label ordering is ordered", {
   skip_on_cran()
-  expect_equal(c("European Union (current composition)",
+  expect_equal(c("European Union - 28 countries",
                "Finland", "United States"),
                levels(label_eurostat(factor(c("FI", "US", "EU28")),
                               dic = "geo", eu_order = TRUE)))
@@ -181,5 +181,28 @@ test_that("Handle numbers in filter name",{
                                                               unit = "I10")),
                c("geo", "nace_r2", "s_adj", "indic_bt", "unit", "time", "values"), 
                ignore.order = TRUE)
+})
+
+
+context("bibliography")
+
+test_that("Bibentry gives correct results",{
+  skip_on_cran()
+  expect_equal(
+    class (get_bibentry ( code = c("sts_inpr_a", "nama_10_gdp"),
+                          keywords = list ( c("production", "industry"),
+                                            c("GDP")
+                          ),
+                          format = "Biblatex")), 
+    "Bibtex"
+  )
+  expect_error(
+    get_bibentry( code = 123456))
+  expect_warning(
+    get_bibentry( code = c("sts_inpr_a", "nama_10_gdp"),
+                  keywords = list ( c("production", "industry"),
+                                    c("GDP")
+                  ),
+                  format = "character"))
 })
 
