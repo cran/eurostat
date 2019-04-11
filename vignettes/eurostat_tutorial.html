@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="date" content="2019-04-07" />
+<meta name="date" content="2019-04-11" />
 
 <title>Tutorial (vignette) for the eurostat R package</title>
 
@@ -90,7 +90,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 <h1 class="title toc-ignore">Tutorial (vignette) for the eurostat R package</h1>
-<h4 class="date"><em>2019-04-07</em></h4>
+<h4 class="date"><em>2019-04-11</em></h4>
 
 
 <div id="TOC">
@@ -120,7 +120,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#citations-and-related-work">Citations and related work</a><ul>
 <li><a href="#citing-the-data-sources">Citing the data sources</a></li>
 <li><a href="#citing-the-eurostat-r-package">Citing the eurostat R package</a></li>
-<li><a href="#related-work">Related work</a></li>
 <li><a href="#contact">Contact</a></li>
 </ul></li>
 <li><a href="#version-info">Version info</a></li>
@@ -296,8 +295,8 @@ toc &lt;-<span class="st"> </span><span class="kw">get_eurostat_toc</span>()
 <td align="left">Air passenger transport by reporting country</td>
 <td align="left">avia_paoc</td>
 <td align="left">dataset</td>
-<td align="left">27.03.2019</td>
-<td align="left">27.03.2019</td>
+<td align="left">09.04.2019</td>
+<td align="left">09.04.2019</td>
 <td align="left">1993</td>
 <td align="left">2018Q4</td>
 <td align="left">NA</td>
@@ -316,7 +315,7 @@ toc &lt;-<span class="st"> </span><span class="kw">get_eurostat_toc</span>()
 <td align="left">Air passenger transport between reporting countries</td>
 <td align="left">avia_paocc</td>
 <td align="left">dataset</td>
-<td align="left">27.03.2019</td>
+<td align="left">10.04.2019</td>
 <td align="left">27.03.2019</td>
 <td align="left">1993</td>
 <td align="left">2018Q4</td>
@@ -326,7 +325,7 @@ toc &lt;-<span class="st"> </span><span class="kw">get_eurostat_toc</span>()
 <td align="left">Air passenger transport between main airports in each reporting country and partner reporting countries</td>
 <td align="left">avia_paoac</td>
 <td align="left">dataset</td>
-<td align="left">27.03.2019</td>
+<td align="left">09.04.2019</td>
 <td align="left">27.03.2019</td>
 <td align="left">1993</td>
 <td align="left">2018Q4</td>
@@ -789,35 +788,19 @@ p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </s
 <span class="kw">library</span>(dplyr)
 <span class="kw">library</span>(tidyr)
 
-<span class="co"># All sources of renewable energy are to be grouped into three sets</span>
- dict &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Solid biofuels (excluding charcoal)&quot;</span> =<span class="st"> &quot;Biofuels&quot;</span>,
- <span class="st">&quot;Biogasoline&quot;</span> =<span class="st"> &quot;Biofuels&quot;</span>,
- <span class="st">&quot;Other liquid biofuels&quot;</span> =<span class="st"> &quot;Biofuels&quot;</span>,
- <span class="st">&quot;Biodiesels&quot;</span> =<span class="st"> &quot;Biofuels&quot;</span>,
- <span class="st">&quot;Biogas&quot;</span> =<span class="st"> &quot;Biofuels&quot;</span>,
- <span class="st">&quot;Hydro power&quot;</span> =<span class="st"> &quot;Hydro power&quot;</span>,
- <span class="st">&quot;Tide, Wave and Ocean&quot;</span> =<span class="st"> &quot;Hydro power&quot;</span>,
- <span class="st">&quot;Solar thermal&quot;</span> =<span class="st"> &quot;Wind, solar, waste and Other&quot;</span>,
- <span class="st">&quot;Geothermal Energy&quot;</span> =<span class="st"> &quot;Wind, solar, waste and Other&quot;</span>,
- <span class="st">&quot;Solar photovoltaic&quot;</span> =<span class="st"> &quot;Wind, solar, waste and Other&quot;</span>,
- <span class="st">&quot;Municipal waste (renewable)&quot;</span> =<span class="st"> &quot;Wind, solar, waste and Other&quot;</span>,
- <span class="st">&quot;Wind power&quot;</span> =<span class="st"> &quot;Wind, solar, waste and Other&quot;</span>,
- <span class="st">&quot;Bio jet kerosene&quot;</span> =<span class="st"> &quot;Wind, solar, waste and Other&quot;</span>)
 <span class="co"># Some cleaning of the data is required</span>
- energy3 &lt;-<span class="st"> </span><span class="kw">get_eurostat</span>(<span class="st">&quot;ten00081&quot;</span>) <span class="op">%&gt;%</span>
+ energy3 &lt;-<span class="st"> </span><span class="kw">get_eurostat</span>(<span class="st">&quot;nrg_114a&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st"> </span><span class="kw">label_eurostat</span>(dat) <span class="op">%&gt;%</span>
-<span class="st"> </span><span class="kw">filter</span>(time <span class="op">==</span><span class="st"> &quot;2013-01-01&quot;</span>,
- product <span class="op">!=</span><span class="st"> &quot;Renewable energies&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">nproduct =</span> dict[<span class="kw">as.character</span>(product)], <span class="co"># just three categories</span>
- <span class="dt">geo =</span> <span class="kw">gsub</span>(geo, <span class="dt">pattern=</span><span class="st">&quot; </span><span class="ch">\\</span><span class="st">(.*&quot;</span>, <span class="dt">replacement=</span><span class="st">&quot;&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st"> </span><span class="kw">select</span>(nproduct, geo, values) <span class="op">%&gt;%</span>
-<span class="st"> </span><span class="kw">group_by</span>(nproduct, geo) <span class="op">%&gt;%</span>
+<span class="st"> </span><span class="kw">filter</span>(time <span class="op">==</span><span class="st"> &quot;2013-01-01&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">geo =</span> <span class="kw">gsub</span>(geo, <span class="dt">pattern=</span><span class="st">&quot; </span><span class="ch">\\</span><span class="st">(.*&quot;</span>, <span class="dt">replacement=</span><span class="st">&quot;&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st"> </span><span class="kw">select</span>(product, geo, values) <span class="op">%&gt;%</span>
+<span class="st"> </span><span class="kw">group_by</span>(product, geo) <span class="op">%&gt;%</span>
 <span class="st"> </span><span class="kw">summarise</span>(<span class="dt">svalue =</span> <span class="kw">sum</span>(values)) <span class="op">%&gt;%</span>
 <span class="st"> </span><span class="kw">group_by</span>(geo) <span class="op">%&gt;%</span>
 <span class="st"> </span><span class="kw">mutate</span>(<span class="dt">tvalue =</span> <span class="kw">sum</span>(svalue),
  <span class="dt">svalue =</span> svalue<span class="op">/</span><span class="kw">sum</span>(svalue)) <span class="op">%&gt;%</span>
 <span class="st"> </span><span class="kw">filter</span>(tvalue <span class="op">&gt;</span><span class="st"> </span><span class="dv">1000</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># only large countries</span>
-<span class="st"> </span><span class="kw">spread</span>(nproduct, svalue)
+<span class="st"> </span><span class="kw">spread</span>(product, svalue)
  
 <span class="co"># Triangle plot</span>
  <span class="kw">par</span>(<span class="dt">cex=</span><span class="fl">0.75</span>, <span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))
@@ -832,21 +815,14 @@ p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </s
  df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(positions<span class="op">$</span>xypos, <span class="dt">geo =</span> energy3<span class="op">$</span>geo)
  <span class="kw">points</span>(df<span class="op">$</span>x[ind], df<span class="op">$</span>y[ind], <span class="dt">cex=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">pch=</span><span class="dv">19</span>)
  <span class="kw">text</span>(df<span class="op">$</span>x[ind], df<span class="op">$</span>y[ind], df<span class="op">$</span>geo[ind], <span class="dt">adj =</span> <span class="kw">c</span>(<span class="fl">0.5</span>,<span class="op">-</span><span class="dv">1</span>), <span class="dt">cex=</span><span class="fl">1.5</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <div id="maps" class="section level2">
 <h2>Maps</h2>
 <div id="disposable-income-of-private-households-by-nuts-2-regions-at-160mln-resolution-using-tmap" class="section level3">
 <h3>Disposable income of private households by NUTS 2 regions at 1:60mln resolution using tmap</h3>
 <p>The mapping examples below use <a href="https://github.com/mtennekes/tmap"><code>tmap</code></a> package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)</code></pre></div>
-<pre><code>## 
-## Attaching package: 'dplyr'</code></pre>
-<pre><code>## The following objects are masked from 'package:stats':
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(eurostat)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(eurostat)
 <span class="kw">library</span>(sf)</code></pre></div>
 <pre><code>## Linking to GEOS 3.6.2, GDAL 2.2.3, PROJ 4.9.3</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tmap)
@@ -859,7 +835,7 @@ sp_data &lt;-<span class="st"> </span>eurostat<span class="op">::</span><span cl
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(time <span class="op">==</span><span class="st"> </span><span class="dv">2010</span>, <span class="kw">nchar</span>(geo) <span class="op">==</span><span class="st"> </span><span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="co"># categorise</span>
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">income =</span> <span class="kw">cut_to_classes</span>(values, <span class="dt">n =</span> <span class="dv">5</span>))</code></pre></div>
-<pre><code>## Table tgs00026 cached at /tmp/RtmptCsIC0/eurostat/tgs00026_raw_code_FF.rds</code></pre>
+<pre><code>## Table tgs00026 cached at /tmp/RtmpZyofyh/eurostat/tgs00026_raw_code_FF.rds</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Download geospatial data from GISCO</span>
 geodata &lt;-<span class="st"> </span><span class="kw">get_eurostat_geospatial</span>(<span class="dt">output_class =</span> <span class="st">&quot;sf&quot;</span>,
                                    <span class="dt">resolution =</span> <span class="st">&quot;60&quot;</span>,
@@ -1017,8 +993,8 @@ dat &lt;-<span class="st"> </span><span class="kw">get_eurostat</span>(<span cla
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(time <span class="op">==</span><span class="st"> </span><span class="dv">2014</span>, <span class="kw">nchar</span>(geo) <span class="op">==</span><span class="st"> </span><span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="co"># classifying the values the variable</span>
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">cat =</span> <span class="kw">cut_to_classes</span>(values))</code></pre></div>
-<pre><code>## Reading cache file /tmp/RtmptCsIC0/eurostat/tgs00026_raw_code_FF.rds</code></pre>
-<pre><code>## Table  tgs00026  read from cache file:  /tmp/RtmptCsIC0/eurostat/tgs00026_raw_code_FF.rds</code></pre>
+<pre><code>## Reading cache file /tmp/RtmpZyofyh/eurostat/tgs00026_raw_code_FF.rds</code></pre>
+<pre><code>## Table  tgs00026  read from cache file:  /tmp/RtmpZyofyh/eurostat/tgs00026_raw_code_FF.rds</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Download geospatial data from GISCO</span>
 geodata &lt;-<span class="st"> </span><span class="kw">get_eurostat_geospatial</span>(<span class="dt">output_class =</span> <span class="st">&quot;spdf&quot;</span>, <span class="dt">resolution =</span> <span class="st">&quot;10&quot;</span>, <span class="dt">nuts_level =</span> <span class="dv">2</span>, <span class="dt">year =</span> <span class="dv">2013</span>)</code></pre></div>
 <pre><code>## 
@@ -1048,7 +1024,7 @@ geodata &lt;-<span class="st"> </span><span class="kw">get_eurostat_geospatial</
 ## information regarding their licence agreements.
 ## </code></pre>
 <pre><code>## No encoding supplied: defaulting to UTF-8.</code></pre>
-<pre><code>## SpatialPolygonDataFrame at resolution 1: 10  cached at:  /tmp/RtmptCsIC0/eurostat/spdf1022013.RData</code></pre>
+<pre><code>## SpatialPolygonDataFrame at resolution 1: 10  cached at:  /tmp/RtmpZyofyh/eurostat/spdf1022013.RData</code></pre>
 <pre><code>## 
 ## # --------------------------
 ## HEADS UP!!
@@ -1084,8 +1060,8 @@ dat &lt;-<span class="st"> </span><span class="kw">get_eurostat</span>(<span cla
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(time <span class="op">==</span><span class="st"> </span><span class="dv">2014</span>, <span class="kw">nchar</span>(geo) <span class="op">==</span><span class="st"> </span><span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="co"># classifying the values the variable</span>
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">cat =</span> <span class="kw">cut_to_classes</span>(values))</code></pre></div>
-<pre><code>## Reading cache file /tmp/RtmptCsIC0/eurostat/tgs00026_raw_code_FF.rds</code></pre>
-<pre><code>## Table  tgs00026  read from cache file:  /tmp/RtmptCsIC0/eurostat/tgs00026_raw_code_FF.rds</code></pre>
+<pre><code>## Reading cache file /tmp/RtmpZyofyh/eurostat/tgs00026_raw_code_FF.rds</code></pre>
+<pre><code>## Table  tgs00026  read from cache file:  /tmp/RtmpZyofyh/eurostat/tgs00026_raw_code_FF.rds</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Download geospatial data from GISCO</span>
 geodata &lt;-<span class="st"> </span><span class="kw">get_eurostat_geospatial</span>(<span class="dt">resolution =</span> <span class="st">&quot;60&quot;</span>, <span class="dt">nuts_level =</span> <span class="st">&quot;2&quot;</span>, <span class="dt">year =</span> <span class="dv">2013</span>)</code></pre></div>
 <pre><code>## 
@@ -1158,62 +1134,6 @@ d &lt;-<span class="st"> </span><span class="kw">readSDMX</span>(url)
 df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(d)
 
 <span class="kw">kable</span>(<span class="kw">head</span>(df))</code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th align="left">UNIT</th>
-<th align="left">Y_GRAD</th>
-<th align="left">FOS07</th>
-<th align="left">GEO</th>
-<th align="left">FREQ</th>
-<th align="left">obsTime</th>
-<th align="right">obsValue</th>
-<th align="left">OBS_STATUS</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">PC</td>
-<td align="left">TOTAL</td>
-<td align="left">FOS1</td>
-<td align="left">BE</td>
-<td align="left">A</td>
-<td align="left">2009</td>
-<td align="right">NA</td>
-<td align="left">na</td>
-</tr>
-<tr class="even">
-<td align="left">PC</td>
-<td align="left">TOTAL</td>
-<td align="left">FOS1</td>
-<td align="left">BE</td>
-<td align="left">A</td>
-<td align="left">2006</td>
-<td align="right">NA</td>
-<td align="left">na</td>
-</tr>
-<tr class="odd">
-<td align="left">PC</td>
-<td align="left">Y_GE1990</td>
-<td align="left">FOS1</td>
-<td align="left">BE</td>
-<td align="left">A</td>
-<td align="left">2009</td>
-<td align="right">43.75</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">PC</td>
-<td align="left">Y_GE1990</td>
-<td align="left">FOS1</td>
-<td align="left">BE</td>
-<td align="left">A</td>
-<td align="left">2006</td>
-<td align="right">NA</td>
-<td align="left">na</td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 <div id="further-examples" class="section level1">
@@ -1237,7 +1157,7 @@ df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(d)
 ## 
 ##   (C) Leo Lahti, Janne Huovari, Markus Kainu, Przemyslaw Biecek.
 ##   Retrieval and analysis of Eurostat open data with the eurostat
-##   package. R Journal 9(1):385-392, 2017. Version 3.3.4 Package
+##   package. R Journal 9(1):385-392, 2017. Version 3.3.5 Package
 ##   URL: http://ropengov.github.io/eurostat Manuscript URL:
 ##   https://journal.r-project.org/archive/2017/RJ-2017-019/index.html
 ## 
@@ -1252,14 +1172,8 @@ df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(d)
 ##     pages = {385-392},
 ##     year = {2017},
 ##     url = {https://journal.r-project.org/archive/2017/RJ-2017-019/index.html},
-##     note = {Version 3.3.4},
+##     note = {Version 3.3.5},
 ##   }</code></pre>
-</div>
-<div id="related-work" class="section level3">
-<h3>Related work</h3>
-<p>This <a href="http://ropengov.github.io">rOpenGov</a> R package is based on the earlier CRAN packages <a href="https://cran.r-project.org/package=statfi">statfi</a> and <a href="https://cran.r-project.org/package=SmarterPoland">smarterpoland</a>.</p>
-<p>The independent <a href="https://github.com/Tungurahua/reurostat">reurostat</a> package develops related Eurostat tools but seems to be in an experimental stage at the time of writing this tutorial.</p>
-<p>The more generic <a href="https://cran.r-project.org/package=quandl">quandl</a>, <a href="https://cran.r-project.org/package=datamart">datamart</a>, <a href="https://cran.r-project.org/package=rsdmx">rsdmx</a>, and <a href="https://cran.r-project.org/package=pdfetch">pdfetch</a> packages may provide access to some versions of eurostat data but these packages are more generic and hence, in contrast to the eurostat R package, lack tools that are specifically customized to facilitate eurostat analysis.</p>
 </div>
 <div id="contact" class="section level3">
 <h3>Contact</h3>
@@ -1290,16 +1204,16 @@ df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(d)
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] rsdmx_0.5-13       sp_1.3-1           RColorBrewer_1.1-2
-##  [4] tmap_2.2           sf_0.7-3           dplyr_0.8.0.1     
+##  [1] sp_1.3-1           RColorBrewer_1.1-2 tmap_2.2          
+##  [4] sf_0.7-3           dplyr_0.8.0.1      plotrix_3.7-4     
 ##  [7] ggplot2_3.1.0      tidyr_0.8.2        rvest_0.3.2       
-## [10] xml2_1.2.0         eurostat_3.3.4     knitr_1.21        
+## [10] xml2_1.2.0         eurostat_3.3.5     knitr_1.21        
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] httr_1.4.0         jsonlite_1.6       viridisLite_0.3.0 
 ##  [4] shiny_1.3.0        assertthat_0.2.0   stats4_3.5.1      
 ##  [7] highr_0.7          yaml_2.2.0         pillar_1.3.1      
-## [10] backports_1.1.3    lattice_0.20-38    glue_1.3.0        
+## [10] backports_1.1.4    lattice_0.20-38    glue_1.3.0        
 ## [13] digest_0.6.18      promises_1.0.1     RefManageR_1.2.12 
 ## [16] colorspace_1.4-0   htmltools_0.3.6    httpuv_1.5.1      
 ## [19] plyr_1.8.4         XML_3.98-1.18      pkgconfig_2.0.2   
@@ -1312,16 +1226,16 @@ df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(d)
 ## [40] nlme_3.1-137       lwgeom_0.1-5       class_7.3-15      
 ## [43] Cairo_1.5-9        tools_3.5.1        hms_0.4.2         
 ## [46] stringr_1.4.0      munsell_0.5.0      compiler_3.5.1    
-## [49] e1071_1.7-0.1      rlang_0.3.1        RCurl_1.95-4.12   
-## [52] classInt_0.3-1     units_0.6-2        grid_3.5.1        
-## [55] tmaptools_2.0-1    dichromat_2.0-0    htmlwidgets_1.3   
-## [58] crosstalk_1.0.0    bitops_1.0-6       base64enc_0.1-3   
-## [61] labeling_0.3       rmarkdown_1.11     gtable_0.2.0      
-## [64] codetools_0.2-16   curl_3.3           DBI_1.0.0         
-## [67] R6_2.4.0           lubridate_1.7.4    rgdal_1.3-9       
-## [70] rgeos_0.4-2        KernSmooth_2.23-15 readr_1.3.1       
-## [73] stringi_1.3.1      Rcpp_1.0.0         png_0.1-7         
-## [76] leaflet_2.0.2      tidyselect_0.2.5   xfun_0.5</code></pre>
+## [49] e1071_1.7-0.1      rlang_0.3.1        classInt_0.3-1    
+## [52] units_0.6-2        grid_3.5.1         tmaptools_2.0-1   
+## [55] dichromat_2.0-0    htmlwidgets_1.3    crosstalk_1.0.0   
+## [58] base64enc_0.1-3    labeling_0.3       rmarkdown_1.11    
+## [61] gtable_0.2.0       codetools_0.2-16   curl_3.3          
+## [64] DBI_1.0.0          R6_2.4.0           lubridate_1.7.4   
+## [67] rgdal_1.3-9        rgeos_0.4-2        KernSmooth_2.23-15
+## [70] readr_1.3.1        stringi_1.3.1      Rcpp_1.0.0        
+## [73] png_0.1-7          leaflet_2.0.2      tidyselect_0.2.5  
+## [76] xfun_0.5</code></pre>
 </div>
 
 
