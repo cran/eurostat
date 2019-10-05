@@ -8,8 +8,6 @@
 #' to \code{NULL}. 
 #' @param format Default is \code{'Biblatex'}, alternatives are \code{'bibentry'} 
 #' or \code{'Bibtex'} (not case sensitive.)
-#' @importFrom RefManageR BibEntry toBiblatex
-#' @importFrom utils toBibtex
 #' @export
 #' @author Daniel Antal, Przemyslaw Biecek
 #' @return a bibentry, Bibtex or Biblatex object.
@@ -46,10 +44,9 @@ get_bibentry <- function(
     format <- 'biblatex'
   }
 
-  code = c("tran_hv_frtra", "t2020_rk310", "tec00001")
-    toc <- get_eurostat_toc()
-    toc <- toc[toc$code %in% code, ]
-    toc <- toc[! duplicated(toc), ]
+  toc <- get_eurostat_toc()
+  toc <- toc[toc$code %in% code, ]
+  toc <- toc[! duplicated(toc), ]
 
   urldate <- as.character(Sys.Date())
 
