@@ -1,8 +1,8 @@
 Package: eurostat
 Type: Package
 Title: Tools for Eurostat Open Data
-Date: 2019-10-03
-Version: 3.3.55
+Date: 2019-12-19
+Version: 3.4.20002
 Encoding: UTF-8
 Authors@R: c(
   person("Leo", "Lahti", email = "leo.lahti@iki.fi", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-5537-637X")),
@@ -19,7 +19,7 @@ Description: Tools to download data from the Eurostat database
     manipulation utilities.
 License: BSD_2_clause + file LICENSE
 Depends: methods, R (>= 3.1.0)
-Imports: broom, classInt, countrycode, dplyr, httr, jsonlite,
+Imports: broom, classInt, countrycode, curl, dplyr, httr, jsonlite,
         RColorBrewer, readr, RefManageR, sf, sp, stringi, stringr,
         tibble, tidyr
 Suggests: Cairo, ggplot2, knitr, lubridate, mapproj, plotrix,
@@ -30,8 +30,8 @@ BugReports: https://github.com/ropengov/eurostat/issues
 VignetteBuilder: knitr
 NeedsCompilation: no
 Repository: CRAN
-RoxygenNote: 6.1.1
-Packaged: 2019-10-03 20:14:47 UTC; lemila
+RoxygenNote: 7.0.2
+Packaged: 2019-12-19 14:51:16 UTC; lemila
 Author: Leo Lahti [aut, cre] (<https://orcid.org/0000-0001-5537-637X>),
   Janne Huovari [aut],
   Markus Kainu [aut],
@@ -39,4 +39,4 @@ Author: Leo Lahti [aut, cre] (<https://orcid.org/0000-0001-5537-637X>),
   Joona Lehtomaki [ctb],
   Francois Briatte [ctb],
   Oliver Reiter [ctb]
-Date/Publication: 2019-10-05 04:20:07 UTC
+Date/Publication: 2019-12-20 11:00:02 UTC

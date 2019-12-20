@@ -11,6 +11,7 @@
 #' @importFrom httr build_url
 #' @importFrom httr content
 #' @importFrom httr GET
+#' @importFrom httr http_error
 #' @importFrom httr status_code
 #' @importFrom jsonlite fromJSON
 #' @importFrom methods as
