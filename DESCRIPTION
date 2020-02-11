@@ -1,8 +1,8 @@
 Package: eurostat
 Type: Package
 Title: Tools for Eurostat Open Data
-Date: 2020-01-20
-Version: 3.5.2
+Date: 2020-02-11
+Version: 3.6.1
 Encoding: UTF-8
 Authors@R: c(
   person("Leo", "Lahti", email = "leo.lahti@iki.fi", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-5537-637X")),
@@ -21,7 +21,7 @@ License: BSD_2_clause + file LICENSE
 Depends: methods, R (>= 3.1.0)
 Imports: broom, classInt, countrycode, curl, dplyr, httr, jsonlite,
         lubridate, RColorBrewer, readr, RefManageR, sf, sp, stringi,
-        stringr, tibble, tidyr
+        stringr, tibble, tidyr, tidyselect
 Suggests: Cairo, ggplot2, knitr, mapproj, plotrix, rmarkdown, roxygen2,
         rsdmx, rvest, testthat, tmap, usethis
 LazyData: true
@@ -31,7 +31,7 @@ VignetteBuilder: knitr
 NeedsCompilation: no
 Repository: CRAN
 RoxygenNote: 7.0.2
-Packaged: 2020-01-25 15:51:26 UTC; lemila
+Packaged: 2020-02-11 17:30:46 UTC; lemila
 Author: Leo Lahti [aut, cre] (<https://orcid.org/0000-0001-5537-637X>),
   Janne Huovari [aut],
   Markus Kainu [aut],
@@ -39,4 +39,4 @@ Author: Leo Lahti [aut, cre] (<https://orcid.org/0000-0001-5537-637X>),
   Joona Lehtomaki [ctb],
   Francois Briatte [ctb],
   Oliver Reiter [ctb]
-Date/Publication: 2020-01-25 16:10:02 UTC
+Date/Publication: 2020-02-11 17:50:03 UTC
