@@ -1,8 +1,8 @@
 Package: eurostat
 Type: Package
 Title: Tools for Eurostat Open Data
-Date: 2020-11-17
-Version: 3.6.83
+Date: 2020-11-19
+Version: 3.6.84
 Encoding: UTF-8
 Authors@R: c(
   person("Leo", "Lahti", email = "leo.lahti@iki.fi", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-5537-637X")),
@@ -31,7 +31,7 @@ VignetteBuilder: knitr
 NeedsCompilation: no
 Repository: CRAN
 RoxygenNote: 7.1.1
-Packaged: 2020-11-18 10:07:05 UTC; lei
+Packaged: 2020-11-19 19:46:09 UTC; lei
 Author: Leo Lahti [aut, cre] (<https://orcid.org/0000-0001-5537-637X>),
   Janne Huovari [aut],
   Markus Kainu [aut],
@@ -39,4 +39,4 @@ Author: Leo Lahti [aut, cre] (<https://orcid.org/0000-0001-5537-637X>),
   Joona Lehtomaki [ctb],
   Francois Briatte [ctb],
   Oliver Reiter [ctb]
-Date/Publication: 2020-11-19 08:30:06 UTC
+Date/Publication: 2020-11-19 21:40:13 UTC

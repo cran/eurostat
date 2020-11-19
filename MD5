@@ -1,4 +1,4 @@
-ba6a3a5d8449f38a86073cc2b2a8d843 *DESCRIPTION
+870534178463108a09883bb8a60b67e5 *DESCRIPTION
 dcca9802b53f9f6258c8cd0d15f418a4 *LICENSE
 e1b0f7d65203a7786f972fbea708eadc *NAMESPACE
 25863777be7dfae5d6dc4babcf76ca99 *NEWS
@@ -19,7 +19,7 @@ dfd7d4995fed84612309eebb31771ca3 *R/data_regional_changes_2016.R
 8d22bd467e5d45d2465c811317fb8e1e *R/get_bibentry.R
 7252463537e5021159648082733e1e40 *R/get_eurostat.R
 fb470fc08681a5907b8979eb4655a448 *R/get_eurostat_dic.R
-416b126d2a8bd131eee65fd63cda2e0d *R/get_eurostat_geospatial.R
+13284b2daee43c31e3d8654c9e144976 *R/get_eurostat_geospatial.R
 9e3282c182eeca28a871f1c5be2b9644 *R/get_eurostat_json.R
 8cfd5fd605f04511901098d26d72ddfb *R/get_eurostat_raw.R
 0122a07706bc84d4b529dd339495d381 *R/get_eurostat_toc.R
@@ -33,7 +33,7 @@ b4b1d0c6960d667535439bdf4a285cef *R/search_eurostat.R
 bfb7ac667aa95b3d0a3e417239078cd3 *R/tidy_eurostat.R
 79050a708489f18f1b7169dcf9cad99b *R/utils.R
 24a6f4bd5f9f8be2bf53c655f7cb2464 *R/zzz.R
-dc468a5b81debb593a56dc9fb68c762d *README.md
+17660076607f892c35728b6367dd135c *README.md
 ce507393529780bb97d38c9a1f18218e *build/vignette.rds
 e252d4cadb5c3957488f74b2ebd5df98 *data/ea_countries.rda
 7236b25135172d2edb0996cb795327d1 *data/efta_countries.rda
@@ -46,7 +46,7 @@ a2e787342a313b3f27a8e6a090284157 *data/regional_changes_2016.rda
 1a5aaf33ae13542d5321f6d536e31b56 *inst/CITATION
 ae2c36b951f818abb7094a03c420729f *inst/doc/vignette.R
 6f1d11ca7a5d54c843769ceca5a33624 *inst/doc/vignette.Rmd
-a62e89e996c81321dab5a335166ed16e *inst/doc/vignette.html
+9a45778fa22cc8b4d88db6dd69e237a5 *inst/doc/vignette.html
 4d0d4552164c43c5cca82031f4750ba1 *man/add_nuts_level.Rd
 7b0741270caad7d9369e171c819b416b *man/check_access_to_data.Rd
 4d8165b600f2e6c9b84cb9601e861964 *man/clean_eurostat_cache.Rd
@@ -61,7 +61,7 @@ f42cd336b88003dd0944ad8f42ad3c13 *man/eurotime2date.Rd
 2a844c8ac09c5cbe473bd9267ac39aa1 *man/get_bibentry.Rd
 fd48112732edba4576a076a16c69c2a3 *man/get_eurostat.Rd
 51ac98d8f3fcb8f4d0252f0fbdc49cbf *man/get_eurostat_dic.Rd
-cbda72b04f754cdcf42c7c23434595d3 *man/get_eurostat_geospatial.Rd
+95765da57d904e02b9fd340e09b953e8 *man/get_eurostat_geospatial.Rd
 67c609302c860d934c4ffb423d32f42a *man/get_eurostat_json.Rd
 d15a4b21041b4c1e7a84ee97b9be206d *man/get_eurostat_raw.Rd
 18cff7bba02df507d61488cfcfd8a2f0 *man/get_eurostat_toc.Rd
@@ -102,6 +102,6 @@ ba431b3b498d0ca30ecc5d46a52e73b7 *vignettes/vignette.md
 68344a54cf85fc352eaaac509752987a *vignettes/website/blogposts.Rmd
 5cfff2317200019e914b666cab4945b3 *vignettes/website/cheatsheet.Rmd
 8fa60573fd7ac9cbbc1c7f44748c0f0c *vignettes/website/eurostat_tutorial.Rmd
-a0bb55aeb42fd87d7d08c8d5768110d0 *vignettes/website/maps.Rmd
+327916d39527b19382e3568e13c8b71f *vignettes/website/maps.Rmd
 2a0c306ace63b29fd5eebc17c5a08398 *vignettes/website/publications.Rmd
 31be72f07d436083f90e7adfd955671b *vignettes/website/regional_data.Rmd
