@@ -1,7 +1,7 @@
 ## ----setup, include=FALSE-----------------------------------------------------
 # Global options
 library(knitr)
-opts_chunk$set(fig.path="fig/")
+# opts_chunk$set(fig.path="fig/")
 
 ## ----install, eval=FALSE------------------------------------------------------
 #  install.packages("eurostat")

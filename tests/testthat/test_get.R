@@ -15,10 +15,11 @@ test_that("get_eurostat works with multi-frequency",{
 
 test_that("get_eurostat return right classes",{
   skip_on_cran()
-  expect_true(all(c("factor", "numeric") %in%
+  skip_on_travis()  
+  expect_true(all(c("character", "numeric") %in%
                     sapply(get_eurostat("road_eqr_trams"), class)))
   expect_true(all(c("character", "numeric") %in%
-                    sapply(get_eurostat("road_eqr_trams", stringsAsFactors = FALSE),
+                    sapply(get_eurostat("road_eqr_trams"),
                            class)))
 })
 

@@ -38,12 +38,11 @@
 #' @return A dataset as a data_frame.
 #' @export
 #' @author Przemyslaw Biecek, Leo Lahti, Janne Huovari and Markus Kainu
-#'   \email{ropengov-forum@@googlegroups.com}
-#'   \url{http://github.com/ropengov/eurostat}
+#' @references See citation("eurostat").
 #' @examples
 #'  \dontrun{
 #'    tmp <- get_eurostat_json("cdh_e_fos")
-#'    nama_gdp_c has been discontinued since 2/2018 and this example has ceased working.
+#'    # nama_gdp_c has been discontinued since 2/2018 and this example has ceased working.
 #'    yy <- get_eurostat_json(id = "nama_gdp_c", filters = list(geo=c("EU28", "FI"),
 #'                                                         unit="EUR_HAB",
 #'                                                         indic_na="B1GM"))
@@ -52,7 +51,7 @@
 get_eurostat_json <- function(id, filters = NULL, 
                               type = c("code", "label", "both"), 
                               lang = c("en", "fr", "de"),
-                              stringsAsFactors = default.stringsAsFactors(),
+                              stringsAsFactors = FALSE,
                               ...){
   
   # Check if you have access to ec.europe.eu. 
@@ -68,7 +67,7 @@ get_eurostat_json <- function(id, filters = NULL,
   
     # resp <- try(httr::GET(url, ...))
     # if (class(resp) == "try-error") { stop(paste("The requested url cannot be found within the get_eurostat_json function:", url))  }
-    resp <- httr::GET(url)
+    resp <- httr::RETRY("GET", url, terminate_on = c(404))
     if (httr::http_error(resp)) { 
       stop(paste("The requested url cannot be found within the get_eurostat_json function:", url))
     }
