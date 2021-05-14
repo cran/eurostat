@@ -1,5 +1,7 @@
 context ("Regional code harmonization")
 
+library(dplyr)
+library(magrittr)
 
 test_regional_codes <- data.frame (
 
@@ -18,13 +20,13 @@ test_regional_codes <- data.frame (
 test_that("Recoding gives correct results",{
 
   skip_on_cran()
-  skip_on_travis()
+  skip_on_ci()
 
   test_harmonized <- harmonize_geo_code(test_regional_codes)
 
-  try_recode_2013 <- recode_to_nuts_2013(test_harmonized)
+  suppressWarnings(try_recode_2013 <- recode_to_nuts_2013(test_harmonized))
 
-  try_recode_2016 <- recode_to_nuts_2016(test_harmonized)
+  suppressWarnings(try_recode_2016 <- recode_to_nuts_2016(test_harmonized))
 
   lookup_code16 <- test_harmonized %>%
     filter ( geo  == "FR243") %>%

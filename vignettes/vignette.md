@@ -2,7 +2,7 @@ R Tools for Eurostat Open Data
 ==============================
 
 This [rOpenGov](http://ropengov.github.io) R package provides tools to
-access [Eurostat database](http://ec.europa.eu/eurostat/data/database),
+access [Eurostat database](https://ec.europa.eu/eurostat/data/database),
 which you can also browse on-line for the data sets and documentation.
 For contact information and source code, see the [package
 website](http://ropengov.github.io/eurostat/).
