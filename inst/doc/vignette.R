@@ -1,15 +1,9 @@
-## ----setup, include=FALSE-----------------------------------------------------
-# Global options
-library(knitr)
-# opts_chunk$set(fig.path="fig/")
-
-## ----install, eval=FALSE------------------------------------------------------
-#  install.packages("eurostat")
-
-## ----install2, eval=FALSE-----------------------------------------------------
-#  library(devtools)
-#  install_github("ropengov/eurostat")
-
-## ---- echo=FALSE--------------------------------------------------------------
-library(eurostat)
+## ---- include = FALSE---------------------------------------------------------
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  purl = NOT_CRAN,
+  eval = NOT_CRAN
+)
 

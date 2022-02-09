@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-<meta name="date" content="2021-05-12" />
+<meta name="date" content="2022-02-09" />
 
 <title>Vignette for the eurostat R package</title>
 
@@ -346,22 +346,19 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 <h1 class="title toc-ignore">Vignette for the eurostat R package</h1>
-<h4 class="date">2021-05-12</h4>
+<h4 class="date">2022-02-09</h4>
 
 
 
-<div id="r-tools-for-eurostat-open-data" class="section level1">
-<h1>R Tools for Eurostat Open Data</h1>
-<p>This <a href="http://ropengov.github.io">rOpenGov</a> R package provides tools to access <a href="https://ec.europa.eu/eurostat/data/database">Eurostat database</a>, which you can also browse on-line for the data sets and documentation. For contact information and source code, see the <a href="http://ropengov.github.io/eurostat/">package website</a>.</p>
-</div>
 <div id="installation" class="section level1">
 <h1>Installation</h1>
 <p>Release version <a href="https://CRAN.R-project.org/package=eurostat">(CRAN)</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">install.packages</span>(<span class="st">&quot;eurostat&quot;</span>)</span></code></pre></div>
 <p>Development version <a href="https://github.com/rOpenGov/eurostat">(Github)</a>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">library</span>(devtools)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="kw">install_github</span>(<span class="st">&quot;ropengov/eurostat&quot;</span>)</span></code></pre></div>
-<p>For examples on how to use the package, see the <a href="http://ropengov.github.io/eurostat/">online tutorial</a> (Articles section of the homepage).</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">library</span>(remotes)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;ropengov/eurostat&quot;</span>)</span></code></pre></div>
+<p>Load the package:</p>
+<p>For more detailed examples on how to use the package, see the <a href="https://ropengov.github.io/eurostat/articles/articles/eurostat_tutorial.html">online tutorial</a>.</p>
 </div>
 
 
