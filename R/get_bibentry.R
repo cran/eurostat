@@ -11,15 +11,17 @@
 #' @author Daniel Antal, Przemyslaw Biecek
 #' @return a bibentry, Bibtex or Biblatex object.
 #' @examplesIf check_access_to_data()
-#' my_bibliography <- get_bibentry(
-#'   code = c("tran_hv_frtra", "t2020_rk310", "tec00001"),
-#'   keywords = list(
-#'     c("railways", "freight", "transport"),
-#'     c("railways", "passengers", "modal split")
-#'   ),
-#'   format = "Biblatex"
-#' )
-#' my_bibliography
+#' \dontrun{
+#'   my_bibliography <- get_bibentry(
+#'     code = c("tran_hv_frtra", "t2020_rk310", "tec00001"),
+#'     keywords = list(
+#'       c("railways", "freight", "transport"),
+#'       c("railways", "passengers", "modal split")
+#'     ),
+#'     format = "Biblatex"
+#'   )
+#'   my_bibliography
+#' }
 #' @importFrom lubridate dmy year month day
 #' @importFrom utils toBibtex
 #' @importFrom RefManageR BibEntry toBiblatex
@@ -33,7 +35,7 @@ get_bibentry <- function(code,
   if (!any(class(code) %in% c("character", "factor"))) {
     stop("The code(s) must be added as character vector")
   }
-  if (!is.null(keywords) & !class(keywords) == "list") {
+  if (!is.null(keywords) & !inherits(keywords, "list")) {
     stop("If keyword(s) are added, they must be added as a list.")
   }
 

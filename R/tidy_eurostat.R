@@ -24,8 +24,8 @@
 #' @author Przemyslaw Biecek, Leo Lahti and Janne Huovari
 #'
 #' @importFrom stringi stri_extract_first_regex
-#' @import tidyr
-#' @import dplyr
+#' @importFrom tidyr separate gather
+#' @importFrom dplyr filter
 #'
 #' @keywords internal utilities database
 tidy_eurostat <- function(dat, time_format = "date", select_time = NULL,
@@ -44,7 +44,8 @@ tidy_eurostat <- function(dat, time_format = "date", select_time = NULL,
   dat <- tidyr::separate(dat,
     col = colnames(dat)[1],
     into = cnames1,
-    sep = ",", convert = FALSE
+    sep = ",", 
+    convert = FALSE
   )
 
   # Get variable from column names
@@ -126,8 +127,6 @@ tidy_eurostat <- function(dat, time_format = "date", select_time = NULL,
   dat$time <- convert_time_col(dat$time,
     time_format = time_format
   )
-
-
 
   dat
 }

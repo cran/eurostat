@@ -1,9 +1,10 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
 
-[![rOG-badge](https://ropengov.github.io/rogtemplate/reference/figures/ropengov-badge.svg)](http://ropengov.org/)
-[![R build
-status](https://github.com/rOpenGov/eurostat/workflows/R-CMD-check/badge.svg)](https://github.com/rOpenGov/eurostat/actions)
+[![rOG-badge](https://ropengov.github.io/rogtemplate/reference/figures/ropengov-badge.svg)](https://ropengov.org/)
+[![R-CMD-check](https://github.com/rOpenGov/eurostat/actions/workflows/check-full.yaml/badge.svg)](https://github.com/rOpenGov/eurostat/actions/workflows/check-full.yaml)
+[![R-CMD-check
+(standard)](https://github.com/rOpenGov/eurostat/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/rOpenGov/eurostat/actions/workflows/check-standard.yaml)
 [![cran
 version](http://www.r-pkg.org/badges/version/eurostat)](https://CRAN.R-project.org/package=eurostat)
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable-1)
@@ -11,7 +12,7 @@ version](http://www.r-pkg.org/badges/version/eurostat)](https://CRAN.R-project.o
 [![codecov](https://codecov.io/gh/rOpenGov/eurostat/branch/master/graph/badge.svg?token=Wp2VVvpWQA)](https://app.codecov.io/gh/rOpenGov/eurostat)
 [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/eurostat)](https://cran.r-project.org/package=eurostat)
 [![Downloads](http://cranlogs.r-pkg.org/badges/eurostat)](https://cran.r-project.org/package=eurostat)
-[![Gitter](https://badges.gitter.im/rOpenGov/eurostat.svg)](https://gitter.im/rOpenGov/eurostat?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Gitter](https://badges.gitter.im/rOpenGov/eurostat.svg)](https://app.gitter.im/#/room/#rOpenGov_eurostat:gitter.im?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![r-universe](https://ropengov.r-universe.dev/badges/eurostat)](https://ropengov.r-universe.dev/)
 
 [![Watch on
@@ -72,16 +73,16 @@ Eurostat. Searching for data is one way, if you know what to look for.
     passengers <- search_eurostat("passenger transport")
     knitr::kable(head(passengers))
 
-<table style="width:100%;">
+<table>
 <colgroup>
-<col style="width: 40%" />
+<col style="width: 48%" />
 <col style="width: 8%" />
 <col style="width: 4%" />
-<col style="width: 12%" />
-<col style="width: 17%" />
-<col style="width: 6%" />
+<col style="width: 10%" />
+<col style="width: 14%" />
 <col style="width: 5%" />
 <col style="width: 4%" />
+<col style="width: 3%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -100,9 +101,29 @@ Eurostat. Searching for data is one way, if you know what to look for.
 <td style="text-align: left;">Air passenger transport</td>
 <td style="text-align: left;">enps_avia_pa</td>
 <td style="text-align: left;">dataset</td>
-<td style="text-align: left;">16.04.2021</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">10.02.2022</td>
+<td style="text-align: left;">10.02.2022</td>
 <td style="text-align: left;">2005</td>
+<td style="text-align: left;">2020</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Modal split of air, sea and inland passenger transport</td>
+<td style="text-align: left;">tran_hv_ms_psmod</td>
+<td style="text-align: left;">dataset</td>
+<td style="text-align: left;">31.01.2023</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">2008</td>
+<td style="text-align: left;">2020</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Modal split of inland passenger transport</td>
+<td style="text-align: left;">tran_hv_psmod</td>
+<td style="text-align: left;">dataset</td>
+<td style="text-align: left;">13.07.2022</td>
+<td style="text-align: left;">13.07.2022</td>
+<td style="text-align: left;">1990</td>
 <td style="text-align: left;">2020</td>
 <td style="text-align: left;">NA</td>
 </tr>
@@ -110,50 +131,30 @@ Eurostat. Searching for data is one way, if you know what to look for.
 <td style="text-align: left;">Volume of passenger transport relative to GDP</td>
 <td style="text-align: left;">tran_hv_pstra</td>
 <td style="text-align: left;">dataset</td>
-<td style="text-align: left;">07.07.2021</td>
-<td style="text-align: left;">07.07.2021</td>
+<td style="text-align: left;">13.07.2022</td>
+<td style="text-align: left;">13.07.2022</td>
 <td style="text-align: left;">1990</td>
-<td style="text-align: left;">2019</td>
+<td style="text-align: left;">2020</td>
 <td style="text-align: left;">NA</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Modal split of passenger transport</td>
-<td style="text-align: left;">tran_hv_psmod</td>
+<td style="text-align: left;">Maritime passenger transport performed in the Exclusive Economic Zone (EEZ) of the countries</td>
+<td style="text-align: left;">mar_tp_pa</td>
 <td style="text-align: left;">dataset</td>
-<td style="text-align: left;">07.07.2021</td>
-<td style="text-align: left;">07.07.2021</td>
-<td style="text-align: left;">1990</td>
-<td style="text-align: left;">2019</td>
+<td style="text-align: left;">21.02.2023</td>
+<td style="text-align: left;">21.02.2023</td>
+<td style="text-align: left;">2005</td>
+<td style="text-align: left;">2021</td>
 <td style="text-align: left;">NA</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Air passenger transport by reporting country</td>
 <td style="text-align: left;">avia_paoc</td>
 <td style="text-align: left;">dataset</td>
-<td style="text-align: left;">02.02.2022</td>
-<td style="text-align: left;">17.01.2022</td>
+<td style="text-align: left;">13.02.2023</td>
+<td style="text-align: left;">13.02.2023</td>
 <td style="text-align: left;">1993</td>
-<td style="text-align: left;">2021Q3</td>
-<td style="text-align: left;">NA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Air passenger transport by main airports in each reporting country</td>
-<td style="text-align: left;">avia_paoa</td>
-<td style="text-align: left;">dataset</td>
-<td style="text-align: left;">01.02.2022</td>
-<td style="text-align: left;">01.02.2022</td>
-<td style="text-align: left;">1993</td>
-<td style="text-align: left;">2021Q4</td>
-<td style="text-align: left;">NA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Air passenger transport between reporting countries</td>
-<td style="text-align: left;">avia_paocc</td>
-<td style="text-align: left;">dataset</td>
-<td style="text-align: left;">02.02.2022</td>
-<td style="text-align: left;">17.01.2022</td>
-<td style="text-align: left;">1993</td>
-<td style="text-align: left;">2021Q3</td>
+<td style="text-align: left;">2022Q4</td>
 <td style="text-align: left;">NA</td>
 </tr>
 </tbody>
@@ -180,7 +181,8 @@ Contributions are very welcome:
     feedback and bug reports.
 -   [Send pull requests](https://github.com/ropengov/eurostat/)
 -   [Star us on the Github page](https://github.com/ropengov/eurostat/)
--   [Join the discussion in Gitter](https://gitter.im/rOpenGov/eurostat)
+-   [Join the discussion in
+    Gitter](https://app.gitter.im/#/room/#rOpenGov_eurostat:gitter.im)
 
 ### Acknowledgements
 
@@ -189,7 +191,7 @@ Lahti](https://github.com/antagomir), Przemyslaw Biecek, Markus Kainu
 and Janne Huovari. Retrieval and analysis of Eurostat open data with the
 eurostat package. [R Journal 9(1):385-392,
 2017](https://journal.r-project.org/archive/2017/RJ-2017-019/index.html).
-R package version 3.7.10. DOI:
+R package version 3.8.2. DOI:
 [10.32614/RJ-2017-019](https://doi.org/10.32614/RJ-2017-019). URL:
 <https://ropengov.github.io/eurostat/>
 
@@ -197,7 +199,7 @@ We are grateful to all
 [contributors](https://github.com/ropengov/eurostat/graphs/contributors),
 including Daniel Antal, Joona Lehtomäki, Francois Briatte, and Oliver
 Reiter, and for the [Eurostat](https://ec.europa.eu/eurostat/) open data
-portal! This project is part of [rOpenGov](http://ropengov.org).
+portal! This project is part of [rOpenGov](https://ropengov.org).
 
 ### Disclaimer
 
@@ -209,6 +211,3 @@ kind of modification to data or text, please state this clearly to the
 end user. See Eurostat policy on [copyright and free re-use of
 data](https://ec.europa.eu/eurostat/about/policies/copyright) for more
 detailed information and certain exceptions.
-
-<!--[build-badge]: https://img.shields.io/travis/ropengov/eurostat.svg?style=flat-square-->
-<!--[build]: https://travis-ci.org/ropengov/eurostat-->

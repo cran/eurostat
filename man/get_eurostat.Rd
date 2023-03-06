@@ -16,6 +16,7 @@ get_eurostat(
   compress_file = TRUE,
   stringsAsFactors = FALSE,
   keepFlags = FALSE,
+  legacy_bulk_download = TRUE,
   ...
 )
 }
@@ -44,10 +45,10 @@ limitations per query via API from for
 \item{select_time}{a character symbol for a time frequency or NULL,
 which is used by default as most datasets have just one time
 frequency. For datasets with multiple time
-frequencies, select the desired time format with:
-Y = annual, S = semi-annual, Q = quarterly, M = monthly.
-For all frequencies in same data frame \code{time_format = "raw"}
-should be used.}
+frequencies, select one or more of the desired frequencies with:
+"Y" (or "A") = annual, "S" = semi-annual / semester, "Q" = quarterly,
+"M" = monthly, "W" = weekly. For all frequencies in same data
+frame \code{time_format = "raw"} should be used.}
 
 \item{cache}{a logical whether to do caching. Default is \code{TRUE}. Affects
 only queries from the bulk download facility.}
@@ -55,7 +56,8 @@ only queries from the bulk download facility.}
 \item{update_cache}{a logical whether to update cache. Can be set also with
 options(eurostat_update = TRUE)}
 
-\item{cache_dir}{a path to a cache directory. The directory must exist.
+\item{cache_dir}{a
+path to a cache directory. The directory must exist.
 The \code{NULL} (default) uses and creates
 'eurostat' directory in the temporary directory from
 \code{\link[=tempdir]{tempdir()}}. The directory can also be set with
@@ -64,9 +66,9 @@ The \code{NULL} (default) uses and creates
 \item{compress_file}{a logical whether to compress the
 RDS-file in caching. Default is \code{TRUE}.}
 
-\item{stringsAsFactors}{if \code{TRUE} (the default) variables are
-converted to factors in original Eurostat order. If \code{FALSE}
-they are returned as a character.}
+\item{stringsAsFactors}{if \code{FALSE} (the default) the variables are
+returned as characters. If \code{TRUE} the variables are converted to
+factors in original Eurostat order.}
 
 \item{keepFlags}{a logical whether the flags (e.g. "confidential",
 "provisional") should be kept in a separate column or if they
@@ -76,31 +78,38 @@ Also possible non-real zero "0n" is indicated in flags column.
 Flags are not available for eurostat API, so \code{keepFlags}
 can not be used with a \code{filters}.}
 
+\item{legacy_bulk_download}{a logical, whether to use the new dissemination API to
+download TSV files instead of the old Bulk Download facilities.
+Default is \code{TRUE}. This is a temporary parameter that will be deleted
+after the old Bulk Download facilities will are decommissioned. Please
+use caution if you intend to build any automated scripts that use this
+parameter.}
+
 \item{...}{
   Arguments passed on to \code{\link[=get_eurostat_json]{get_eurostat_json}}
   \describe{
-    \item{\code{lang}}{A language used for metadata (en/fr/de).}
+    \item{\code{lang}}{A language used for metadata. Default is \code{EN}, other options are
+\code{FR} and \code{DE}.}
   }}
 }
 \value{
-a tibble. One column for each dimension in the data,
-the time column for a time dimension and
-the values column for numerical values.
-Eurostat data does not include all missing values and a treatment of
-missing values depend on source. In bulk download
-facility missing values are dropped if all dimensions are missing
-on particular time. In JSON API missing values are dropped
-only if all dimensions are missing on all times. The data from
-bulk download facility can be completed for example with
-\code{\link[tidyr:complete]{tidyr::complete()}}.
+a tibble.
+
+One column for each dimension in the data, the time column for a time
+dimension and the values column for numerical values. Eurostat data does
+not include all missing values and a treatment of missing values depend
+on source. In bulk download facility missing values are dropped if all
+dimensions are missing on particular time. In JSON API missing values are
+dropped only if all dimensions are missing on all times. The data from
+bulk download facility can be completed for example with \code{\link[tidyr:complete]{tidyr::complete()}}.
 }
 \description{
-Download data sets from Eurostat \url{https://ec.europa.eu/eurostat/}.
+Download data sets from Eurostat \url{https://ec.europa.eu/eurostat}
 }
 \details{
 Data sets are downloaded from
 \href{https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing}{the Eurostat bulk download facility} or from The Eurostat Web Services
-\href{https://ec.europa.eu/eurostat/web/json-and-unicode-web-services}{JSON API}.
+\href{https://ec.europa.eu/eurostat/web/main/data/web-services}{JSON API}.
 If only the table \code{id} is given, the whole table is downloaded from the
 bulk download facility. If also \code{filters} are defined the JSON API is
 used.
@@ -130,7 +139,7 @@ in parenthesis.
 }
 \examples{
 \dontshow{if (check_access_to_data()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-\donttest{
+\dontrun{
 k <- get_eurostat("nama_10_lp_ulc")
 k <- get_eurostat("nama_10_lp_ulc", time_format = "num")
 k <- get_eurostat("nama_10_lp_ulc", update_cache = TRUE)
@@ -146,8 +155,7 @@ set_eurostat_cache_dir(file.path(tempdir(), "r_cache2"))
 k <- get_eurostat("nama_10_lp_ulc")
 k <- get_eurostat("nama_10_lp_ulc", cache = FALSE)
 k <- get_eurostat("avia_gonc", select_time = "Y", cache = FALSE)
-}
-\dontrun{
+
 dd <- get_eurostat("nama_10_gdp",
   filters = list(
     geo = "FI",
@@ -155,11 +163,20 @@ dd <- get_eurostat("nama_10_gdp",
     unit = "CLV_I10"
   )
 )
+
+# A dataset with multiple time series in one
+dd2 <- get_eurostat("AVIA_GOR_ME",
+  select_time = c("A", "M", "Q"),
+  time_format = "date_last",
+  legacy_bulk_download = FALSE
+)
 }
 \dontshow{\}) # examplesIf}
 }
 \references{
-See \code{citation("eurostat")}:\preformatted{# 
+See \code{citation("eurostat")}:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{# 
 # Kindly cite the eurostat R package as follows:
 # 
 #   (C) Leo Lahti, Janne Huovari, Markus Kainu, Przemyslaw Biecek.
@@ -181,7 +198,12 @@ See \code{citation("eurostat")}:\preformatted{#
 #     doi = \{10.32614/RJ-2017-019\},
 #     url = \{https://doi.org/10.32614/RJ-2017-019\},
 #   \}
-}
+}\if{html}{\out{</div>}}
+
+When citing data, please indicate that the data source is Eurostat. If the
+re-use of data involves modification to the data or text, state this clearly.
+For more detailed information and exceptions regarding commercial use,
+see \href{https://ec.europa.eu/eurostat/web/main/about/policies/copyright}{Eurostat policy on copyright and free re-use of data}.
 }
 \seealso{
 \code{\link[=search_eurostat]{search_eurostat()}}, \code{\link[=label_eurostat]{label_eurostat()}}

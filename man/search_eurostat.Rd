@@ -44,9 +44,9 @@ education of teaching.
 }
 \section{Functions}{
 \itemize{
-\item \code{grepEurostatTOC}: Old deprecated version
-}}
+\item \code{grepEurostatTOC()}: Old deprecated version
 
+}}
 \examples{
 \dontshow{if (check_access_to_data()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
@@ -59,7 +59,9 @@ tmp <- search_eurostat("Live births (total) by NUTS 3 region", fixed = TRUE)
 \dontshow{\}) # examplesIf}
 }
 \references{
-See \code{citation("eurostat")}:\preformatted{# 
+See \code{citation("eurostat")}:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{# 
 # Kindly cite the eurostat R package as follows:
 # 
 #   (C) Leo Lahti, Janne Huovari, Markus Kainu, Przemyslaw Biecek.
@@ -81,7 +83,7 @@ See \code{citation("eurostat")}:\preformatted{#
 #     doi = \{10.32614/RJ-2017-019\},
 #     url = \{https://doi.org/10.32614/RJ-2017-019\},
 #   \}
-}
+}\if{html}{\out{</div>}}
 }
 \seealso{
 \code{\link[=get_eurostat]{get_eurostat()}}, \code{\link[=get_eurostat_toc]{get_eurostat_toc()}}

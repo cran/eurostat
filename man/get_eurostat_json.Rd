@@ -7,8 +7,8 @@
 get_eurostat_json(
   id,
   filters = NULL,
-  type = c("code", "label", "both"),
-  lang = c("en", "fr", "de"),
+  type = "code",
+  lang = "EN",
   stringsAsFactors = FALSE,
   ...
 )
@@ -22,15 +22,16 @@ variable codes and values are vectors of observation codes. If \code{NULL}
 (default) the whole dataset is returned. See details for more on filters
 and limitations per query.}
 
-\item{type}{A type of variables, "code" (default), "label" or "both". The
-"both" will return a data_frame with named vectors, labels as values and
-codes as names.}
+\item{type}{A type of variables, "\code{code}" (default), "\code{label}" or "\code{both}".
+The parameter "\code{both}" will return a data_frame with named vectors,
+labels as values and codes as names.}
 
-\item{lang}{A language used for metadata (en/fr/de).}
+\item{lang}{A language used for metadata. Default is \code{EN}, other options are
+\code{FR} and \code{DE}.}
 
-\item{stringsAsFactors}{if \code{TRUE} (the default) variables are converted
-to factors in original Eurostat order. If \code{FALSE} they are returned as
-a character.}
+\item{stringsAsFactors}{if \code{FALSE} (the default) the variables are
+returned as characters. If \code{TRUE} the variables are converted to
+factors in original Eurostat order.}
 
 \item{...}{
   Arguments passed on to \code{\link[httr:GET]{httr::GET}}
@@ -50,14 +51,15 @@ details.}
   }}
 }
 \value{
-A dataset as a data_frame.
+A dataset as an object of \code{data.frame} class.
 }
 \description{
 Retrieve data from Eurostat API in JSON format.
 }
 \details{
 Data to retrieve from
-\href{https://ec.europa.eu/eurostat/web/json-and-unicode-web-services}{The Eurostat Web Services} can be specified with filters. Normally, it is
+\href{https://ec.europa.eu/eurostat/web/main/data/web-services}{The Eurostat Web Services}
+can be specified with filters. Normally, it is
 better to use JSON query through \code{\link[=get_eurostat]{get_eurostat()}}, than to use
 \code{\link[=get_eurostat_json]{get_eurostat_json()}} directly.
 
@@ -72,18 +74,39 @@ passed to \code{\link[httr:GET]{httr::GET()}}. For example
 \code{get_eurostat_json(id, filters, config = httr::use_proxy(url, port, username, password))}.
 }
 \examples{
-# nama_gdp_c has been discontinued since 2/2018 and this example has ceased working.
 \dontrun{
-tmp <- get_eurostat_json("cdh_e_fos")
-yy <- get_eurostat_json(id = "nama_gdp_c", filters = list(
-  geo = c("EU28", "FI"),
-  unit = "EUR_HAB",
-  indic_na = "B1GM"
+# Generally speaking these queries would be done through get_eurostat
+tmp <- get_eurostat_json("nama_10_gdp")
+yy <- get_eurostat_json("nama_10_gdp", filters = list(
+  geo = c("FI", "SE", "EU28"),
+  time = c(2015:2023),
+  lang = "FR",
+  na_item = "B1GQ",
+  unit = "CLV_I10"
+))
+
+# TIME_PERIOD filter works also with the new JSON API
+yy2 <- get_eurostat_json("nama_10_gdp", filters = list(
+   geo = c("FI", "SE", "EU28"),
+   TIME_PERIOD = c(2015:2023),
+   lang = "FR",
+   na_item = "B1GQ",
+   unit = "CLV_I10"
+))
+  
+# An example from get_eurostat
+dd <- get_eurostat("nama_10_gdp",
+  filters = list(
+  geo = "FI",
+  na_item = "B1GQ",
+  unit = "CLV_I10"
 ))
 }
 }
 \references{
-See \code{citation("eurostat")}:\preformatted{# 
+See \code{citation("eurostat")}:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{# 
 # Kindly cite the eurostat R package as follows:
 # 
 #   (C) Leo Lahti, Janne Huovari, Markus Kainu, Przemyslaw Biecek.
@@ -105,13 +128,20 @@ See \code{citation("eurostat")}:\preformatted{#
 #     doi = \{10.32614/RJ-2017-019\},
 #     url = \{https://doi.org/10.32614/RJ-2017-019\},
 #   \}
-}
+}\if{html}{\out{</div>}}
 }
 \seealso{
 \code{\link[httr:GET]{httr::GET()}}
+
+Eurostat Data Browser online help: API Statistics - data query:
+\url{https://wikis.ec.europa.eu/display/EUROSTATHELP/API+Statistics+-+data+query}
+
+Eurostat Data Browser online help: migrating from JSON web service to API
+Statistics:
+\url{https://wikis.ec.europa.eu/display/EUROSTATHELP/API+Statistics+-+migrating+from+JSON+web+service+to+API+Statistics}
 }
 \author{
-Przemyslaw Biecek, Leo Lahti, Janne Huovari and Markus Kainu
+Przemyslaw Biecek, Leo Lahti, Janne Huovari Markus Kainu and Pyry Kantanen
 }
 \keyword{database}
 \keyword{utilities}
