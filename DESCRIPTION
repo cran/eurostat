@@ -1,8 +1,8 @@
 Type: Package
 Package: eurostat
 Title: Tools for Eurostat Open Data
-Version: 3.8.2
-Date: 2023-03-03
+Version: 4.0.0
+Date: 2023-12-19
 Authors@R: c(
     person("Leo", "Lahti", , "leo.lahti@iki.fi", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5537-637X")),
@@ -30,13 +30,15 @@ License: BSD_2_clause + file LICENSE
 URL: https://ropengov.github.io/eurostat/,
         https://github.com/rOpenGov/eurostat
 BugReports: https://github.com/rOpenGov/eurostat/issues
-Depends: methods, R (>= 3.5.0)
-Imports: broom, classInt, countrycode, curl, dplyr, httr, jsonlite,
-        lubridate, rappdirs, readr, RefManageR, regions, stringi,
-        stringr, tibble, tidyr (>= 1.0.0), ISOweek
-Suggests: RColorBrewer, knitr, rmarkdown, sf, sp, testthat (>= 3.0.0),
-        remotes
+Depends: R (>= 3.6.0)
+Imports: classInt, countrycode, curl, digest, dplyr, httr2 (>= 0.2.3),
+        ISOweek, jsonlite, lubridate, rappdirs, readr, RefManageR,
+        regions, rlang, stringi, stringr, tibble, tidyr (>= 1.0.0),
+        xml2, data.table (>= 1.14.8)
+Suggests: giscoR, knitr, rmarkdown, sf, testthat (>= 3.0.0)
 VignetteBuilder: knitr
+Config/Needs/website: ggplot2, tmap, styler, sessioninfo,
+        ropengov/rogtemplate, ragg
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8
@@ -47,7 +49,7 @@ Repository: CRAN
 RoxygenNote: 7.2.3
 X-schema.org-isPartOf: http://ropengov.org/
 X-schema.org-keywords: ropengov
-Packaged: 2023-03-06 15:00:19 UTC; xxx
+Packaged: 2023-12-19 20:11:33 UTC; leo
 Author: Leo Lahti [aut, cre] (<https://orcid.org/0000-0001-5537-637X>),
   Janne Huovari [aut],
   Markus Kainu [aut],
@@ -63,4 +65,4 @@ Author: Leo Lahti [aut, cre] (<https://orcid.org/0000-0001-5537-637X>),
   Pyry Kantanen [ctb] (<https://orcid.org/0000-0003-2853-2765>),
   Enrico Spinielli [ctb] (<https://orcid.org/0000-0001-8584-9131>)
 Maintainer: Leo Lahti <leo.lahti@iki.fi>
-Date/Publication: 2023-03-06 15:40:02 UTC
+Date/Publication: 2023-12-19 20:30:02 UTC

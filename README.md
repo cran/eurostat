@@ -19,7 +19,7 @@ version](http://www.r-pkg.org/badges/version/eurostat)](https://CRAN.R-project.o
 GitHub](https://img.shields.io/github/watchers/ropengov/eurostat.svg?style=social)](https://github.com/ropengov/eurostat/watchers)
 [![Star on
 GitHub](https://img.shields.io/github/stars/ropengov/eurostat.svg?style=social)](https://github.com/ropengov/eurostat/stargazers)
-[![Follow](https://img.shields.io/twitter/follow/ropengov.svg?style=social)](https://twitter.com/intent/follow?screen_name=ropengov)
+[![Follow](https://img.shields.io/twitter/follow/ropengov.svg?style=social)](https://twitter.com/ropengov)
 
 <!--[![Build Status](https://travis-ci.org/rOpenGov/eurostat.svg?branch=master)](https://travis-ci.org/rOpenGov/eurostat)-->
 <!--[![AppVeyor Status](https://ci.appveyor.com/api/projects/status/github/rOpenGov/eurostat?branch=master&svg=true)](https://ci.appveyor.com/project/rOpenGov/eurostat)-->
@@ -33,8 +33,7 @@ GitHub](https://img.shields.io/github/stars/ropengov/eurostat.svg?style=social)]
 <!--[![CRAN version](http://www.r-pkg.org/badges/version/eurostat)](https://cran.r-project.org/package=eurostat)-->
 <!-- badges: end -->
 
-eurostat R package <a href='https://ropengov.github.io/eurostat/'><img src='man/figures/logo.png' align="right" height="139" /></a>
-===================================================================================================================================
+# eurostat R package <a href='https://ropengov.github.io/eurostat/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 R tools to access open data from
 [Eurostat](https://ec.europa.eu/eurostat). Data search, download,
@@ -75,25 +74,27 @@ Eurostat. Searching for data is one way, if you know what to look for.
 
 <table>
 <colgroup>
-<col style="width: 48%" />
+<col style="width: 45%" />
 <col style="width: 8%" />
-<col style="width: 4%" />
-<col style="width: 10%" />
-<col style="width: 14%" />
+<col style="width: 3%" />
+<col style="width: 9%" />
+<col style="width: 13%" />
 <col style="width: 5%" />
 <col style="width: 4%" />
 <col style="width: 3%" />
+<col style="width: 4%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">title</th>
 <th style="text-align: left;">code</th>
 <th style="text-align: left;">type</th>
-<th style="text-align: left;">last update of data</th>
-<th style="text-align: left;">last table structure change</th>
-<th style="text-align: left;">data start</th>
-<th style="text-align: left;">data end</th>
-<th style="text-align: left;">values</th>
+<th style="text-align: left;">last.update.of.data</th>
+<th style="text-align: left;">last.table.structure.change</th>
+<th style="text-align: left;">data.start</th>
+<th style="text-align: left;">data.end</th>
+<th style="text-align: right;">values</th>
+<th style="text-align: right;">hierarchy</th>
 </tr>
 </thead>
 <tbody>
@@ -101,61 +102,72 @@ Eurostat. Searching for data is one way, if you know what to look for.
 <td style="text-align: left;">Air passenger transport</td>
 <td style="text-align: left;">enps_avia_pa</td>
 <td style="text-align: left;">dataset</td>
-<td style="text-align: left;">10.02.2022</td>
-<td style="text-align: left;">10.02.2022</td>
+<td style="text-align: left;">13.03.2023</td>
+<td style="text-align: left;">13.03.2023</td>
 <td style="text-align: left;">2005</td>
-<td style="text-align: left;">2020</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">2021</td>
+<td style="text-align: right;">406</td>
+<td style="text-align: right;">6</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Modal split of air, sea and inland passenger transport</td>
+<td style="text-align: left;">Modal split of air, sea and inland
+passenger transport</td>
 <td style="text-align: left;">tran_hv_ms_psmod</td>
 <td style="text-align: left;">dataset</td>
-<td style="text-align: left;">31.01.2023</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">29.06.2023</td>
+<td style="text-align: left;">29.06.2023</td>
 <td style="text-align: left;">2008</td>
-<td style="text-align: left;">2020</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">2021</td>
+<td style="text-align: right;">2100</td>
+<td style="text-align: right;">4</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Modal split of inland passenger transport</td>
+<td style="text-align: left;">Modal split of inland passenger
+transport</td>
 <td style="text-align: left;">tran_hv_psmod</td>
 <td style="text-align: left;">dataset</td>
-<td style="text-align: left;">13.07.2022</td>
-<td style="text-align: left;">13.07.2022</td>
+<td style="text-align: left;">29.06.2023</td>
+<td style="text-align: left;">29.06.2023</td>
 <td style="text-align: left;">1990</td>
-<td style="text-align: left;">2020</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">2021</td>
+<td style="text-align: right;">4219</td>
+<td style="text-align: right;">4</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Volume of passenger transport relative to GDP</td>
+<td style="text-align: left;">Volume of passenger transport relative to
+GDP</td>
 <td style="text-align: left;">tran_hv_pstra</td>
 <td style="text-align: left;">dataset</td>
-<td style="text-align: left;">13.07.2022</td>
-<td style="text-align: left;">13.07.2022</td>
+<td style="text-align: left;">11.08.2023</td>
+<td style="text-align: left;">29.06.2023</td>
 <td style="text-align: left;">1990</td>
-<td style="text-align: left;">2020</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">2021</td>
+<td style="text-align: right;">969</td>
+<td style="text-align: right;">4</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Maritime passenger transport performed in the Exclusive Economic Zone (EEZ) of the countries</td>
+<td style="text-align: left;">Maritime passenger transport performed in
+the Exclusive Economic Zone (EEZ) of the countries</td>
 <td style="text-align: left;">mar_tp_pa</td>
 <td style="text-align: left;">dataset</td>
 <td style="text-align: left;">21.02.2023</td>
 <td style="text-align: left;">21.02.2023</td>
 <td style="text-align: left;">2005</td>
 <td style="text-align: left;">2021</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: right;">1752</td>
+<td style="text-align: right;">4</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Air passenger transport by reporting country</td>
+<td style="text-align: left;">Air passenger transport by reporting
+country</td>
 <td style="text-align: left;">avia_paoc</td>
 <td style="text-align: left;">dataset</td>
-<td style="text-align: left;">13.02.2023</td>
-<td style="text-align: left;">13.02.2023</td>
+<td style="text-align: left;">04.12.2023</td>
+<td style="text-align: left;">28.11.2023</td>
 <td style="text-align: left;">1993</td>
-<td style="text-align: left;">2022Q4</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">2023-Q3</td>
+<td style="text-align: right;">2482969</td>
+<td style="text-align: right;">5</td>
 </tr>
 </tbody>
 </table>
@@ -169,9 +181,9 @@ examples.
 ### Recommended packages
 
 It is recommended to install the `giscoR` package
-(<a href="https://dieghernan.github.io/giscoR/" class="uri">https://dieghernan.github.io/giscoR/</a>).
-This is another API package that provides R tools for Eurostat
-geographic data to support geospatial analysis and visualization.
+(<https://dieghernan.github.io/giscoR/>). This is another API package
+that provides R tools for Eurostat geographic data to support geospatial
+analysis and visualization.
 
 ### Contribute
 
@@ -186,14 +198,21 @@ Contributions are very welcome:
 
 ### Acknowledgements
 
-**Kindly cite this package** as follows: [Leo
-Lahti](https://github.com/antagomir), Przemyslaw Biecek, Markus Kainu
-and Janne Huovari. Retrieval and analysis of Eurostat open data with the
-eurostat package. [R Journal 9(1):385-392,
-2017](https://journal.r-project.org/archive/2017/RJ-2017-019/index.html).
-R package version 3.8.2. DOI:
-[10.32614/RJ-2017-019](https://doi.org/10.32614/RJ-2017-019). URL:
-<https://ropengov.github.io/eurostat/>
+**Kindly cite this package** by citing the following R Journal article:
+
+[Lahti L.](https://github.com/antagomir), Huovari J., Kainu M., and
+Biecek P. (2017). Retrieval and analysis of Eurostat open data with the
+eurostat package. [The R Journal 9(1),
+pp. 385-392](https://journal.r-project.org/archive/2017/RJ-2017-019/index.html).
+doi: [10.32614/RJ-2017-019](https://doi.org/10.32614/RJ-2017-019).
+
+In addition, please provide a citation to the specific software version
+used:
+
+Lahti, L., Huovari J., Kainu M., Biecek P., Hernangomez D., Antal D.,
+and Kantanen P. (2023). eurostat: Tools for Eurostat Open Data
+\[Computer software\]. R package version 4.0.0.9003.
+<https://github.com/rOpenGov/eurostat>
 
 We are grateful to all
 [contributors](https://github.com/ropengov/eurostat/graphs/contributors),
